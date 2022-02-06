@@ -4,6 +4,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import I18n from 'i18n-js';
 import React from 'react';
+import { HistoryProvider } from '../contexts/HistoryContext';
+import { ItemProvider } from '../contexts/ItemContext';
 import { SettingsProvider } from '../contexts/SettingsContext';
 import SettingsScreen from '../screens/SettingsScreen';
 import BottomNavigator from './BottomNavigator';
@@ -14,13 +16,15 @@ const RootStack = createStackNavigator<RootStackParamList>();
 function RootStackNavigator() {
   return (
     <SettingsProvider>
-      <RootStack.Navigator initialRouteName="Main">
-        <RootStack.Screen
-          name="Main"
-          component={BottomNavigator}
-          options={{ headerShown: false }}
-        />
-        {/* <RootStack.Screen
+      <ItemProvider>
+        <HistoryProvider>
+          <RootStack.Navigator initialRouteName="Main">
+            <RootStack.Screen
+              name="Main"
+              component={BottomNavigator}
+              options={{ headerShown: false }}
+            />
+            {/* <RootStack.Screen
         name="AddItem"
         component={AddItemScreen}
         options={{
@@ -42,15 +46,15 @@ function RootStackNavigator() {
         component={MyCamera}
         options={{ title: I18n.t('CameraTitle'), headerShown: false }}
       /> */}
-        <RootStack.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{
-            title: I18n.t('settingsTitle'),
-            headerBackTitle: I18n.t('back'),
-          }}
-        />
-        {/* <RootStack.Screen
+            <RootStack.Screen
+              name="Settings"
+              component={SettingsScreen}
+              options={{
+                title: I18n.t('settingsTitle'),
+                headerBackTitle: I18n.t('back'),
+              }}
+            />
+            {/* <RootStack.Screen
         name="ItemDetails"
         component={ItemDetailsScreen}
         options={{
@@ -58,7 +62,9 @@ function RootStackNavigator() {
           headerBackTitle: I18n.t('back'),
         }}
       /> */}
-      </RootStack.Navigator>
+          </RootStack.Navigator>
+        </HistoryProvider>
+      </ItemProvider>
     </SettingsProvider>
   );
 }
