@@ -9,6 +9,8 @@ import SettingsItem from '../components/SettingsItem';
 import { SettingsContext } from '../contexts/SettingsContext';
 import { firebaseSignOut } from '../firebase/auth.firebase';
 import { SettingsContextType } from '../interfaces/context';
+import exportAdapter from '../adapter/exportData/exportDataAdapter';
+import importAdapter from '../adapter/importData/importDataAdapter';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +31,6 @@ function SettingsScreen() {
   const { colors } = useTheme();
 
   const { settings } = useContext<SettingsContextType>(SettingsContext);
-  // TODO Zeile löschen, wenn fertig
   const [showCalorieTargetDialog, setShowCalorieTargetDialog] = useState<boolean>(false);
 
   const openLink = (link: string) => {
@@ -50,8 +51,7 @@ function SettingsScreen() {
 
   const deleteUser = async () => {
     // TODO to implement
-    // alert('to implement');
-    Share.share({ message: 'test nachricht' });
+    alert('to implement');
   };
 
   return (
@@ -87,17 +87,14 @@ function SettingsScreen() {
           <SettingsItem
             left={I18n.t('exportData')}
             right={<Feather name="upload" size={24} />}
-            // onPress={() => exportAdapter.exportData()}
-            onPress={() => alert('to implement')}
+            onPress={() => exportAdapter.exportData()}
           />
 
           {/* data import */}
           <SettingsItem
             left={I18n.t('importData')}
             right={<Feather name="download" size={24} />}
-            // TODO to implement
-            // onPress={() => importAdapter.importData()}
-            onPress={() => alert('to implement')}
+            onPress={() => importAdapter.importData()}
           />
 
           {/* share */}

@@ -5,8 +5,8 @@ import I18n from 'i18n-js';
 import React from 'react';
 import HeaderRightButton from '../components/HeaderRightButton';
 import HomeScreen from '../screens/HomeScreen';
-// import ItemsScreen from '../screens/ItemsScreen';
-// import StatisticsScreen from '../screens/StatisticsScreen';
+import ItemsScreen from '../screens/ItemsScreen';
+import StatisticsScreen from '../screens/StatisticsScreen';
 import { BottomTabParamList } from './types.navigation';
 
 interface IconProps {
@@ -41,7 +41,7 @@ function BottomNavigator() {
             TabBarIcon({ icon: 'home', color: focused ? colors.primary : colors.text }),
         }}
       />
-      {/* <MainTab.Screen
+      <MainTab.Screen
         name="Statistics"
         component={StatisticsScreen}
         options={{
@@ -61,7 +61,7 @@ function BottomNavigator() {
           tabBarIcon: ({ focused }) =>
             TabBarIcon({ icon: 'coffee', color: focused ? colors.primary : colors.text }),
         }}
-      /> */}
+      />
     </MainTab.Navigator>
   );
 }
