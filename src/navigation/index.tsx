@@ -18,10 +18,6 @@ export default function Root() {
     return authListener;
   }, []);
 
-  useEffect(() => {
-    console.log('isAutorized:', isAuthorized);
-  }, [isAuthorized]);
-
   return (
     <NavigationContainer theme={scheme === 'dark' ? MyDarkTheme : MyLightTheme}>
       {isAuthorized === false && <AuthNavigator />}

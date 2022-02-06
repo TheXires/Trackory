@@ -1,12 +1,14 @@
 import { Feather } from '@expo/vector-icons';
-import auth from '@react-native-firebase/auth';
 import { useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
 import CalorieTargetDialog from '../components/CalorieTargetDialog';
 import HorizontalLine from '../components/HorizontalLine';
 import SettingsItem from '../components/SettingsItem';
+import { SettingsContext } from '../contexts/SettingsContext';
+import { firebaseSignOut } from '../firebase/auth.firebase';
+import { SettingsContextType } from '../interfaces/context';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,9 +28,8 @@ const styles = StyleSheet.create({
 function SettingsScreen() {
   const { colors } = useTheme();
 
-  // const { settings }: SettingsContextType = useContext(SettingsContext);
+  const { settings } = useContext<SettingsContextType>(SettingsContext);
   // TODO Zeile löschen, wenn fertig
-  const settings = { calorieTarget: 2100 };
   const [showCalorieTargetDialog, setShowCalorieTargetDialog] = useState<boolean>(false);
 
   const openLink = (link: string) => {
@@ -41,7 +42,7 @@ function SettingsScreen() {
 
   const signUserOut = async () => {
     try {
-      await auth().signOut();
+      await firebaseSignOut();
     } catch (error) {
       console.error(error);
     }

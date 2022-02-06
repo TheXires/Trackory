@@ -1,7 +1,9 @@
 import I18n from 'i18n-js';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { SettingsContext } from '../contexts/SettingsContext';
+import { SettingsContextType } from '../interfaces/context';
 import { Settings } from '../interfaces/settings';
 import { permanentColors } from '../theme/colors';
 import convertTextToInteger from '../util/numberconverter';
@@ -41,11 +43,8 @@ const styles = StyleSheet.create({
   },
 });
 
-// TODO mehr logik aus dieser Komponente entfernen und in SettingsScreen verlagern
-
 function CalorieTargetDialog({ show, onClose }: Props) {
-  // const { settings, setSettings }: SettingsContextType = useContext(SettingsContext);
-  const settings = { calorieTarget: 2100 };
+  const { settings, setSettings } = useContext<SettingsContextType>(SettingsContext);
   const [calorieTarget, setCalorieTarget] = useState<number | null>(
     settings?.calorieTarget ?? null,
   );
@@ -59,7 +58,7 @@ function CalorieTargetDialog({ show, onClose }: Props) {
   const save = () => {
     if (!calorieTarget) return;
     const newSettings: Settings = { ...settings, calorieTarget };
-    // setSettings(newSettings);
+    setSettings(newSettings);
     onClose();
   };
 
