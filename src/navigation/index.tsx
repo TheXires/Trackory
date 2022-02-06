@@ -1,9 +1,10 @@
+import auth from '@react-native-firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
+import { MyDarkTheme, MyLightTheme } from '../theme/colors';
 import AuthNavigator from './AuthNavigator';
 import RootStackNavigator from './MainNavigator';
-import auth from '@react-native-firebase/auth';
 
 export default function Root() {
   const scheme = useColorScheme();
@@ -11,7 +12,9 @@ export default function Root() {
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(false);
 
   useEffect(() => {
-    const authListener = auth().onAuthStateChanged((user) => setIsAuthorized(user != null));
+    const authListener = auth().onAuthStateChanged((user) =>
+      setIsAuthorized(user != null),
+    );
     return authListener;
   }, []);
 
@@ -20,7 +23,7 @@ export default function Root() {
   }, [isAuthorized]);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={scheme === 'dark' ? MyDarkTheme : MyLightTheme}>
       {isAuthorized === false && <AuthNavigator />}
       {isAuthorized === true && <RootStackNavigator />}
     </NavigationContainer>

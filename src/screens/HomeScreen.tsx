@@ -11,18 +11,9 @@ const styles = StyleSheet.create({
 });
 
 function HomeScreen() {
-  const logout = async () => {
-    try {
-      await auth().signOut();
-    } catch (error) {
-      console.log('logoutError: ', error);
-    }
-  };
-
   return (
     <View style={styles.container}>
       <Text>Logged in</Text>
-      <Button title="LogOut" onPress={logout} />
     </View>
   );
 }

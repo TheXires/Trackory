@@ -1,16 +1,21 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import Login from '../screens/Login';
+import LandingPage from '../screens/Auth/LandingPage';
+import Login from '../screens/Auth/Login';
+import Registration from '../screens/Auth/Registration';
 import { AuthStackParamList } from './types.navigation';
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
 
 function AuthNavigator() {
-  console.log('called AuthStack');
-
   return (
-    <AuthStack.Navigator initialRouteName="Login">
+    <AuthStack.Navigator
+      initialRouteName="LandingPage"
+      screenOptions={{ headerShown: false }}
+    >
+      <AuthStack.Screen name="LandingPage" component={LandingPage} />
       <AuthStack.Screen name="Login" component={Login} />
+      <AuthStack.Screen name="Registration" component={Registration} />
     </AuthStack.Navigator>
   );
 }

@@ -1,0 +1,9 @@
+.expo
+.vscode
+assets
+mode_modules
+.gitignore
+app.json
+bable.config.js
+package-lock.json
+README.md
