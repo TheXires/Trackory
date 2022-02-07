@@ -10,9 +10,9 @@ import firestore from '@react-native-firebase/firestore';
 export const firebaseSignIn = async (email: string, password: string) => {
   try {
     await auth().signInWithEmailAndPassword(email, password);
-  } catch (error) {
-    console.error('firebase signIn error: ', error);
-    // throw firebaseGetErrorMessage(error.code);
+  } catch (error: any) {
+    console.error(error);
+    throw error.code;
   }
 };
 

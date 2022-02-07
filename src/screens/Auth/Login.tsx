@@ -1,4 +1,3 @@
-import auth from '@react-native-firebase/auth';
 import { useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useEffect, useState } from 'react';
@@ -19,6 +18,7 @@ import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 import CustomButton from '../../components/CustomButton';
 import Dialog from '../../components/Dialog';
 import InputContainer from '../../components/InputContainer';
+import { firebaseSignIn } from '../../firebase/auth.firebase';
 
 const styles = StyleSheet.create({
   container: {
@@ -63,13 +63,12 @@ function Login() {
   const signUserIn = async () => {
     setLoading(true);
     try {
-      // TODO auslagern in firebase ordner
-      await auth().signInWithEmailAndPassword(email, password);
-    } catch (error) {
+      await firebaseSignIn(email, password);
+    } catch (error: any) {
       Toast.show({
         type: 'error',
-        text1: 'Fehler einfügen',
-        text2: 'Fehler beschreibung einfügen',
+        text1: I18n.t('loginErrorTitle'),
+        text2: I18n.t(error),
       });
       setLoading(false);
     }

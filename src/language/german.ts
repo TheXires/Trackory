@@ -19,6 +19,19 @@ export default {
   camera_unavailable: 'Kamera nicht verfügbar',
   permission: 'Kamera Zugriff verweigert',
 
+  // Firebase Auth
+  loginErrorTitle: 'Login Fehler',
+  registrationErrorTitle: 'Registrierungsfehler',
+  'auth/email-already-exists': 'Diese Email ist bereits registriert',
+  'auth/insufficient-permission': 'Fehlende Berechtigungen',
+  'auth/internal-error': 'Es ist ein Serverfehler aufgetreten, versuche es später erneut',
+  'auth/invalid-email': 'Die eingegebene Email ist ungülitg',
+  'auth/invalid-password': 'Das eingegebene Passwort ist ungültig',
+  'auth/wrong-password': 'Email und Passwort stimmen nicht überein',
+  'auth/maximum-user-count-exceeded':
+    'Momentan können keine neuen Nutzer registriert werden',
+  'auth/user-not-found': 'Dieser Nutzer Existiert nicht',
+
   // #Abbreviations
   calorieAbbreviation: 'kcal',
   gramAbbreviation: 'g',

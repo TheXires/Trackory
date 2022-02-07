@@ -9,7 +9,7 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
@@ -18,6 +18,7 @@ import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 import CustomButton from '../../components/CustomButton';
 import Dialog from '../../components/Dialog';
 import InputContainer from '../../components/InputContainer';
+import { firebaseSignUp } from '../../firebase/auth.firebase';
 import { permanentColors } from '../../theme/colors';
 
 const styles = StyleSheet.create({
@@ -62,12 +63,12 @@ function Registration() {
 
   const signUserUp = async () => {
     try {
-      // TODO funktion in firebase ordner aufrufen
-    } catch (error) {
+      await firebaseSignUp(email, password);
+    } catch (error: any) {
       Toast.show({
         type: 'error',
-        text1: 'Fehler einfügen',
-        text2: 'fehlerbeschreibung einfügen',
+        text1: I18n.t('registrationErrorTitle'),
+        text2: I18n.t('error'),
       });
       setLoading(false);
     }

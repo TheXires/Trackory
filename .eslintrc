@@ -29,7 +29,8 @@
     "import/extensions": ["off"],
     "react/require-default-props": ["off"],
     "no-throw-literal": ["warn"],
-    "consistent-return": ["warn"]
+    "consistent-return": ["warn"],
+    "no-console": ["error", { "allow": ["error"] }]
   },
   "settings": {
     "import/resolver": {
