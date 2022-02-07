@@ -53,10 +53,10 @@ export const firebaseConsumeItem = async (
       .collection('consumptions')
       .where('date', '==', date)
       .get();
-    const consumedItems = res.docs[0].data().items;
-    const consumptionID = res.docs[0].id;
+    const consumedItems = res.docs[0]?.data().items;
+    const consumptionID = res.docs[0]?.id;
     // if there are no consumptions for the date
-    if (consumedItems.length < 1) {
+    if (consumedItems == null) {
       const response = await firestore()
         .collection('users')
         .doc(currentUserId)

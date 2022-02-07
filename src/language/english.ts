@@ -10,8 +10,14 @@ export default {
   back: 'Back',
 
   // #Errors
+  // General
   errorTitle: 'Error',
   exportError: 'Unable to export Data.',
+  unexpectedError: 'An unexpected error occurred',
+
+  // Camera
+  camera_unavailable: 'Camera not available',
+  permission: 'Camera access denied',
 
   // #Abbreviations
   calorieAbbreviation: 'cal',

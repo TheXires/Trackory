@@ -1,5 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 import { Item, NewItem } from '../interfaces/item';
 
 /**
@@ -103,13 +104,15 @@ export const firebaseAddItem = async (
       .collection('items')
       .add(newItem);
     if (!response) throw 'unable to create item in firestore';
-    if (true) return { id: response.id, ...newItem };
-    // if (!imageUri) return { id: response.id, ...newItem };
-    // const imgUrl = await firebaseFileUpload(imageUri, response.id);
-    // const itemWithImg: Item = { id: response.id, ...newItem, imgUrl };
-    // const updateResponse = await firebaseUpdateItem(itemWithImg);
-    // if (updateResponse === -1) throw 'unable to add image to item';
-    // return itemWithImg;
+    if (!imageUri) return { id: response.id, ...newItem };
+    await storage().ref(`${currentUserId}/images/${response.id}.jpg`).putFile(imageUri);
+    const downloadUrl = await storage()
+      .ref(`${currentUserId}/images/${response.id}.jpg`)
+      .getDownloadURL();
+    const itemWithImg: Item = { id: response.id, ...newItem, imgUrl: downloadUrl };
+    const updateResponse = await firebaseUpdateItem(itemWithImg);
+    if (updateResponse === -1) throw 'unable to add image to item';
+    return itemWithImg;
   } catch (error) {
     console.error('addNewItem error: ', error);
   }

@@ -10,8 +10,14 @@ export default {
   back: 'Zurück',
 
   // #Errors
+  // General
   errorTitle: 'Fehler',
   exportError: 'Daten konnten nicht exportiert werden.',
+  unexpectedError: 'Es ist ein unerwarteter Fehler aufgetreten',
+
+  // Camera
+  camera_unavailable: 'Kamera nicht verfügbar',
+  permission: 'Kamera Zugriff verweigert',
 
   // #Abbreviations
   calorieAbbreviation: 'kcal',

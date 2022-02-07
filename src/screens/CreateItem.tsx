@@ -2,7 +2,17 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Button,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import Toast from 'react-native-toast-message';
 import AddImageButton from '../components/AddImageButton';
 import InputContainer from '../components/InputContainer';
 import { ItemContext } from '../contexts/ItemContext';
@@ -71,18 +81,43 @@ function CreateItemScreen() {
       name,
       protein: protein ?? 0,
     };
-    console.log(`handleCreation imageUri: ${route.params?.imageUri}`);
-    addItem(newItem, route.params?.imageUri);
+    addItem(newItem, imageUri);
     navigation.goBack();
   };
 
-  const uploadImage = async () => {
-    if (route.params?.imageUri) {
-      try {
-        console.log('called it');
-      } catch (error) {
-        console.error(`uploadImage error: ${error}`);
-      }
+  const camera = async () => {
+    try {
+      const res = await launchCamera({
+        mediaType: 'photo',
+        cameraType: 'back',
+        quality: Platform.OS === 'ios' ? 0.5 : 0.7,
+        maxHeight: 400,
+        maxWidth: 400,
+      });
+      if (res.didCancel) return;
+      if (res.errorCode) throw res.errorCode;
+      if (!res.assets) return;
+      setImageUri(res.assets[0].uri);
+    } catch (error: any) {
+      Toast.show({ type: 'error', text1: I18n.t('errorTitle'), text2: I18n.t(error) });
+    }
+  };
+
+  const pickImage = async () => {
+    try {
+      const res = await launchImageLibrary({
+        mediaType: 'photo',
+        quality: Platform.OS === 'ios' ? 0.5 : 0.7,
+        maxHeight: 400,
+        maxWidth: 400,
+        selectionLimit: 1,
+      });
+      if (res.didCancel) return;
+      if (res.errorCode) throw res.errorCode;
+      if (!res.assets) return;
+      setImageUri(res.assets[0].uri);
+    } catch (error: any) {
+      Toast.show({ type: 'error', text1: I18n.t('errorTitle'), text2: I18n.t(error) });
     }
   };
 
@@ -178,11 +213,8 @@ function CreateItemScreen() {
             {I18n.t(expanded ? 'less' : 'more')}
           </Text>
         </View>
-        <AddImageButton
-          // onPress={() => navigation.navigate('Camera')}
-          onPress={() => alert('to implement')}
-          imageUri={imageUri}
-        />
+        {/* <AddImageButton onPress={camera} imageUri={imageUri} /> */}
+        <AddImageButton onPress={pickImage} imageUri={imageUri} />
       </ScrollView>
       <View style={{ position: 'absolute', bottom: 25, right: 25 }}>
         <Button title={I18n.t('create')} onPress={handleCreation} />
