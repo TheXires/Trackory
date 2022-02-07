@@ -2,20 +2,28 @@
   "expo": {
     "name": "eas-calorie-counter",
     "slug": "eas-calorie-counter",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.xires.eascaloriecounter",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Grant access to camera to take pictures of your Food",
+        "NSPhotoLibraryUsageDescription": "Grant access to gallery to select pictures of your Food"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +36,8 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["@react-native-firebase/app"]
+    "plugins": [
+      "@react-native-firebase/app"
+    ]
   }
 }
