@@ -2,6 +2,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import { Item, NewItem } from '../interfaces/item';
+import { firebaseImageUpload } from './fileupload.firebase';
 
 /**
  * get all items from firestore
@@ -68,10 +69,20 @@ export const firebaseGetItem = async (itemId: string): Promise<Item | null> => {
  *
  * @returns 1 on success, otherwise -1
  */
-export const firebaseUpdateItem = async (updatedItem: Item): Promise<1 | -1> => {
+export const firebaseUpdateItem = async (
+  item: Item,
+  newImageUri?: string,
+): Promise<1 | -1> => {
+  const updatedItem = item;
   try {
     const currentUserId = auth().currentUser?.uid;
     if (!currentUserId) throw 'no current user found';
+    let downloadUrl;
+    if (newImageUri) {
+      downloadUrl = await firebaseImageUpload(item.id, newImageUri);
+      if (!downloadUrl) throw 'unable to upload image';
+      updatedItem.imgUrl = downloadUrl;
+    }
     await firestore()
       .collection('users')
       .doc(currentUserId)
@@ -105,10 +116,8 @@ export const firebaseAddItem = async (
       .add(newItem);
     if (!response) throw 'unable to create item in firestore';
     if (!imageUri) return { id: response.id, ...newItem };
-    await storage().ref(`${currentUserId}/images/${response.id}.jpg`).putFile(imageUri);
-    const downloadUrl = await storage()
-      .ref(`${currentUserId}/images/${response.id}.jpg`)
-      .getDownloadURL();
+    const downloadUrl = await firebaseImageUpload(response.id, imageUri);
+    if (!downloadUrl) throw 'unable to upload image';
     const itemWithImg: Item = { id: response.id, ...newItem, imgUrl: downloadUrl };
     const updateResponse = await firebaseUpdateItem(itemWithImg);
     if (updateResponse === -1) throw 'unable to add image to item';
