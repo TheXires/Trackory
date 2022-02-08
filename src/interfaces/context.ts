@@ -19,3 +19,7 @@ export interface SettingsContextType {
   settings: Settings | undefined;
   setSettings: React.Dispatch<React.SetStateAction<Settings | undefined>>;
 }
+
+export interface LoadingContextType {
+  showLoadingPopup: (isLoading: boolean, title?: string | undefined) => void;
+}
