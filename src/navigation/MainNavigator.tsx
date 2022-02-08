@@ -64,11 +64,6 @@ function RootStackNavigator() {
                 headerRight: () => (Platform.OS === 'ios' ? null : CancelHeader()),
               }}
             />
-            {/* <RootStack.Screen
-        name="Camera"
-        component={MyCamera}
-        options={{ title: I18n.t('CameraTitle'), headerShown: false }}
-      /> */}
             <RootStack.Screen
               name="Settings"
               component={SettingsScreen}
@@ -81,7 +76,7 @@ function RootStackNavigator() {
               name="ItemDetails"
               component={ItemDetailsScreen}
               options={{
-                title: I18n.t('itemEditTitle'),
+                title: I18n.t('itemDetailsTitle'),
                 headerBackTitle: I18n.t('back'),
               }}
             />

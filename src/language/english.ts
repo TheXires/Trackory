@@ -46,7 +46,7 @@ export default {
   cameraTitle: 'Camera',
   statisticTitle: 'Statistic',
   itemsTitle: 'Items',
-  itemEditTitle: 'Edit',
+  itemDetailsTitle: 'Item',
 
   // #Pages
   // Startpage
