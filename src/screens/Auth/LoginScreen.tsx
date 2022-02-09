@@ -2,6 +2,7 @@ import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import {
+  Alert,
   Image,
   Keyboard,
   KeyboardAvoidingView,
@@ -12,13 +13,10 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import Toast from 'react-native-toast-message';
 import loginImage from '../../../assets/login.png';
-import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 import CustomButton from '../../components/CustomButton';
-import Dialog from '../../components/Dialog';
 import InputContainer from '../../components/InputContainer';
-import { LoadingContext, LoadingProvider } from '../../contexts/LoadingContext';
+import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseSignIn } from '../../firebase/auth.firebase';
 import { LoadingContextType } from '../../interfaces/context';
 import { LoginNavigationProp } from '../../navigation/types.navigation';
@@ -70,11 +68,11 @@ function LoginScreen() {
     try {
       await firebaseSignIn(email, password);
     } catch (error: any) {
-      Toast.show({
-        type: 'error',
-        text1: I18n.t('loginErrorTitle'),
-        text2: I18n.t(error),
-      });
+      Alert.alert(I18n.t('loginErrorTitle'), I18n.t(error), [
+        {
+          text: 'OK',
+        },
+      ]);
     }
     showLoadingPopup(false);
   };

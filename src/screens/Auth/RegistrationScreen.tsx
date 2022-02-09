@@ -2,6 +2,7 @@ import { useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import {
+  Alert,
   Image,
   Keyboard,
   KeyboardAvoidingView,
@@ -12,11 +13,8 @@ import {
   View,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import Toast from 'react-native-toast-message';
 import registrationImage from '../../../assets/registration.png';
-import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 import CustomButton from '../../components/CustomButton';
-import Dialog from '../../components/Dialog';
 import InputContainer from '../../components/InputContainer';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseSignUp } from '../../firebase/auth.firebase';
@@ -68,11 +66,11 @@ function RegistrationScreen() {
     try {
       await firebaseSignUp(email, password);
     } catch (error: any) {
-      Toast.show({
-        type: 'error',
-        text1: I18n.t('registrationErrorTitle'),
-        text2: I18n.t('error'),
-      });
+      Alert.alert(I18n.t('registrationErrorTitle'), I18n.t(error), [
+        {
+          text: 'OK',
+        },
+      ]);
     }
     showLoadingPopup(false);
   };
