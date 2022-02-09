@@ -18,9 +18,8 @@ export type BottomTabParamList = {
 export type RootStackParamList = {
   Main: NavigatorScreenParams<BottomTabParamList>;
   AddItem: undefined;
-  CreateItem: undefined | { imageUri: string };
+  CreateItem: undefined;
   Settings: undefined;
-  Camera: undefined;
   ItemDetails: { itemId: string };
 };
 
@@ -49,7 +48,6 @@ export type MainNavigationProp = StackNavigationProp<RootStackParamList, 'Main'>
 export type AddItemNavigationProp = StackNavigationProp<RootStackParamList, 'AddItem'>;
 export type CreateItemNavigationProp = StackNavigationProp<RootStackParamList, 'CreateItem'>;
 export type SettingsNavigationProp = StackNavigationProp<RootStackParamList, 'Settings'>;
-export type CameraNavigationProp = StackNavigationProp<RootStackParamList, 'Camera'>;
 export type ItemDetailsNavigationProp = StackNavigationProp<RootStackParamList, 'ItemDetails'>;
 
 // routeParams

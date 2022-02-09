@@ -4,6 +4,8 @@ export default {
   cancel: 'Abbrechen',
   add: 'Hinzufügen',
   create: 'Erstellen',
+  delete: 'Löschen',
+  edit: 'Bearbeiten',
   more: 'Mehr',
   less: 'Weniger',
   ok: 'Ok',
@@ -87,6 +89,10 @@ export default {
   // CreateItem
   addPhoto: 'Foto hinzufügen',
   cameraNotAvailable: 'Kamera nicht verfügbar',
+
+  // ItemDetails
+  deleteItemDialogTitle: 'Item löschen',
+  deleteItemDialogText: 'Möchtest du das Item wirklich löschen?',
 
   // #Components
   // CalorieTargetDialog

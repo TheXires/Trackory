@@ -2,17 +2,17 @@ import { ConsumedItem, Item, NewItem } from './item';
 import { Settings } from './settings';
 
 export interface ItemContextType {
-  addItem: (newItem: NewItem, imageUri?: undefined | string) => void;
+  addItem: (newItem: NewItem, imageUri?: undefined | string) => Promise<void>;
   items: Item[];
-  refreshItems: () => void;
+  refreshItems: () => Promise<void>;
   refreshingItems: boolean;
 }
 
 export interface HistoryContextType {
   consumedItems: ConsumedItem[];
-  refreshConsumedItems: (date: number) => void;
+  refreshConsumedItems: (date: number) => Promise<void>;
   refreshingConsumedItems: boolean;
-  consumeItem: (daysInThePast: number, item: Item, quantity: number) => void;
+  consumeItem: (daysInThePast: number, item: Item, quantity: number) => Promise<void>;
 }
 
 export interface SettingsContextType {

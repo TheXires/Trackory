@@ -1,9 +1,10 @@
 import { useTheme } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 
 interface Props {
   children: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
 const styles = StyleSheet.create({
@@ -18,10 +19,10 @@ const styles = StyleSheet.create({
   },
 });
 
-function InputContainer({ children }: Props) {
+function InputContainer({ children, style }: Props) {
   const { colors } = useTheme();
   return (
-    <View style={[styles.container, { borderColor: colors.border }]}>{children}</View>
+    <View style={[styles.container, { borderColor: colors.border }, style]}>{children}</View>
   );
 }
 

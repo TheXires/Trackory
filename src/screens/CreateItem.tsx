@@ -1,27 +1,18 @@
 import { Feather } from '@expo/vector-icons';
-import { useNavigation, useRoute, useTheme } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
-import React, { useContext, useEffect, useState } from 'react';
-import {
-  Button,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import React, { useContext, useState } from 'react';
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import AddImageButton from '../components/AddImageButton';
+import CustomButton from '../components/CustomButton';
 import InputContainer from '../components/InputContainer';
 import { ItemContext } from '../contexts/ItemContext';
-import { ItemContextType } from '../interfaces/context';
+import { LoadingContext } from '../contexts/LoadingContext';
+import { ItemContextType, LoadingContextType } from '../interfaces/context';
 import { NewItem } from '../interfaces/item';
-import {
-  CreateItemNavigationProp,
-  CreateItemRouteProp,
-} from '../navigation/types.navigation';
+import { CreateItemNavigationProp } from '../navigation/types.navigation';
 import { permanentColors } from '../theme/colors';
 
 const styles = StyleSheet.create({
@@ -56,7 +47,8 @@ function CreateItemScreen() {
   const { addItem } = useContext<ItemContextType>(ItemContext);
   const { colors } = useTheme();
   const navigation = useNavigation<CreateItemNavigationProp>();
-  const route = useRoute<CreateItemRouteProp>();
+
+  const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
   const [calories, setCalories] = useState<number>();
   const [carbohydrate, setCarbohydrate] = useState<number>();
@@ -66,23 +58,28 @@ function CreateItemScreen() {
   const [protein, setProtein] = useState<number>();
   const [imageUri, setImageUri] = useState<undefined | string>(undefined);
 
-  useEffect(() => {
-    setImageUri(route.params?.imageUri);
-  }, [route]);
-
-  const handleCreation = () => {
+  const handleCreation = async () => {
+    showLoadingPopup(true, I18n.t('create'));
     if (name == null || name === '') return;
     if (calories == null || calories < 0) return;
-    const newItem: NewItem = {
-      calories: calories ?? 0,
-      carbonHydrates: carbohydrate ?? 0,
-      fat: fat ?? 0,
-      imgUrl: '',
-      name,
-      protein: protein ?? 0,
-    };
-    addItem(newItem, imageUri);
-    navigation.goBack();
+    try {
+      const newItem: NewItem = {
+        calories: calories ?? 0,
+        carbonHydrates: carbohydrate ?? 0,
+        fat: fat ?? 0,
+        imgUrl: '',
+        name,
+        protein: protein ?? 0,
+      };
+      await addItem(newItem, imageUri);
+      showLoadingPopup(false);
+      navigation.goBack();
+    } catch (error) {
+      console.error(error);
+      // TODO übersetzung hinzufügen
+      Toast.show({ type: 'error', text1: 'to add', text2: 'to add' });
+      showLoadingPopup(false);
+    }
   };
 
   const camera = async () => {
@@ -90,7 +87,7 @@ function CreateItemScreen() {
       const res = await launchCamera({
         mediaType: 'photo',
         cameraType: 'back',
-        quality: Platform.OS === 'ios' ? 0.5 : 0.7,
+        quality: 0.9,
         maxHeight: 400,
         maxWidth: 400,
       });
@@ -107,7 +104,7 @@ function CreateItemScreen() {
     try {
       const res = await launchImageLibrary({
         mediaType: 'photo',
-        quality: Platform.OS === 'ios' ? 0.5 : 0.7,
+        quality: 0.9,
         maxHeight: 400,
         maxWidth: 400,
         selectionLimit: 1,
@@ -125,6 +122,7 @@ function CreateItemScreen() {
     <>
       <ScrollView
         contentContainerStyle={[styles.container, { backgroundColor: colors.background }]}
+        bounces={false}
       >
         <View style={styles.inputContainer}>
           <Text style={[styles.title, { color: colors.text }]}>{I18n.t('itemName')}</Text>
@@ -216,8 +214,13 @@ function CreateItemScreen() {
         {/* <AddImageButton onPress={camera} imageUri={imageUri} /> */}
         <AddImageButton onPress={pickImage} imageUri={imageUri} />
       </ScrollView>
-      <View style={{ position: 'absolute', bottom: 25, right: 25 }}>
-        <Button title={I18n.t('create')} onPress={handleCreation} />
+      <View style={{ position: 'absolute', bottom: 30, right: 15 }}>
+        <CustomButton
+          value={I18n.t('create')}
+          onPress={handleCreation}
+          textColor={colors.primary}
+          buttonColor={colors.background}
+        />
       </View>
     </>
   );

@@ -41,7 +41,7 @@ function AddItemScreen() {
   }, [searchTerm, items]);
 
   const onPress = async (item: Item) => {
-    consumeItem(0, item, 1);
+    await consumeItem(0, item, 1);
     navigation.goBack();
   };
 
