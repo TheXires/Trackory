@@ -2,9 +2,8 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import Toast from 'react-native-toast-message';
 import AddImageButton from '../components/AddImageButton';
 import CustomButton from '../components/CustomButton';
 import InputContainer from '../components/InputContainer';
@@ -77,7 +76,7 @@ function CreateItemScreen() {
     } catch (error) {
       console.error(error);
       // TODO übersetzung hinzufügen
-      Toast.show({ type: 'error', text1: 'to add', text2: 'to add' });
+      Alert.alert(I18n.t('errorTitle'), 'to add', [{ text: 'OK' }]);
       showLoadingPopup(false);
     }
   };
@@ -96,7 +95,7 @@ function CreateItemScreen() {
       if (!res.assets) return;
       setImageUri(res.assets[0].uri);
     } catch (error: any) {
-      Toast.show({ type: 'error', text1: I18n.t('errorTitle'), text2: I18n.t(error) });
+      Alert.alert(I18n.t('errorTitle'), I18n.t(error), [{ text: 'OK' }]);
     }
   };
 
@@ -114,7 +113,7 @@ function CreateItemScreen() {
       if (!res.assets) return;
       setImageUri(res.assets[0].uri);
     } catch (error: any) {
-      Toast.show({ type: 'error', text1: I18n.t('errorTitle'), text2: I18n.t(error) });
+      Alert.alert(I18n.t('errorTitle'), I18n.t(error), [{ text: 'OK' }]);
     }
   };
 

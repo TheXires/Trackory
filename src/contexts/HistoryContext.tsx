@@ -1,6 +1,10 @@
+import I18n from 'i18n-js';
 import React, { createContext, useEffect, useState } from 'react';
-import Toast from 'react-native-toast-message';
-import { firebaseConsumeItem, firebaseGetConsumptions } from '../firebase/consumption.firebase';
+import { Alert } from 'react-native';
+import {
+  firebaseConsumeItem,
+  firebaseGetConsumptions,
+} from '../firebase/consumption.firebase';
 import { HistoryContextType } from '../interfaces/context';
 import { ConsumedItem, Item } from '../interfaces/item';
 
@@ -28,11 +32,7 @@ export function HistoryProvider(props: any) {
       const res = await firebaseConsumeItem(daysInThePast, item, quantity);
       // TODO übersetzung
       if (res === -1) {
-        Toast.show({
-          type: 'error',
-          text1: 'Fehler',
-          text2: 'Konnte nicht hinzugefügt werden!',
-        });
+        Alert.alert('toAdd', 'toAdd', [{ text: 'OK' }]);
         throw 'unable to add item to consumptions';
       }
       refreshConsumedItems(daysInThePast, true);

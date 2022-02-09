@@ -4,7 +4,6 @@ import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import { Alert, Image, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Toast from 'react-native-toast-message';
 import placeholderImage from '../../assets/itemPlaceholderImage.png';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
 import CustomButton from '../components/CustomButton';
@@ -144,11 +143,8 @@ function ItemDetailsScreen() {
       await refreshItems();
       setIsEditing(false);
     } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'To Add',
-        text2: 'To Add',
-      });
+      // TODO richtige Fehlermeldung und übersetzunge hinzufügen
+      Alert.alert('toAdd', 'toAdd', [{ text: 'OK' }]);
     }
     showLoadingPopup(false);
   };

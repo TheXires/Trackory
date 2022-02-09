@@ -3,7 +3,6 @@ import * as Localization from 'expo-localization';
 import I18n from 'i18n-js';
 import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
-import Toast from 'react-native-toast-message';
 import { LoadingProvider } from './src/contexts/LoadingContext';
 import en from './src/language/english';
 import de from './src/language/german';
@@ -26,7 +25,6 @@ export default function App() {
       <LoadingProvider>
         <Navigation />
       </LoadingProvider>
-      <Toast />
     </>
   );
 }

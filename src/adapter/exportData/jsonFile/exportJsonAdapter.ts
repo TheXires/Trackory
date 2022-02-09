@@ -3,8 +3,7 @@
 // https://www.farhansayshi.com/post/how-to-save-files-to-a-device-folder-using-expo-and-react-native/
 
 import I18n from 'i18n-js';
-import { Share } from 'react-native';
-import Toast from 'react-native-toast-message';
+import { Alert, Share } from 'react-native';
 import { firebaseGetAllItems } from '../../../firebase/items.firebase';
 import { firebaseGetUserSettings } from '../../../firebase/settings.firebase';
 import { ExportAdapter } from '../../../interfaces/adapters';
@@ -23,11 +22,7 @@ const exportJsonAdapter: ExportAdapter = {
         message: JSON.stringify(toShare),
       });
     } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: I18n.t('errorTitle'),
-        text2: I18n.t('exportError'),
-      });
+      Alert.alert(I18n.t('errorTitle'), I18n.t('exportError'), [{ text: 'OK' }]);
       console.error(`export error: ${error}`);
     }
   },
