@@ -21,6 +21,8 @@ export type RootStackParamList = {
   CreateItem: undefined;
   Settings: undefined;
   ItemDetails: { itemId: string };
+  ChangeEmail: undefined;
+  ChangePassword: undefined;
 };
 
 // AuthStackNavigator
@@ -49,6 +51,8 @@ export type AddItemNavigationProp = StackNavigationProp<RootStackParamList, 'Add
 export type CreateItemNavigationProp = StackNavigationProp<RootStackParamList, 'CreateItem'>;
 export type SettingsNavigationProp = StackNavigationProp<RootStackParamList, 'Settings'>;
 export type ItemDetailsNavigationProp = StackNavigationProp<RootStackParamList, 'ItemDetails'>;
+export type ChangeEmailNavigationProp = StackNavigationProp<RootStackParamList, 'ChangeEmail'>;
+export type ChangePasswordNavigationProp = StackNavigationProp<RootStackParamList, 'ChangePassword'>;
 
 // routeParams
 export type ItemDetailsRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;

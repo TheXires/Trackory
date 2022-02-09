@@ -10,6 +10,8 @@ import { HistoryProvider } from '../contexts/HistoryContext';
 import { ItemProvider } from '../contexts/ItemContext';
 import { SettingsProvider } from '../contexts/SettingsContext';
 import AddItemScreen from '../screens/AddItemScreen';
+import ChangeEmailScreen from '../screens/ChangeEmailScreen';
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import CreateItemScreen from '../screens/CreateItem';
 import ItemDetailsScreen from '../screens/ItemDetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -77,6 +79,22 @@ function RootStackNavigator() {
               component={ItemDetailsScreen}
               options={{
                 title: I18n.t('itemDetailsTitle'),
+                headerBackTitle: I18n.t('back'),
+              }}
+            />
+            <RootStack.Screen
+              name="ChangeEmail"
+              component={ChangeEmailScreen}
+              options={{
+                title: I18n.t('changeEmailTitle'),
+                headerBackTitle: I18n.t('back'),
+              }}
+            />
+            <RootStack.Screen
+              name="ChangePassword"
+              component={ChangePasswordScreen}
+              options={{
+                title: I18n.t('changePasswordTitle'),
                 headerBackTitle: I18n.t('back'),
               }}
             />

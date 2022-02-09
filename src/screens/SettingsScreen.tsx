@@ -1,5 +1,5 @@
 import { Feather } from '@expo/vector-icons';
-import { useTheme } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
 import { Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
@@ -11,6 +11,7 @@ import { firebaseSignOut } from '../firebase/auth.firebase';
 import { SettingsContextType } from '../interfaces/context';
 import exportAdapter from '../adapter/exportData/exportDataAdapter';
 import importAdapter from '../adapter/importData/importDataAdapter';
+import { SettingsNavigationProp } from '../navigation/types.navigation';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,6 +30,7 @@ const styles = StyleSheet.create({
 
 function SettingsScreen() {
   const { colors } = useTheme();
+  const navigation = useNavigation<SettingsNavigationProp>();
 
   const { settings } = useContext<SettingsContextType>(SettingsContext);
   const [showCalorieTargetDialog, setShowCalorieTargetDialog] = useState<boolean>(false);
@@ -101,8 +103,7 @@ function SettingsScreen() {
           <SettingsItem
             left={I18n.t('recommendApp')}
             right={<Feather name="share-2" size={24} />}
-            // TODO to implement
-            onPress={() => Share.share({ message: 'Add Link here' })}
+            onPress={() => Share.share({ message: 'https://xires.de' })}
           />
           <HorizontalLine />
 
@@ -110,23 +111,36 @@ function SettingsScreen() {
           <SettingsItem
             left={I18n.t('privacyPolicy')}
             right={<Feather name="chevron-right" size={24} />}
-            // TODO to implement
-            onPress={() => alert('implement')}
+            onPress={() => openLink('https://xires.de')}
           />
 
           {/* terms of use */}
           <SettingsItem
             left={I18n.t('termsOfService')}
             right={<Feather name="chevron-right" size={24} />}
-            // TODO to implement
-            onPress={() => alert('implement')}
+            onPress={() => openLink('https://xires.de')}
           />
 
           {/* imprint */}
           <SettingsItem
             left={I18n.t('imprint')}
             right={<Feather name="chevron-right" size={24} />}
-            onPress={() => openLink('http://xires.de')}
+            onPress={() => openLink('https://xires.de')}
+          />
+          <HorizontalLine />
+
+          {/* change email */}
+          <SettingsItem
+            left={I18n.t('changeEmail')}
+            right={<Feather name="chevron-right" size={24} />}
+            onPress={() => navigation.navigate('ChangeEmail')}
+          />
+
+          {/* change password */}
+          <SettingsItem
+            left={I18n.t('changePassword')}
+            right={<Feather name="chevron-right" size={24} />}
+            onPress={() => navigation.navigate('ChangePassword')}
           />
           <HorizontalLine />
 

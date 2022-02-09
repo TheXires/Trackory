@@ -10,6 +10,8 @@ export default {
   less: 'Weniger',
   ok: 'Ok',
   back: 'Zurück',
+  securityInfoText:
+    'Dies ist eine sicherheitsrelevante Operation, daher ist die Eingabe des Passwortes nötig.',
 
   // #Errors
   // General
@@ -24,15 +26,14 @@ export default {
   // Firebase Auth
   loginErrorTitle: 'Login Fehler',
   registrationErrorTitle: 'Registrierungsfehler',
-  'auth/email-already-exists': 'Diese Email ist bereits registriert',
-  'auth/insufficient-permission': 'Fehlende Berechtigungen',
-  'auth/internal-error': 'Es ist ein Serverfehler aufgetreten, versuche es später erneut',
-  'auth/invalid-email': 'Die eingegebene Email ist ungülitg',
-  'auth/invalid-password': 'Das eingegebene Passwort ist ungültig',
-  'auth/wrong-password': 'Email und Passwort stimmen nicht überein',
-  'auth/maximum-user-count-exceeded':
-    'Momentan können keine neuen Nutzer registriert werden',
-  'auth/user-not-found': 'Dieser Nutzer Existiert nicht',
+  'auth/email-already-in-use': 'Email wird bereits verwendet',
+  'auth/invalid-email': 'Ungültige Email',
+  'auth/operation-not-allowed': 'Login-Server Fehler',
+  'auth/weak-password': 'Passwort zu unsicher',
+  'auth/user-disabled': 'Nutzerkonto ist gesperrt',
+  'auth/user-not-found': 'Dieser Nutzer existiert nicht',
+  'auth/wrong-password': 'Falsches Passwort',
+  'auth/requires-recent-login': 'Erneuter Login nötig',
 
   // #Abbreviations
   calorieAbbreviation: 'kcal',
@@ -50,6 +51,8 @@ export default {
   statisticTitle: 'Statistik',
   itemsTitle: 'Items',
   itemDetailsTitle: 'Item',
+  changeEmailTitle: 'Email',
+  changePasswordTitle: 'Passwort',
 
   // #Pages
   // Startpage
@@ -85,6 +88,16 @@ export default {
   privacyPolicy: 'Datenschutz',
   termsOfService: 'AGB',
   imprint: 'Impressum',
+  changePassword: 'Password ändern',
+  changeEmail: 'Email ändern',
+
+  // Change Email
+  newEmail: 'Neue Email',
+
+  // ChangePassword
+  currentPassword: 'Aktuelles Passwort',
+  newPassword: 'Neues Passwort',
+  repeatNewPassword: 'Neues Passwort wiederholen',
 
   // CreateItem
   addPhoto: 'Foto hinzufügen',

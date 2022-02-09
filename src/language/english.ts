@@ -10,6 +10,8 @@ export default {
   less: 'Less',
   ok: 'Ok',
   back: 'Back',
+  securityInfoText:
+    'This is a security related operation, so it is necessary to enter the password.',
 
   // #Errors
   // General
@@ -24,14 +26,14 @@ export default {
   // Firebase Auth
   loginErrorTitle: 'Login error',
   registrationErrorTitle: 'Registration error',
-  'auth/email-already-exists': 'Email does already exist',
-  'auth/insufficient-permission': 'Missing authorizations',
-  'auth/internal-error': 'A server error occurred, try again later',
+  'auth/email-already-in-use': 'Email is already in use',
   'auth/invalid-email': 'Invalid email',
-  'auth/invalid-password': 'Invalid password',
-  'auth/wrong-password': 'Wrong email or password',
-  'auth/maximum-user-count-exceeded': 'No new users can be registered at the moment',
+  'auth/operation-not-allowed': 'Auth server error',
+  'auth/weak-password': 'Weak Password',
+  'auth/user-disabled': 'User account is disabled',
   'auth/user-not-found': 'User does not exist',
+  'auth/wrong-password': 'Wrong password',
+  'auth/requires-recent-login': 'New login necessary',
 
   // #Abbreviations
   calorieAbbreviation: 'cal',
@@ -49,6 +51,8 @@ export default {
   statisticTitle: 'Statistic',
   itemsTitle: 'Items',
   itemDetailsTitle: 'Item',
+  changeEmailTitle: 'Email',
+  changePasswordTitle: 'Password',
 
   // #Pages
   // Startpage
@@ -84,6 +88,16 @@ export default {
   privacyPolicy: 'Privacy Policy',
   termsOfService: 'Terms of Service',
   imprint: 'Imprint',
+  changePassword: 'Change Password',
+  changeEmail: 'Change Email',
+
+  // ChangeEmail
+  newEmail: 'New Email',
+
+  // ChangePassword
+  currentPassword: 'Current Password',
+  newPassword: 'New Password',
+  repeatNewPassword: 'Repeat new Password',
 
   // CreateItem
   addPhoto: 'Add Photo',
