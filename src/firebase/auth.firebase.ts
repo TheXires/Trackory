@@ -112,3 +112,24 @@ export const firebaseChangePassword = async (
     throw error.code;
   }
 };
+
+/**
+ * sends an email containing a link to reset the users password
+ * 
+ * @param email 
+ * @error auth/invalid-email
+ * @error auth/missing-android-pkg-name
+ * @error auth/missing-continue-uri
+ * @error auth/missing-ios-bundle-id
+ * @error auth/invalid-continue-uri
+ * @error auth/unauthorized-continue-uri
+ * @error auth/user-not-found
+ */
+export const firebaseRequestPasswordReset = async (email: string) => {
+  try {
+    await auth().sendPasswordResetEmail(email);
+  } catch (error: any) {
+    console.error(error);
+    throw error.code;
+  }
+};

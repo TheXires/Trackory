@@ -34,6 +34,11 @@ export default {
   'auth/user-not-found': 'User does not exist',
   'auth/wrong-password': 'Wrong password',
   'auth/requires-recent-login': 'New login necessary',
+  'auth/missing-android-pkg-name': 'An unexpected error occurred',
+  'auth/missing-continue-uri': 'An unexpected error occurred',
+  'auth/missing-ios-bundle-id': 'An unexpected error occurred',
+  'auth/invalid-continue-uri': 'An unexpected error occurred',
+  'auth/unauthorized-continue-uri': 'An unexpected error occurred',
 
   // #Abbreviations
   calorieAbbreviation: 'cal',
@@ -68,6 +73,13 @@ export default {
   email: 'Email',
   password: ' Password',
   forgotPassword: 'Forgot Password',
+  resetPassword: 'Reset password',
+  resetPasswordInfoText:
+    'A link to reset the password will be sent to the provided email.',
+  sendingEmail: 'Sending email',
+  emailSentTitle: 'Email sent',
+  emailSentMessage:
+    'The link was sent successfully. If you have not received an email, wait a few more minutes and check your spam folder.',
 
   // Item
   itemName: 'Name',

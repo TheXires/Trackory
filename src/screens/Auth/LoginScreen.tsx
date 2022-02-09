@@ -1,4 +1,4 @@
-import { useTheme } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import {
@@ -21,6 +21,7 @@ import InputContainer from '../../components/InputContainer';
 import { LoadingContext, LoadingProvider } from '../../contexts/LoadingContext';
 import { firebaseSignIn } from '../../firebase/auth.firebase';
 import { LoadingContextType } from '../../interfaces/context';
+import { LoginNavigationProp } from '../../navigation/types.navigation';
 
 const styles = StyleSheet.create({
   container: {
@@ -52,6 +53,8 @@ const styles = StyleSheet.create({
 
 function LoginScreen() {
   const { colors } = useTheme();
+  const navigation = useNavigation<LoginNavigationProp>();
+
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
   const [email, setEmail] = useState<string>('');
@@ -113,6 +116,13 @@ function LoginScreen() {
             </InputContainer>
           </View>
           <CustomButton value={I18n.t('login')} enabled={canLogin} onPress={signUserIn} />
+          <CustomButton
+            value={I18n.t('forgotPassword')}
+            onPress={() => navigation.navigate('ForgotPassword')}
+            buttonColor={colors.background}
+            textColor={colors.text}
+            style={{ marginTop: 15, opacity: 0.6 }}
+          />
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

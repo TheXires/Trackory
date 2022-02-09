@@ -34,6 +34,11 @@ export default {
   'auth/user-not-found': 'Dieser Nutzer existiert nicht',
   'auth/wrong-password': 'Falsches Passwort',
   'auth/requires-recent-login': 'Erneuter Login nötig',
+  'auth/missing-android-pkg-name': 'Es ist ein unerwarteter Fehler aufgetreten',
+  'auth/missing-continue-uri': 'Es ist ein unerwarteter Fehler aufgetreten',
+  'auth/missing-ios-bundle-id': 'Es ist ein unerwarteter Fehler aufgetreten',
+  'auth/invalid-continue-uri': 'Es ist ein unerwarteter Fehler aufgetreten',
+  'auth/unauthorized-continue-uri': 'Es ist ein unerwarteter Fehler aufgetreten',
 
   // #Abbreviations
   calorieAbbreviation: 'kcal',
@@ -68,6 +73,13 @@ export default {
   email: 'Email',
   password: ' Passwort',
   forgotPassword: 'Passwort vergessen',
+  resetPassword: 'Passwort zurücksetzen',
+  resetPasswordInfoText:
+    'Ein Link zum zurücksetzen des Passwortes wird an die eingegebene Email gesendet.',
+  sendingEmail: 'Email wird versendet',
+  emailSentTitle: 'Email versendet',
+  emailSentMessage:
+    'Der Link wurde erfolgreich versendet. Wenn du keine Email erhalten hast, warte noch wenige Minuten und überprüfe deinen Spam-Ordner.',
 
   // Item
   itemName: 'Name',
