@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core';
 import I18n from 'i18n-js';
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
-import backgroundImage from '../../../assets/splash.png';
+import backgroundImage from '../../../assets/splash.jpg';
 import CustomButton from '../../components/CustomButton';
 import { LandingPageNavigationProp } from '../../navigation/types.navigation';
 import { permanentColors } from '../../theme/colors';
