@@ -8,19 +8,20 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TextInput,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
-import loginImage from '../../../assets/login.png';
+import registrationImage from '../../../assets/registration.png';
 import CustomActivityIndicator from '../../components/CustomActivityIndicator';
 import CustomButton from '../../components/CustomButton';
 import Dialog from '../../components/Dialog';
 import InputContainer from '../../components/InputContainer';
-import { LoadingContext, LoadingProvider } from '../../contexts/LoadingContext';
-import { firebaseSignIn } from '../../firebase/auth.firebase';
+import { LoadingContext } from '../../contexts/LoadingContext';
+import { firebaseSignUp } from '../../firebase/auth.firebase';
 import { LoadingContextType } from '../../interfaces/context';
+import { permanentColors } from '../../theme/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -50,27 +51,27 @@ const styles = StyleSheet.create({
   },
 });
 
-function Login() {
+function RegistrationScreen() {
   const { colors } = useTheme();
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [canLogin, setCanLogin] = useState<boolean>(false);
+  const [canRegister, setCanRegister] = useState<boolean>(false);
 
   useEffect(() => {
-    setCanLogin(email !== '' && password !== '');
+    setCanRegister(email !== '' && password !== '');
   }, [email, password]);
 
-  const signUserIn = async () => {
-    showLoadingPopup(true, I18n.t('login'));
+  const signUserUp = async () => {
+    showLoadingPopup(true, I18n.t('registration'));
     try {
-      await firebaseSignIn(email, password);
+      await firebaseSignUp(email, password);
     } catch (error: any) {
       Toast.show({
         type: 'error',
-        text1: I18n.t('loginErrorTitle'),
-        text2: I18n.t(error),
+        text1: I18n.t('registrationErrorTitle'),
+        text2: I18n.t('error'),
       });
     }
     showLoadingPopup(false);
@@ -82,10 +83,10 @@ function Login() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={[styles.container, { backgroundColor: colors.background }]}
       >
-        <Image style={styles.image} source={loginImage} />
+        <Image style={styles.image} source={registrationImage} />
         <View style={styles.bottomContainer}>
-          <Text style={[styles.heading, { color: colors.primary }]}>
-            {I18n.t('login')}
+          <Text style={[styles.heading, { color: permanentColors.success }]}>
+            {I18n.t('register')}
           </Text>
           <View style={styles.inputContainer}>
             <InputContainer>
@@ -112,11 +113,16 @@ function Login() {
               />
             </InputContainer>
           </View>
-          <CustomButton value={I18n.t('login')} enabled={canLogin} onPress={signUserIn} />
+          <CustomButton
+            value={I18n.t('register')}
+            enabled={canRegister}
+            onPress={signUserUp}
+            buttonColor={permanentColors.success}
+          />
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }
 
-export default Login;
+export default RegistrationScreen;

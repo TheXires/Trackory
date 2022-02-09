@@ -109,7 +109,9 @@ function ChangePasswordScreen() {
           newPassword === newRepeatedPassword
         }
       />
-      <Text style={styles.infoText}>{I18n.t('securityInfoText')}</Text>
+      <Text style={[styles.infoText, { color: colors.text }]}>
+        {I18n.t('securityInfoText')}
+      </Text>
     </ScrollView>
   );
 }

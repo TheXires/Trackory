@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function LandingPage() {
+function LandingScreen() {
   const navigation = useNavigation<LandingPageNavigationProp>();
 
   return (
@@ -75,4 +75,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default LandingScreen;
