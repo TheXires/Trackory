@@ -1,4 +1,3 @@
-import auth from '@react-native-firebase/auth';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
@@ -69,6 +68,8 @@ function ChangePasswordScreen() {
           <TextInput
             secureTextEntry
             placeholder={I18n.t('currentPassword')}
+            autoCompleteType="password"
+            autoCorrect={false}
             value={currentPassword}
             onChangeText={(text) => setCurrentPassword(text)}
           />
@@ -82,6 +83,8 @@ function ChangePasswordScreen() {
           <TextInput
             secureTextEntry
             placeholder={I18n.t('newPassword')}
+            autoCompleteType="password"
+            autoCorrect={false}
             value={newPassword}
             onChangeText={(text) => setNewPassword(text)}
           />
@@ -95,6 +98,8 @@ function ChangePasswordScreen() {
           <TextInput
             secureTextEntry
             placeholder={I18n.t('repeatNewPassword')}
+            autoCompleteType="password"
+            autoCorrect={false}
             value={newRepeatedPassword}
             onChangeText={(text) => setNewRepeatedPassword(text)}
           />

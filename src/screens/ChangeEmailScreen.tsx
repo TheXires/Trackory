@@ -3,7 +3,6 @@ import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, TextInput, View, ScrollView, Alert } from 'react-native';
-import Toast from 'react-native-toast-message';
 import CustomButton from '../components/CustomButton';
 import InputContainer from '../components/InputContainer';
 import { LoadingContext } from '../contexts/LoadingContext';
@@ -69,6 +68,8 @@ function ChangeEmailScreen() {
           <TextInput
             secureTextEntry
             placeholder={I18n.t('currentPassword')}
+            autoCompleteType="password"
+            autoCorrect={false}
             value={password}
             onChangeText={(text) => setPassword(text)}
           />
@@ -80,6 +81,8 @@ function ChangeEmailScreen() {
           <TextInput
             placeholder={auth().currentUser?.email ?? ''}
             keyboardType="email-address"
+            autoCompleteType="email"
+            autoCorrect={false}
             value={newEmail}
             onChangeText={(text) => setNewEmail(text)}
           />
