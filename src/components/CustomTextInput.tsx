@@ -18,7 +18,7 @@ interface Props {
 const styles = StyleSheet.create({
   heading: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '500',
     marginBottom: 3,
   },
 });
