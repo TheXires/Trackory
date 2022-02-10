@@ -41,36 +41,36 @@ function RootStackNavigator() {
               name="AddItem"
               component={AddItemScreen}
               options={{
-                title: I18n.t('addItemTitle'),
                 headerBackTitle: I18n.t('back'),
+                title: I18n.t('addItemTitle'),
               }}
             />
             <RootStack.Screen
               name="CreateItem"
               component={CreateItemScreen}
               options={{
-                title: I18n.t('createItemTitle'),
                 headerLeft: () =>
                   NavigationHeaderButton({
-                    text: I18n.t('cancel'),
                     onPress: () => navigation.goBack(),
+                    text: I18n.t('cancel'),
                   }),
+                title: I18n.t('createItemTitle'),
               }}
             />
             <RootStack.Screen
               name="Settings"
               component={SettingsScreen}
               options={{
-                title: I18n.t('settingsTitle'),
                 headerBackTitle: I18n.t('back'),
+                title: I18n.t('settingsTitle'),
               }}
             />
             <RootStack.Screen
               name="ItemDetails"
               component={ItemDetailsScreen}
               options={{
-                title: I18n.t('itemDetailsTitle'),
                 headerBackTitle: I18n.t('back'),
+                title: I18n.t('itemDetailsTitle'),
               }}
             />
             <RootStack.Group screenOptions={{ presentation: 'modal' }}>
@@ -78,12 +78,12 @@ function RootStackNavigator() {
                 name="EditItem"
                 component={EditItemScreen}
                 options={{
-                  title: I18n.t('EditItemTitle'),
                   headerLeft: () =>
                     NavigationHeaderButton({
-                      text: I18n.t('cancel'),
                       onPress: () => navigation.goBack(),
+                      text: I18n.t('cancel'),
                     }),
+                  title: I18n.t('EditItemTitle'),
                 }}
               />
             </RootStack.Group>
@@ -91,16 +91,16 @@ function RootStackNavigator() {
               name="ChangeEmail"
               component={ChangeEmailScreen}
               options={{
-                title: I18n.t('changeEmailTitle'),
                 headerBackTitle: I18n.t('back'),
+                title: I18n.t('changeEmailTitle'),
               }}
             />
             <RootStack.Screen
               name="ChangePassword"
               component={ChangePasswordScreen}
               options={{
-                title: I18n.t('changePasswordTitle'),
                 headerBackTitle: I18n.t('back'),
+                title: I18n.t('changePasswordTitle'),
               }}
             />
           </RootStack.Navigator>

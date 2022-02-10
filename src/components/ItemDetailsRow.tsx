@@ -28,7 +28,7 @@ function ItemDetailsRow({ description, unit, value }: Props) {
   return (
     <View style={styles.row}>
       <Text style={[styles.text, { color: colors.text }]}>{description}</Text>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ alignItems: 'center', flexDirection: 'row' }}>
         <Text style={[styles.text, { color: colors.text }]}>{`${value} ${unit}`}</Text>
       </View>
     </View>

@@ -14,15 +14,6 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
   },
-  upperContainer: {
-    marginTop: 70,
-  },
-  lowerContainer: {
-    width: '100%',
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingBottom: 35,
-  },
   heading: {
     fontSize: 26,
     fontWeight: 'bold',
@@ -30,6 +21,15 @@ const styles = StyleSheet.create({
   headingRow: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  lowerContainer: {
+    paddingBottom: 35,
+    paddingLeft: 15,
+    paddingRight: 15,
+    width: '100%',
+  },
+  upperContainer: {
+    marginTop: 70,
   },
 });
 
@@ -40,7 +40,7 @@ function LandingScreen() {
     <ImageBackground
       source={backgroundImage}
       resizeMode="cover"
-      style={{ width: '100%', height: '100%' }}
+      style={{ height: '100%', width: '100%' }}
     >
       <View style={styles.container}>
         <View style={styles.upperContainer}>

@@ -5,21 +5,19 @@ import { Pressable, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    width: 56,
-    height: 56,
-    right: 20,
-    bottom: 20,
-    borderRadius: 31,
-    justifyContent: 'center',
     alignItems: 'center',
-    // shadow for ios
-    shadowColor: 'black',
-    shadowOffset: { width: 2, height: 2 },
-    shadowRadius: 2,
-    shadowOpacity: 0.3,
-    // shadow for android
+    borderRadius: 31,
+    bottom: 20,
     elevation: 4,
+    height: 56,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 20,
+    shadowColor: 'black',
+    shadowOffset: { height: 2, width: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    width: 56,
   },
 });
 

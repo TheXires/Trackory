@@ -11,20 +11,20 @@ interface Props {
 }
 
 const styles = StyleSheet.create({
+  chart: {
+    alignItems: 'center',
+    borderRadius: 20,
+    display: 'flex',
+    paddingBottom: 20,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 20,
+    width: '100%',
+  },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: -15,
-  },
-  chart: {
-    borderRadius: 20,
-    display: 'flex',
-    alignItems: 'center',
-    paddingRight: 0,
-    paddingLeft: 0,
-    paddingBottom: 20,
-    paddingTop: 20,
-    width: '100%',
   },
 });
 
@@ -74,8 +74,8 @@ function CustomBarChart({ title, view }: Props) {
       <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
       <BarChart
         data={{
-          labels,
           datasets: [{ data: new Array(b).fill(Math.floor(Math.random() * 2500)) }],
+          labels,
         }}
         width={Dimensions.get('window').width - 30} // from react-native
         height={200}
@@ -84,9 +84,9 @@ function CustomBarChart({ title, view }: Props) {
         chartConfig={{
           backgroundGradientFrom: permanentColors.primary,
           backgroundGradientTo: permanentColors.primary,
-          decimalPlaces: 0,
           barPercentage: a,
           color: () => `rgba(255, 255, 255, 1)`,
+          decimalPlaces: 0,
         }}
         style={styles.chart}
         showValuesOnTopOfBars

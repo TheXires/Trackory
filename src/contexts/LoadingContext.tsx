@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
 import Dialog from '../components/Dialog';
 import { LoadingContextType } from '../interfaces/context';
@@ -8,9 +8,9 @@ export const LoadingContext = createContext({} as LoadingContextType);
 
 const style = StyleSheet.create({
   container: {
+    alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 

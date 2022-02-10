@@ -15,10 +15,10 @@ interface Props {
 
 const styles = StyleSheet.create({
   button: {
-    justifyContent: 'center',
     alignItems: 'center',
-    height: 50,
     borderRadius: 25,
+    height: 50,
+    justifyContent: 'center',
     paddingHorizontal: 25,
   },
   buttonText: {

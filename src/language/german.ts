@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys */
 export default {
   // #General
   save: 'Speichern',

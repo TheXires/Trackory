@@ -12,20 +12,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
   },
-  progressbar: {
-    width: '80%',
-    height: 16,
-    borderRadius: 8,
-    backgroundColor: permanentColors.border,
+  datacontainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '20%',
   },
   progress: {
-    height: 16,
     borderRadius: 8,
+    height: 16,
   },
-  datacontainer: {
-    width: '20%',
-    justifyContent: 'center',
-    alignItems: 'center',
+  progressbar: {
+    backgroundColor: permanentColors.border,
+    borderRadius: 8,
+    height: 16,
+    width: '80%',
   },
 });
 
@@ -40,9 +40,9 @@ function Progressbar({ progress }: Props) {
           style={[
             styles.progress,
             {
-              width: `${Math.min(Math.round(percent), 100)}%`,
               backgroundColor:
                 percent <= 100 ? permanentColors.success : permanentColors.error,
+              width: `${Math.min(Math.round(percent), 100)}%`,
             },
           ]}
         />

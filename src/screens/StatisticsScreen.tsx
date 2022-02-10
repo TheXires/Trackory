@@ -1,4 +1,3 @@
-import { useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';

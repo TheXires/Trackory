@@ -36,30 +36,30 @@ function BottomNavigator() {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          title: I18n.t('overviewTitle'),
           tabBarIcon: ({ focused }) =>
-            TabBarIcon({ icon: 'home', color: focused ? colors.primary : colors.text }),
+            TabBarIcon({ color: focused ? colors.primary : colors.text, icon: 'home' }),
+          title: I18n.t('overviewTitle'),
         }}
       />
       <MainTab.Screen
         name="Statistics"
         component={StatisticsScreen}
         options={{
-          title: I18n.t('statisticTitle'),
           tabBarIcon: ({ focused }) =>
             TabBarIcon({
-              icon: 'bar-chart-2',
               color: focused ? colors.primary : colors.text,
+              icon: 'bar-chart-2',
             }),
+          title: I18n.t('statisticTitle'),
         }}
       />
       <MainTab.Screen
         name="Items"
         component={ItemsScreen}
         options={{
-          title: I18n.t('itemsTitle'),
           tabBarIcon: ({ focused }) =>
-            TabBarIcon({ icon: 'coffee', color: focused ? colors.primary : colors.text }),
+            TabBarIcon({ color: focused ? colors.primary : colors.text, icon: 'coffee' }),
+          title: I18n.t('itemsTitle'),
         }}
       />
     </MainTab.Navigator>

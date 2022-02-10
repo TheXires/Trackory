@@ -1,6 +1,5 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import storage from '@react-native-firebase/storage';
 import { Item, NewItem } from '../interfaces/item';
 import { firebaseImageUpload } from './fileupload.firebase';
 
@@ -146,6 +145,6 @@ export const firebaseRemoveItem = async (itemId: string): Promise<void> => {
       .delete();
   } catch (error) {
     console.error('removeItem error: ', error);
-    throw "firebase/unknown"
+    throw 'firebase/unknown';
   }
 };

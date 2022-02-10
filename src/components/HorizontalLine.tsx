@@ -7,7 +7,7 @@ function HorizontalLine() {
 
   return (
     <View
-      style={{ width: '100%', height: 1, backgroundColor: colors.text, opacity: 0.1 }}
+      style={{ backgroundColor: colors.text, height: 1, opacity: 0.1, width: '100%' }}
     />
   );
 }

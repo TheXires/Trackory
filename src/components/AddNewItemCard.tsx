@@ -9,31 +9,31 @@ interface Props {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 15,
-    paddingTop: 5,
-    paddingBottom: 20,
-  },
   box: {
-    width: '100%',
-    height: 150,
+    alignItems: 'center',
     borderRadius: 25,
     borderWidth: 6,
+    height: 150,
     justifyContent: 'center',
-    alignItems: 'center',
+    width: '100%',
   },
-  innerBox: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  container: {
+    flex: 1,
+    paddingBottom: 20,
+    paddingHorizontal: 15,
+    paddingTop: 5,
   },
   icon: {
-    fontWeight: 'bold',
     fontSize: 40,
+    fontWeight: 'bold',
+  },
+  innerBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
-    fontWeight: 'bold',
     fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

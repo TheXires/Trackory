@@ -17,22 +17,21 @@ import { permanentColors } from '../theme/colors';
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    paddingTop: 15,
     paddingHorizontal: 15,
+    paddingTop: 15,
   },
-  inputContainer: {
-    width: '100%',
+  expandButton: {
+    color: permanentColors.primary,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   expandButtonContainer: {
     alignItems: 'center',
-    marginTop: 25,
     marginBottom: 50,
+    marginTop: 25,
   },
-  expandButton: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: permanentColors.primary,
+  inputContainer: {
+    width: '100%',
   },
 });
 
@@ -78,11 +77,11 @@ function CreateItemScreen() {
   const camera = async () => {
     try {
       const res = await launchCamera({
-        mediaType: 'photo',
         cameraType: 'back',
-        quality: 0.9,
         maxHeight: 400,
         maxWidth: 400,
+        mediaType: 'photo',
+        quality: 0.9,
       });
       if (res.didCancel) return;
       if (res.errorCode) throw res.errorCode;
@@ -96,10 +95,10 @@ function CreateItemScreen() {
   const pickImage = async () => {
     try {
       const res = await launchImageLibrary({
-        mediaType: 'photo',
-        quality: 0.9,
         maxHeight: 400,
         maxWidth: 400,
+        mediaType: 'photo',
+        quality: 0.9,
         selectionLimit: 1,
       });
       if (res.didCancel) return;
@@ -162,7 +161,7 @@ function CreateItemScreen() {
         {/* <AddImageButton onPress={camera} imageUri={imageUri} /> */}
         <AddImageButton onPress={pickImage} imageUri={imageUri} />
       </ScrollView>
-      <View style={{ position: 'absolute', bottom: 30, right: 15 }}>
+      <View style={{ bottom: 30, position: 'absolute', right: 15 }}>
         <CustomButton
           value={I18n.t('create')}
           onPress={handleCreation}

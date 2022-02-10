@@ -1,7 +1,7 @@
-import { Pressable, StyleSheet, Text, View, Image } from 'react-native';
-import React from 'react';
 import { Feather } from '@expo/vector-icons';
 import I18n from 'i18n-js';
+import React from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { permanentColors } from '../theme/colors';
 
 interface Props {
@@ -10,16 +10,16 @@ interface Props {
 }
 
 const styles = StyleSheet.create({
-  addPhotoButtonContainer: {
-    alignItems: 'center',
-  },
   addPhotoButton: {
-    borderRadius: 25,
-    borderColor: permanentColors.primary,
-    borderWidth: 6,
-    width: 150,
+    alignItems: 'center',
     aspectRatio: 1,
+    borderColor: permanentColors.primary,
+    borderRadius: 25,
+    borderWidth: 6,
     justifyContent: 'center',
+    width: 150,
+  },
+  addPhotoButtonContainer: {
     alignItems: 'center',
   },
   addPhotoButtonText: {
@@ -34,7 +34,11 @@ function AddImageButton({ imageUri, onPress }: Props) {
     <Pressable style={styles.addPhotoButtonContainer} onPress={onPress}>
       {imageUri ? (
         <Image
-          source={{ uri: imageUri, width: 250, height: 300 }}
+          source={{
+            height: 300,
+            uri: imageUri,
+            width: 250,
+          }}
           height={250}
           width={250}
         />

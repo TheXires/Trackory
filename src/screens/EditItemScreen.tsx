@@ -1,14 +1,13 @@
 import { useNavigation, useRoute, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import AddImageButton from '../components/AddImageButton';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
 import CustomNumberInput from '../components/CustomNumberInput';
 import CustomTextInput from '../components/CustomTextInput';
-import InputContainer from '../components/InputContainer';
 import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseUpdateItem } from '../firebase/items.firebase';
@@ -59,10 +58,10 @@ function EditItemScreen() {
     try {
       if (!item) throw 'unable to update item';
       const updatedItem: Item = {
-        id: item?.id,
         calories: calories ?? 0,
         carbohydrates: carbohydrates ?? 0,
         fat: fat ?? 0,
+        id: item?.id,
         imgUrl: item.imgUrl,
         name: name ?? '',
         protein: protein ?? 0,
@@ -83,11 +82,11 @@ function EditItemScreen() {
   const camera = async () => {
     try {
       const res = await launchCamera({
-        mediaType: 'photo',
         cameraType: 'back',
-        quality: 0.9,
         maxHeight: 400,
         maxWidth: 400,
+        mediaType: 'photo',
+        quality: 0.9,
       });
       if (res.didCancel) return;
       if (res.errorCode) throw res.errorCode;
@@ -101,10 +100,10 @@ function EditItemScreen() {
   const pickImage = async () => {
     try {
       const res = await launchImageLibrary({
-        mediaType: 'photo',
-        quality: 0.9,
         maxHeight: 400,
         maxWidth: 400,
+        mediaType: 'photo',
+        quality: 0.9,
         selectionLimit: 1,
       });
       if (res.didCancel) return;

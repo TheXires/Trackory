@@ -12,62 +12,62 @@ interface Props {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  bottomBar: {
+    alignItems: 'center',
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingRight: 10,
     width: '100%',
-    height: 120,
+  },
+  bottomEditContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 80,
+  },
+  container: {
     backgroundColor: permanentColors.primary,
     borderRadius: 25,
-  },
-  imgContainer: {
+    flexDirection: 'row',
     height: 120,
-    width: '25%',
-    borderTopLeftRadius: 25,
-    borderBottomLeftRadius: 25,
-    overflow: 'hidden',
+    width: '100%',
+  },
+  icon: {
+    color: permanentColors.textWhite,
+    padding: 5,
   },
   image: {
     height: '100%',
     width: '100%',
   },
-  informationContainer: {
-    width: '75%',
-    height: '100%',
-    padding: 10,
-    justifyContent: 'space-between',
+  imageContainer: {
+    borderBottomLeftRadius: 25,
+    borderTopLeftRadius: 25,
+    height: 120,
+    overflow: 'hidden',
+    width: '25%',
   },
-  title: {
-    fontWeight: 'bold',
+  informationContainer: {
+    height: '100%',
+    justifyContent: 'space-between',
+    padding: 10,
+    width: '75%',
+  },
+  quantity: {
     color: permanentColors.textWhite,
-    opacity: 0.87,
-    fontSize: 15,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   text: {
     color: permanentColors.textWhite,
-    opacity: 0.6,
     fontSize: 13,
+    opacity: 0.6,
   },
-  bottomBar: {
-    flexDirection: 'row',
-    width: '100%',
-    paddingRight: 10,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  bottomEditContainer: {
-    flexDirection: 'row',
-    width: 80,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  quantity: {
+  title: {
+    color: permanentColors.textWhite,
+    fontSize: 15,
     fontWeight: 'bold',
-    color: permanentColors.textWhite,
-    fontSize: 16,
-  },
-  icon: {
-    color: permanentColors.textWhite,
-    padding: 5,
+    opacity: 0.87,
   },
 });
 
@@ -96,7 +96,7 @@ function OverviewItem({ consumedItem, onSave }: Props) {
 
   return (
     <View style={[styles.container, { backgroundColor: permanentColors.primary }]}>
-      <View style={styles.imgContainer}>
+      <View style={styles.imageContainer}>
         <Image style={styles.image} source={image} />
       </View>
       <View style={styles.informationContainer}>

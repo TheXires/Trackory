@@ -12,12 +12,12 @@ interface Props {
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
     flexDirection: 'row',
-    width: '100%',
     height: 70,
     justifyContent: 'space-between',
-    alignItems: 'center',
     padding: 10,
+    width: '100%',
   },
 });
 

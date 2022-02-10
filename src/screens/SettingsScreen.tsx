@@ -3,14 +3,14 @@ import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
 import { Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
+import exportAdapter from '../adapter/exportData/exportDataAdapter';
+import importAdapter from '../adapter/importData/importDataAdapter';
 import CalorieTargetDialog from '../components/CalorieTargetDialog';
 import HorizontalLine from '../components/HorizontalLine';
 import SettingsItem from '../components/SettingsItem';
 import { SettingsContext } from '../contexts/SettingsContext';
 import { firebaseSignOut } from '../firebase/auth.firebase';
 import { SettingsContextType } from '../interfaces/context';
-import exportAdapter from '../adapter/exportData/exportDataAdapter';
-import importAdapter from '../adapter/importData/importDataAdapter';
 import { SettingsNavigationProp } from '../navigation/types.navigation';
 
 const styles = StyleSheet.create({
@@ -20,11 +20,11 @@ const styles = StyleSheet.create({
     paddingRight: 15,
   },
   item: {
+    alignItems: 'center',
     flexDirection: 'row',
-    width: '100%',
     height: 70,
     justifyContent: 'space-between',
-    alignItems: 'center',
+    width: '100%',
   },
 });
 

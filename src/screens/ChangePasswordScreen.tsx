@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   infoText: {
-    marginTop: 5,
-    paddingHorizontal: 15,
     fontSize: 10,
+    marginTop: 5,
     opacity: 0.6,
+    paddingHorizontal: 15,
   },
 });
 

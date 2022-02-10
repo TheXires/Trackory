@@ -21,37 +21,37 @@ import {
 import { permanentColors } from '../theme/colors';
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    alignItems: 'center',
+    flex: 1,
+    paddingBottom: Platform.OS === 'ios' ? 30 : 15,
+  },
   container: {
     flex: 1,
     justifyContent: 'space-between',
   },
-  imageContainer: {
-    alignItems: 'center',
-    marginVertical: 20,
-    height: '40%',
+  dataContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 15,
   },
   image: {
-    height: 200,
     aspectRatio: 1 / 1,
     borderRadius: 100,
+    height: 200,
     marginBottom: 10,
+  },
+  imageContainer: {
+    alignItems: 'center',
+    height: '40%',
+    marginVertical: 20,
   },
   itemName: {
     fontSize: 26,
     fontWeight: 'bold',
   },
-  dataContainer: {
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-  },
   text: {
     fontSize: 16,
     marginVertical: 5,
-  },
-  buttonContainer: {
-    flex: 1,
-    alignItems: 'center',
-    paddingBottom: Platform.OS === 'ios' ? 30 : 15,
   },
 });
 
@@ -71,8 +71,8 @@ function ItemDetailsScreen() {
     navigation.setOptions({
       headerRight: () =>
         NavigationHeaderButton({
-          text: I18n.t('edit'),
           onPress: () => navigation.navigate('EditItem', { itemId: route.params.itemId }),
+          text: I18n.t('edit'),
         }),
     });
   }, [route, items, navigation]);
@@ -94,8 +94,8 @@ function ItemDetailsScreen() {
 
   const deleteItemPopup = () => {
     Alert.alert(I18n.t('deleteItemDialogTitle'), I18n.t('deleteItemDialogText'), [
-      { text: I18n.t('cancel'), style: 'cancel' },
-      { text: I18n.t('delete'), style: 'destructive', onPress: () => deleteItem() },
+      { style: 'cancel', text: I18n.t('cancel') },
+      { onPress: () => deleteItem(), style: 'destructive', text: I18n.t('delete') },
     ]);
   };
 

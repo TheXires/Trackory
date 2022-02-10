@@ -17,13 +17,13 @@ export const MyDarkTheme: Theme = {
 };
 
 export const permanentColors = {
-  primary: '#6666FF',
   background: DefaultTheme.colors.background,
+  border: DefaultTheme.colors.border,
   card: DefaultTheme.colors.card,
+  error: '#ff0000',
+  notification: DefaultTheme.colors.notification,
+  primary: '#6666FF',
+  success: '#47C24B',
   text: DefaultTheme.colors.text,
   textWhite: '#ffffff',
-  border: DefaultTheme.colors.border,
-  notification: DefaultTheme.colors.notification,
-  success: '#47C24B',
-  error: '#ff0000',
 };

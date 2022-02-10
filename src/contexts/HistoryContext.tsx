@@ -1,4 +1,3 @@
-import I18n from 'i18n-js';
 import React, { createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import {
@@ -53,10 +52,10 @@ export function HistoryProvider(props: any) {
     <HistoryContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
+        consumeItem,
         consumedItems,
         refreshConsumedItems,
         refreshingConsumedItems,
-        consumeItem,
       }}
     >
       {/* eslint-disable-next-line react/destructuring-assignment */}

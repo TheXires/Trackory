@@ -30,7 +30,7 @@ export function SettingsProvider(props: any) {
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <SettingsContext.Provider value={{ settings, setSettings }}>
+    <SettingsContext.Provider value={{ setSettings, settings }}>
       {/* eslint-disable-next-line react/destructuring-assignment */}
       {props.children}
     </SettingsContext.Provider>

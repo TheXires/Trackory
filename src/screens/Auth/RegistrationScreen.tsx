@@ -21,24 +21,24 @@ import { LoadingContextType } from '../../interfaces/context';
 import { permanentColors } from '../../theme/colors';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 15,
-  },
-  image: {
-    height: '30%',
-    aspectRatio: 1107 / 728,
-  },
   bottomContainer: {
     paddingTop: '10%',
     width: '100%',
+  },
+  container: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    padding: 15,
   },
   heading: {
     fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 15,
+  },
+  image: {
+    aspectRatio: 1107 / 728,
+    height: '30%',
   },
   inputContainer: {
     alignItems: 'center',

@@ -30,7 +30,12 @@
     "react/require-default-props": ["off"],
     "no-throw-literal": ["warn"],
     "consistent-return": ["warn"],
-    "no-console": ["error", { "allow": ["error"] }]
+    "no-console": ["error", { "allow": ["error"] }],
+    "sort-keys": [
+      "error",
+      "asc",
+      { "caseSensitive": true, "natural": false, "minKeys": 2 }
+    ]
   },
   "settings": {
     "import/resolver": {

@@ -3,8 +3,8 @@ import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import { Item } from '../interfaces/item';
 import placeholderImg from '../../assets/itemPlaceholderImage.png';
+import { Item } from '../interfaces/item';
 import HorizontalLine from './HorizontalLine';
 
 interface Props {
@@ -14,21 +14,21 @@ interface Props {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
+    flexDirection: 'row',
     height: 100,
+    justifyContent: 'space-between',
+    padding: 10,
   },
   dataContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   image: {
-    height: 80,
-    width: 50,
-    marginRight: 15,
     borderRadius: 10,
+    height: 80,
+    marginRight: 15,
+    width: 50,
   },
   itemName: {
     fontSize: 16,

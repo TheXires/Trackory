@@ -115,8 +115,8 @@ export const firebaseChangePassword = async (
 
 /**
  * sends an email containing a link to reset the users password
- * 
- * @param email 
+ *
+ * @param email
  * @error auth/invalid-email
  * @error auth/missing-android-pkg-name
  * @error auth/missing-continue-uri

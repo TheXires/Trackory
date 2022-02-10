@@ -16,17 +16,17 @@ const styles = StyleSheet.create({
     paddingRight: 15,
   },
   image: {
-    width: '100%',
-    height: 150,
     borderRadius: 25,
-  },
-  textContainer: {
+    height: 150,
     width: '100%',
-    alignItems: 'center',
   },
   text: {
     fontWeight: 'bold',
     paddingTop: 5,
+  },
+  textContainer: {
+    alignItems: 'center',
+    width: '100%',
   },
 });
 

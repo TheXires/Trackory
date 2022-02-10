@@ -9,20 +9,22 @@ interface Props {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    width: '100%',
-    height: 40,
-    padding: 5,
-    borderWidth: 2,
     borderRadius: 15,
+    borderWidth: 2,
+    height: 40,
+    justifyContent: 'center',
     marginBottom: 10,
+    padding: 5,
+    width: '100%',
   },
 });
 
 function InputContainer({ children, style }: Props) {
   const { colors } = useTheme();
   return (
-    <View style={[styles.container, { borderColor: colors.border }, style]}>{children}</View>
+    <View style={[styles.container, { borderColor: colors.border }, style]}>
+      {children}
+    </View>
   );
 }
 

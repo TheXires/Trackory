@@ -26,7 +26,10 @@ export function ItemProvider(props: any) {
     setRefreshingItems(false);
   }, [items]);
 
-  const addItem = async (newItem: NewItem, imageUri?: string | undefined): Promise<void> => {
+  const addItem = async (
+    newItem: NewItem,
+    imageUri?: string | undefined,
+  ): Promise<void> => {
     try {
       // TODO hier weiter machen und wenn imageUri verfügbar ist, das Bild bei Firebase hochladen
       const addedItem = await firebaseAddItem(newItem, imageUri);

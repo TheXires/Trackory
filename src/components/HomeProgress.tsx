@@ -12,32 +12,32 @@ interface Props {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     height: 80,
-    paddingTop: 5,
-    paddingBottom: 5,
     justifyContent: 'space-between',
-  },
-  outerProgressbar: {
-    width: '50%',
-    height: 16,
-    borderRadius: 8,
-    backgroundColor: 'lightgreen',
+    paddingBottom: 5,
+    paddingTop: 5,
+    width: '100%',
   },
   innerProgressbar: {
-    width: '80%',
-    height: 16,
-    borderRadius: 8,
     backgroundColor: 'green',
+    borderRadius: 8,
+    height: 16,
+    width: '80%',
   },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 16,
+  outerProgressbar: {
+    backgroundColor: 'lightgreen',
+    borderRadius: 8,
+    height: 16,
+    width: '50%',
   },
   subtext: {
-    marginLeft: 8,
     fontSize: 10,
+    marginLeft: 8,
     opacity: 0.6,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

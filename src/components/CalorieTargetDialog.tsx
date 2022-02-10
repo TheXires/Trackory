@@ -15,7 +15,19 @@ interface Props {
 }
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    alignItems: 'flex-end',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '100%',
+  },
   container: {
+    padding: 5,
+  },
+  dialogButton: {
+    alignItems: 'flex-end',
+    marginRight: 5,
     padding: 5,
   },
   dialogHeader: {
@@ -24,22 +36,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   inputContainer: {
-    marginTop: 10,
-    marginBottom: 10,
     borderBottomColor: '#00000099',
     borderBottomWidth: 1,
-  },
-  dialogButton: {
-    marginRight: 5,
-    padding: 5,
-    alignItems: 'flex-end',
-  },
-  buttonContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    marginBottom: 10,
+    marginTop: 10,
   },
 });
 

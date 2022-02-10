@@ -8,25 +8,25 @@ interface Props {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-    width: '100%',
-    position: 'absolute',
-  },
   background: {
     backgroundColor: '#00000088',
     height: '100%',
-    width: '100%',
     position: 'absolute',
+    width: '100%',
+  },
+  container: {
+    alignItems: 'center',
+    display: 'flex',
+    height: '100%',
+    justifyContent: 'center',
+    position: 'absolute',
+    width: '100%',
   },
   content: {
-    width: 300,
-    padding: 10,
-    borderRadius: 10,
     backgroundColor: '#ffffff',
+    borderRadius: 10,
+    padding: 10,
+    width: 300,
   },
 });
 
