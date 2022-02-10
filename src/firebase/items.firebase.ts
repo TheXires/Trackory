@@ -22,7 +22,7 @@ export const firebaseGetAllItems = async (): Promise<Item[]> => {
     response.forEach((document) =>
       items.push({
         calories: document.data().calories,
-        carbonHydrates: document.data().carbonHydrates,
+        carbohydrates: document.data().carbohydrates,
         fat: document.data().fat,
         id: document.id,
         imgUrl: document.data().imgUrl ?? '',

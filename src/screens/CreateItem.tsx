@@ -58,7 +58,7 @@ function CreateItemScreen() {
     try {
       const newItem: NewItem = {
         calories: calories ?? 0,
-        carbonHydrates: carbohydrate ?? 0,
+        carbohydrates: carbohydrate ?? 0,
         fat: fat ?? 0,
         imgUrl: '',
         name,

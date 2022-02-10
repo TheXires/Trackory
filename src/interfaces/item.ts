@@ -1,6 +1,6 @@
 export interface Item {
   calories: number;
-  carbonHydrates: number;
+  carbohydrates: number;
   fat: number;
   id: string;
   imgUrl?: string;
@@ -10,7 +10,7 @@ export interface Item {
 
 export interface NewItem {
   calories: number;
-  carbonHydrates: number;
+  carbohydrates: number;
   fat: number;
   imgUrl?: string;
   name: string;
@@ -19,7 +19,7 @@ export interface NewItem {
 
 export interface ConsumedItem {
   calories: number;
-  carbonHydrates: number;
+  carbohydrates: number;
   fat: number;
   id: string;
   imgUrl?: string;

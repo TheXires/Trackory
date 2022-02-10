@@ -1,4 +1,5 @@
 import { useNavigation, useTheme } from '@react-navigation/native';
+import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import AddNewItemCard from '../components/AddNewItemCard';
@@ -6,7 +7,12 @@ import ItemCard from '../components/ItemCard';
 import Searchbar from '../components/Searchbar';
 import { HistoryContext } from '../contexts/HistoryContext';
 import { ItemContext } from '../contexts/ItemContext';
-import { HistoryContextType, ItemContextType } from '../interfaces/context';
+import { LoadingContext } from '../contexts/LoadingContext';
+import {
+  HistoryContextType,
+  ItemContextType,
+  LoadingContextType,
+} from '../interfaces/context';
 import { Item } from '../interfaces/item';
 import { AddItemNavigationProp } from '../navigation/types.navigation';
 
@@ -14,6 +20,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 15,
+    paddingTop: 15,
   },
 });
 
@@ -25,6 +32,7 @@ function AddItemScreen() {
   const { items, refreshItems, refreshingItems } =
     useContext<ItemContextType>(ItemContext);
   const { consumeItem } = useContext<HistoryContextType>(HistoryContext);
+  const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
   const { colors } = useTheme();
   const navigation = useNavigation<AddItemNavigationProp>();
 
@@ -41,8 +49,16 @@ function AddItemScreen() {
   }, [searchTerm, items]);
 
   const onPress = async (item: Item) => {
-    await consumeItem(0, item, 1);
-    navigation.goBack();
+    // TODO richtigen Text einfügen
+    showLoadingPopup(true, I18n.t('toAdd'));
+    try {
+      await consumeItem(0, item, 1);
+      showLoadingPopup(false);
+      navigation.goBack();
+    } catch (error) {
+      console.error(error);
+      showLoadingPopup(false);
+    }
   };
 
   return (
