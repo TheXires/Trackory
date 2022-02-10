@@ -12,10 +12,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
 import registrationImage from '../../../assets/registration.png';
 import CustomButton from '../../components/CustomButton';
-import InputContainer from '../../components/InputContainer';
+import CustomTextInput from '../../components/CustomTextInput';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseSignUp } from '../../firebase/auth.firebase';
 import { LoadingContextType } from '../../interfaces/context';
@@ -86,31 +85,25 @@ function RegistrationScreen() {
           <Text style={[styles.heading, { color: permanentColors.success }]}>
             {I18n.t('register')}
           </Text>
-          <View style={styles.inputContainer}>
-            <InputContainer>
-              <TextInput
-                style={[styles.textInput, { color: colors.text }]}
-                placeholderTextColor={colors.border}
-                placeholder={I18n.t('email')}
-                autoCompleteType="email"
-                autoCorrect={false}
-                value={email}
-                onChangeText={(input: string) => setEmail(input)}
-              />
-            </InputContainer>
-            <InputContainer>
-              <TextInput
-                style={[styles.textInput, { color: colors.text }]}
-                placeholderTextColor={colors.border}
-                placeholder={I18n.t('password')}
-                secureTextEntry
-                autoCompleteType="password"
-                autoCorrect={false}
-                value={password}
-                onChangeText={(input: string) => setPassword(input)}
-              />
-            </InputContainer>
-          </View>
+          <CustomTextInput
+            autoCompleteType="email"
+            autoCorrect={false}
+            hideTitle
+            keyboardType="email-address"
+            onChangeText={(input: string) => setEmail(input)}
+            placeholder={I18n.t('email')}
+            value={email}
+          />
+          <CustomTextInput
+            autoCompleteType="password"
+            autoCorrect={false}
+            hideTitle
+            keyboardType="default"
+            onChangeText={(input: string) => setPassword(input)}
+            placeholder={I18n.t('password')}
+            secureTextEntry
+            value={password}
+          />
           <CustomButton
             value={I18n.t('register')}
             enabled={canRegister}

@@ -2,11 +2,12 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import AddImageButton from '../components/AddImageButton';
 import CustomButton from '../components/CustomButton';
-import InputContainer from '../components/InputContainer';
+import CustomNumberInput from '../components/CustomNumberInput';
+import CustomTextInput from '../components/CustomTextInput';
 import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { ItemContextType, LoadingContextType } from '../interfaces/context';
@@ -16,19 +17,12 @@ import { permanentColors } from '../theme/colors';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 10,
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontSize: 16,
-    marginVertical: 5,
+    // flex: 1,
+    paddingTop: 15,
+    paddingHorizontal: 15,
   },
   inputContainer: {
     width: '100%',
-  },
-  input: {
-    opacity: 0.6,
   },
   expandButtonContainer: {
     alignItems: 'center',
@@ -124,83 +118,38 @@ function CreateItemScreen() {
         bounces={false}
       >
         <View style={styles.inputContainer}>
-          <Text style={[styles.title, { color: colors.text }]}>{I18n.t('itemName')}</Text>
-          <InputContainer>
-            <TextInput
-              placeholderTextColor={colors.text}
-              style={[styles.input, { color: colors.text }]}
-              placeholder="Sandwich..."
-              value={name}
-              onChangeText={(text) => setName(text)}
-            />
-          </InputContainer>
-
-          <Text style={[styles.title, { color: colors.text }]}>{I18n.t('calories')}</Text>
-          <InputContainer>
-            <TextInput
-              keyboardType="numeric"
-              placeholder="123"
-              placeholderTextColor={colors.text}
-              style={[styles.input, { color: colors.text }]}
-              value={calories?.toString()}
-              onChangeText={(text: string) => {
-                if (Number.isInteger(parseInt(text, 10))) {
-                  setCalories(parseInt(text, 10));
-                }
-              }}
-            />
-          </InputContainer>
+          <CustomTextInput
+            onChangeText={(text) => setName(text)}
+            placeholder="Sandwich..."
+            title={I18n.t('itemName')}
+            value={name}
+          />
+          <CustomNumberInput
+            onChangeText={(input) => setCalories(input)}
+            placeholder="123"
+            title={I18n.t('calories')}
+            value={calories}
+          />
           {expanded && (
             <>
-              <Text style={[styles.title, { color: colors.text }]}>
-                {I18n.t('carbohydrates')}
-              </Text>
-              <InputContainer>
-                <TextInput
-                  keyboardType="numeric"
-                  placeholder="123"
-                  placeholderTextColor={colors.text}
-                  style={[styles.input, { color: colors.text }]}
-                  value={carbohydrate?.toString()}
-                  onChangeText={(text: string) => {
-                    if (Number.isInteger(text)) {
-                      setCarbohydrate(parseInt(text, 10));
-                    }
-                  }}
-                />
-              </InputContainer>
-              <Text style={[styles.title, { color: colors.text }]}>{I18n.t('fat')}</Text>
-              <InputContainer>
-                <TextInput
-                  keyboardType="numeric"
-                  placeholder="123"
-                  placeholderTextColor={colors.text}
-                  style={[styles.input, { color: colors.text }]}
-                  value={fat?.toString()}
-                  onChangeText={(text: string) => {
-                    if (Number.isInteger(text)) {
-                      setFat(parseInt(text, 10));
-                    }
-                  }}
-                />
-              </InputContainer>
-              <Text style={[styles.title, { color: colors.text }]}>
-                {I18n.t('protein')}
-              </Text>
-              <InputContainer>
-                <TextInput
-                  keyboardType="numeric"
-                  placeholder="123"
-                  placeholderTextColor={colors.text}
-                  style={[styles.input, { color: colors.text }]}
-                  value={protein?.toString()}
-                  onChangeText={(text: string) => {
-                    if (Number.isInteger(text)) {
-                      setProtein(parseInt(text, 10));
-                    }
-                  }}
-                />
-              </InputContainer>
+              <CustomNumberInput
+                onChangeText={(input) => setFat(input)}
+                placeholder="123"
+                title={I18n.t('carbohydrates')}
+                value={carbohydrate}
+              />
+              <CustomNumberInput
+                onChangeText={(input) => setCarbohydrate(input)}
+                placeholder="123"
+                title={I18n.t('fat')}
+                value={fat}
+              />
+              <CustomNumberInput
+                onChangeText={(input) => setProtein(input)}
+                placeholder="123"
+                title={I18n.t('protein')}
+                value={protein}
+              />
             </>
           )}
         </View>

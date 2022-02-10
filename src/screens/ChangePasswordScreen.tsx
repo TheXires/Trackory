@@ -1,9 +1,9 @@
 import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text } from 'react-native';
 import CustomButton from '../components/CustomButton';
-import InputContainer from '../components/InputContainer';
+import CustomTextInput from '../components/CustomTextInput';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseChangePassword } from '../firebase/auth.firebase';
 import { LoadingContextType } from '../interfaces/context';
@@ -14,15 +14,6 @@ const styles = StyleSheet.create({
     flex: 10,
     flexDirection: 'column',
     padding: 15,
-  },
-  inputRow: {
-    flexDirection: 'column',
-    marginBottom: 15,
-  },
-  heading: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
   },
   infoText: {
     marginTop: 5,
@@ -60,51 +51,30 @@ function ChangePasswordScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} bounces={false}>
-      <View style={styles.inputRow}>
-        <Text style={[styles.heading, { color: colors.text }]}>
-          {I18n.t('currentPassword')}
-        </Text>
-        <InputContainer>
-          <TextInput
-            secureTextEntry
-            placeholder={I18n.t('currentPassword')}
-            autoCompleteType="password"
-            autoCorrect={false}
-            value={currentPassword}
-            onChangeText={(text) => setCurrentPassword(text)}
-          />
-        </InputContainer>
-      </View>
-      <View style={styles.inputRow}>
-        <Text style={[styles.heading, { color: colors.text }]}>
-          {I18n.t('newPassword')}
-        </Text>
-        <InputContainer>
-          <TextInput
-            secureTextEntry
-            placeholder={I18n.t('newPassword')}
-            autoCompleteType="password"
-            autoCorrect={false}
-            value={newPassword}
-            onChangeText={(text) => setNewPassword(text)}
-          />
-        </InputContainer>
-      </View>
-      <View style={styles.inputRow}>
-        <Text style={[styles.heading, { color: colors.text }]}>
-          {I18n.t('repeatNewPassword')}
-        </Text>
-        <InputContainer>
-          <TextInput
-            secureTextEntry
-            placeholder={I18n.t('repeatNewPassword')}
-            autoCompleteType="password"
-            autoCorrect={false}
-            value={newRepeatedPassword}
-            onChangeText={(text) => setNewRepeatedPassword(text)}
-          />
-        </InputContainer>
-      </View>
+      <CustomTextInput
+        autoCompleteType="password"
+        onChangeText={(text) => setCurrentPassword(text)}
+        placeholder={I18n.t('currentPassword')}
+        secureTextEntry
+        title={I18n.t('currentPassword')}
+        value={currentPassword}
+      />
+      <CustomTextInput
+        autoCompleteType="password"
+        onChangeText={(text) => setNewPassword(text)}
+        placeholder={I18n.t('newPassword')}
+        secureTextEntry
+        title={I18n.t('newPassword')}
+        value={newPassword}
+      />
+      <CustomTextInput
+        autoCompleteType="password"
+        onChangeText={(text) => setNewRepeatedPassword(text)}
+        placeholder={I18n.t('repeatNewPassword')}
+        secureTextEntry
+        title={I18n.t('repeatNewPassword')}
+        value={newRepeatedPassword}
+      />
       <CustomButton
         value={I18n.t('changePassword')}
         onPress={changePassword}

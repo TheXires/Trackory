@@ -9,13 +9,12 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TextInput,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import loginImage from '../../../assets/login.png';
 import CustomButton from '../../components/CustomButton';
-import InputContainer from '../../components/InputContainer';
+import CustomTextInput from '../../components/CustomTextInput';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseSignIn } from '../../firebase/auth.firebase';
 import { LoadingContextType } from '../../interfaces/context';
@@ -40,9 +39,6 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 15,
-  },
-  inputContainer: {
-    alignItems: 'center',
   },
   textInput: {
     fontSize: 16,
@@ -88,31 +84,25 @@ function LoginScreen() {
           <Text style={[styles.heading, { color: colors.primary }]}>
             {I18n.t('login')}
           </Text>
-          <View style={styles.inputContainer}>
-            <InputContainer>
-              <TextInput
-                style={[styles.textInput, { color: colors.text }]}
-                placeholderTextColor={colors.border}
-                placeholder={I18n.t('email')}
-                autoCompleteType="email"
-                autoCorrect={false}
-                value={email}
-                onChangeText={(input: string) => setEmail(input)}
-              />
-            </InputContainer>
-            <InputContainer>
-              <TextInput
-                style={[styles.textInput, { color: colors.text }]}
-                placeholderTextColor={colors.border}
-                placeholder={I18n.t('password')}
-                secureTextEntry
-                autoCompleteType="password"
-                autoCorrect={false}
-                value={password}
-                onChangeText={(input: string) => setPassword(input)}
-              />
-            </InputContainer>
-          </View>
+          <CustomTextInput
+            autoCompleteType="email"
+            autoCorrect={false}
+            hideTitle
+            keyboardType="email-address"
+            onChangeText={(input: string) => setEmail(input)}
+            placeholder={I18n.t('email')}
+            value={email}
+          />
+          <CustomTextInput
+            autoCompleteType="password"
+            autoCorrect={false}
+            hideTitle
+            keyboardType="default"
+            onChangeText={(input: string) => setPassword(input)}
+            placeholder={I18n.t('password')}
+            secureTextEntry
+            value={password}
+          />
           <CustomButton value={I18n.t('login')} enabled={canLogin} onPress={signUserIn} />
           <CustomButton
             value={I18n.t('forgotPassword')}

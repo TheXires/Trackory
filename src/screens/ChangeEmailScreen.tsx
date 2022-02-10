@@ -2,9 +2,9 @@ import auth from '@react-native-firebase/auth';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, TextInput, View, ScrollView, Alert } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text } from 'react-native';
 import CustomButton from '../components/CustomButton';
-import InputContainer from '../components/InputContainer';
+import CustomTextInput from '../components/CustomTextInput';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseChangeEmail } from '../firebase/auth.firebase';
 import { LoadingContextType } from '../interfaces/context';
@@ -15,15 +15,6 @@ const styles = StyleSheet.create({
     flex: 10,
     flexDirection: 'column',
     padding: 15,
-  },
-  inputRow: {
-    flexDirection: 'column',
-    marginBottom: 15,
-  },
-  heading: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
   },
   infoText: {
     marginTop: 5,
@@ -60,34 +51,22 @@ function ChangeEmailScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} bounces={false}>
-      <View style={styles.inputRow}>
-        <Text style={[styles.heading, { color: colors.text }]}>
-          {I18n.t('currentPassword')}
-        </Text>
-        <InputContainer>
-          <TextInput
-            secureTextEntry
-            placeholder={I18n.t('currentPassword')}
-            autoCompleteType="password"
-            autoCorrect={false}
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-          />
-        </InputContainer>
-      </View>
-      <View style={styles.inputRow}>
-        <Text style={[styles.heading, { color: colors.text }]}>{I18n.t('newEmail')}</Text>
-        <InputContainer>
-          <TextInput
-            placeholder={auth().currentUser?.email ?? ''}
-            keyboardType="email-address"
-            autoCompleteType="email"
-            autoCorrect={false}
-            value={newEmail}
-            onChangeText={(text) => setNewEmail(text)}
-          />
-        </InputContainer>
-      </View>
+      <CustomTextInput
+        autoCompleteType="password"
+        onChangeText={(text) => setPassword(text)}
+        placeholder={I18n.t('password')}
+        secureTextEntry
+        title={I18n.t('password')}
+        value={password}
+      />
+      <CustomTextInput
+        autoCompleteType="email"
+        keyboardType="email-address"
+        onChangeText={(text) => setNewEmail(text)}
+        placeholder={auth().currentUser?.email ?? ''}
+        title={I18n.t('newEmail')}
+        value={newEmail}
+      />
       <CustomButton
         value={I18n.t('changeEmail')}
         onPress={changeEmail}

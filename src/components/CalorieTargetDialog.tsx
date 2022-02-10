@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
 
 function CalorieTargetDialog({ show, onClose }: Props) {
   const { settings, setSettings } = useContext<SettingsContextType>(SettingsContext);
-  const [calorieTarget, setCalorieTarget] = useState<number | null>(
-    settings?.calorieTarget ?? null,
+  const [calorieTarget, setCalorieTarget] = useState<number | undefined>(
+    settings?.calorieTarget ?? undefined,
   );
   const [canSave, setCanSave] = useState<boolean>(false);
 

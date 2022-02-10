@@ -1,10 +1,9 @@
-import auth from '@react-native-firebase/auth';
-import { useNavigation, useTheme } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, TextInput, View, ScrollView, Alert } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text } from 'react-native';
 import CustomButton from '../../components/CustomButton';
-import InputContainer from '../../components/InputContainer';
+import CustomTextInput from '../../components/CustomTextInput';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseRequestPasswordReset } from '../../firebase/auth.firebase';
 import { LoadingContextType } from '../../interfaces/context';
@@ -16,15 +15,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     padding: 15,
   },
-  inputRow: {
-    flexDirection: 'column',
-    marginBottom: 15,
-  },
-  heading: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
   infoText: {
     marginTop: 5,
     paddingHorizontal: 15,
@@ -34,7 +24,6 @@ const styles = StyleSheet.create({
 });
 
 function ForgotPasswordScreen() {
-  const { colors } = useTheme();
   const navigation = useNavigation<ForgotPasswordNavigationProp>();
 
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
@@ -64,18 +53,14 @@ function ForgotPasswordScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} bounces={false}>
-      <View style={styles.inputRow}>
-        <Text style={[styles.heading, { color: colors.text }]}>{I18n.t('email')}</Text>
-        <InputContainer>
-          <TextInput
-            placeholder={I18n.t('email')}
-            autoCompleteType="email"
-            autoCorrect={false}
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-          />
-        </InputContainer>
-      </View>
+      <CustomTextInput
+        autoCompleteType="email"
+        keyboardType="email-address"
+        onChangeText={(text) => setEmail(text)}
+        placeholder={I18n.t('email')}
+        title={I18n.t('email')}
+        value={email}
+      />
       <CustomButton
         value={I18n.t('resetPassword')}
         onPress={requestPasswordReset}
