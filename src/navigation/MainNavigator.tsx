@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import I18n from 'i18n-js';
 import React from 'react';
-import { Platform, Pressable, Text } from 'react-native';
+import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { HistoryProvider } from '../contexts/HistoryContext';
 import { ItemProvider } from '../contexts/ItemContext';
 import { SettingsProvider } from '../contexts/SettingsContext';
@@ -13,6 +13,7 @@ import AddItemScreen from '../screens/AddItemScreen';
 import ChangeEmailScreen from '../screens/ChangeEmailScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import CreateItemScreen from '../screens/CreateItem';
+import EditItemScreen from '../screens/EditItemScreen';
 import ItemDetailsScreen from '../screens/ItemDetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import BottomNavigator from './BottomNavigator';
@@ -72,6 +73,20 @@ function RootStackNavigator() {
                 headerBackTitle: I18n.t('back'),
               }}
             />
+            <RootStack.Group screenOptions={{ presentation: 'modal' }}>
+              <RootStack.Screen
+                name="EditItem"
+                component={EditItemScreen}
+                options={{
+                  title: I18n.t('EditItemTitle'),
+                  headerLeft: () =>
+                    NavigationHeaderButton({
+                      text: I18n.t('cancel'),
+                      onPress: () => navigation.goBack(),
+                    }),
+                }}
+              />
+            </RootStack.Group>
             <RootStack.Screen
               name="ChangeEmail"
               component={ChangeEmailScreen}

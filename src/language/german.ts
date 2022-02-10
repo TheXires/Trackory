@@ -56,6 +56,7 @@ export default {
   statisticTitle: 'Statistik',
   itemsTitle: 'Items',
   itemDetailsTitle: 'Item',
+  EditItemTitle: 'Bearbeiten',
   changeEmailTitle: 'Email',
   changePasswordTitle: 'Passwort',
 

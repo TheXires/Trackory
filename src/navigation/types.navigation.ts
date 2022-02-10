@@ -21,6 +21,7 @@ export type RootStackParamList = {
   CreateItem: undefined;
   Settings: undefined;
   ItemDetails: { itemId: string };
+  EditItem: { itemId: string };
   ChangeEmail: undefined;
   ChangePassword: undefined;
 };
@@ -51,9 +52,11 @@ export type AddItemNavigationProp = StackNavigationProp<RootStackParamList, 'Add
 export type CreateItemNavigationProp = StackNavigationProp<RootStackParamList, 'CreateItem'>;
 export type SettingsNavigationProp = StackNavigationProp<RootStackParamList, 'Settings'>;
 export type ItemDetailsNavigationProp = StackNavigationProp<RootStackParamList, 'ItemDetails'>;
+export type EditItemNavigationProp = StackNavigationProp<RootStackParamList, 'EditItem'>;
 export type ChangeEmailNavigationProp = StackNavigationProp<RootStackParamList, 'ChangeEmail'>;
 export type ChangePasswordNavigationProp = StackNavigationProp<RootStackParamList, 'ChangePassword'>;
 
 // routeParams
 export type ItemDetailsRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;
+export type EditItemRouteProp = RouteProp<RootStackParamList, 'EditItem'>;
 export type CreateItemRouteProp = RouteProp<RootStackParamList, 'CreateItem'>;
