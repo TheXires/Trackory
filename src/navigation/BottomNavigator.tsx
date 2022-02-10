@@ -30,7 +30,7 @@ function BottomNavigator() {
   return (
     <MainTab.Navigator
       initialRouteName="HomeScreen"
-      screenOptions={{ headerRight: () => SettingsButton() }}
+      screenOptions={{ headerRight: () => SettingsButton(), headerTitleAlign: 'center' }}
     >
       <MainTab.Screen
         name="HomeScreen"

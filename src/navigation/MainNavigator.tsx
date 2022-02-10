@@ -1,7 +1,7 @@
 // got some code from react navigation documentation
 // https://reactnavigation.org/docs/tab-based-navigation/
 // https://reactnavigation.org/docs/nesting-navigators/
-import { useNavigation, useTheme } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import I18n from 'i18n-js';
 import React from 'react';
@@ -20,30 +20,17 @@ import { RootStackParamList } from './types.navigation';
 
 const RootStack = createStackNavigator<RootStackParamList>();
 
-function CancelHeader() {
-  const { colors } = useTheme();
+function RootStackNavigator() {
   const navigation = useNavigation();
 
-  return (
-    <Pressable style={{ marginHorizontal: 15 }} onPress={() => navigation.goBack()}>
-      <Text
-        style={{
-          fontSize: 17,
-          color: colors.primary,
-        }}
-      >
-        {I18n.t('cancel')}
-      </Text>
-    </Pressable>
-  );
-}
-
-function RootStackNavigator() {
   return (
     <SettingsProvider>
       <ItemProvider>
         <HistoryProvider>
-          <RootStack.Navigator initialRouteName="Main">
+          <RootStack.Navigator
+            initialRouteName="Main"
+            screenOptions={{ headerTitleAlign: 'center' }}
+          >
             <RootStack.Screen
               name="Main"
               component={BottomNavigator}
@@ -62,8 +49,11 @@ function RootStackNavigator() {
               component={CreateItemScreen}
               options={{
                 title: I18n.t('createItemTitle'),
-                headerLeft: () => (Platform.OS === 'ios' ? CancelHeader() : null),
-                headerRight: () => (Platform.OS === 'ios' ? null : CancelHeader()),
+                headerLeft: () =>
+                  NavigationHeaderButton({
+                    text: I18n.t('cancel'),
+                    onPress: () => navigation.goBack(),
+                  }),
               }}
             />
             <RootStack.Screen

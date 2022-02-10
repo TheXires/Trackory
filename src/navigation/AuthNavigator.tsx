@@ -20,7 +20,7 @@ function AuthNavigator() {
       <AuthStack.Screen
         name="ForgotPassword"
         component={ForgotPasswordScreen}
-        options={{ headerShown: true }}
+        options={{ headerShown: true, headerTitleAlign: 'center' }}
       />
     </AuthStack.Navigator>
   );
