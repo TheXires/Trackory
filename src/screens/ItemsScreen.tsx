@@ -14,8 +14,8 @@ import { ItemsNavigationProp } from '../navigation/types.navigation';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingHorizontal: 15,
+    paddingTop: 15,
   },
 });
 

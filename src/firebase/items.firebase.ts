@@ -134,7 +134,7 @@ export const firebaseAddItem = async (
  * @param itemId
  * @returns
  */
-export const firebaseRemoveItem = async (itemId: string): Promise<1 | -1> => {
+export const firebaseRemoveItem = async (itemId: string): Promise<void> => {
   try {
     const currentUserId = auth().currentUser?.uid;
     if (!currentUserId) throw 'no current user found';
@@ -144,9 +144,8 @@ export const firebaseRemoveItem = async (itemId: string): Promise<1 | -1> => {
       .collection('items')
       .doc(itemId)
       .delete();
-    return 1;
   } catch (error) {
     console.error('removeItem error: ', error);
+    throw "firebase/unknown"
   }
-  return -1;
 };

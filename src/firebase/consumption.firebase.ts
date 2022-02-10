@@ -29,6 +29,7 @@ export const firebaseGetConsumptions = async (
   return [];
 };
 
+// TODO funktion vereinfachen, da sie zu komplex ist
 /**
  * adds an item to consumed items, if it was not consumed on that day already,
  * changes the quantity of it, if it was, removes it, if the new quantity
