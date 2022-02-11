@@ -13,21 +13,6 @@ import { firebaseSignOut } from '../firebase/auth.firebase';
 import { SettingsContextType } from '../interfaces/context';
 import { SettingsNavigationProp } from '../navigation/types.navigation';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  item: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    height: 70,
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-});
-
 function SettingsScreen() {
   const { colors } = useTheme();
   const navigation = useNavigation<SettingsNavigationProp>();
@@ -166,3 +151,18 @@ function SettingsScreen() {
 }
 
 export default SettingsScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  item: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 70,
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+});

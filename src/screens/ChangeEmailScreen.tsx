@@ -10,20 +10,6 @@ import { firebaseChangeEmail } from '../firebase/auth.firebase';
 import { LoadingContextType } from '../interfaces/context';
 import { ChangeEmailNavigationProp } from '../navigation/types.navigation';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 10,
-    flexDirection: 'column',
-    padding: 15,
-  },
-  infoText: {
-    fontSize: 10,
-    marginTop: 5,
-    opacity: 0.6,
-    paddingHorizontal: 15,
-  },
-});
-
 function ChangeEmailScreen() {
   const { colors } = useTheme();
   const navigation = useNavigation<ChangeEmailNavigationProp>();
@@ -80,3 +66,17 @@ function ChangeEmailScreen() {
 }
 
 export default ChangeEmailScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 10,
+    flexDirection: 'column',
+    padding: 15,
+  },
+  infoText: {
+    fontSize: 10,
+    marginTop: 5,
+    opacity: 0.6,
+    paddingHorizontal: 15,
+  },
+});

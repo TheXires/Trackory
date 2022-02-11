@@ -9,13 +9,6 @@ interface Props {
   targetScreen: string;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginRight: 15,
-    padding: 5,
-  },
-});
-
 function HeaderRightButton({ targetScreen }: Props) {
   // TODO hier eine Lösung für die Typen finden
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,3 +26,10 @@ function HeaderRightButton({ targetScreen }: Props) {
 }
 
 export default HeaderRightButton;
+
+const styles = StyleSheet.create({
+  container: {
+    marginRight: 15,
+    padding: 5,
+  },
+});

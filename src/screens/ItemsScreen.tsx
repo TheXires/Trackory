@@ -11,14 +11,6 @@ import { ItemContextType } from '../interfaces/context';
 import { Item } from '../interfaces/item';
 import { ItemsNavigationProp } from '../navigation/types.navigation';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 15,
-    paddingTop: 15,
-  },
-});
-
 function ItemsScreen() {
   const { colors } = useTheme();
   const navigation = useNavigation<ItemsNavigationProp>();
@@ -70,3 +62,11 @@ function ItemsScreen() {
 }
 
 export default ItemsScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 15,
+    paddingTop: 15,
+  },
+});

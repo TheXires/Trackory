@@ -8,6 +8,27 @@ interface Props {
   onPress: () => void;
 }
 
+function AddNewItemCard({ onPress }: Props) {
+  const { colors } = useTheme();
+
+  return (
+    <View style={styles.container}>
+      <Pressable onPress={onPress}>
+        <View style={[styles.box, { borderColor: colors.primary }]}>
+          <View style={styles.innerBox}>
+            <Feather name="plus" style={[styles.icon, { color: colors.primary }]} />
+            <Text style={[styles.text, { color: colors.primary }]}>
+              {I18n.t('create')}
+            </Text>
+          </View>
+        </View>
+      </Pressable>
+    </View>
+  );
+}
+
+export default AddNewItemCard;
+
 const styles = StyleSheet.create({
   box: {
     alignItems: 'center',
@@ -36,24 +57,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-function AddNewItemCard({ onPress }: Props) {
-  const { colors } = useTheme();
-
-  return (
-    <View style={styles.container}>
-      <Pressable onPress={onPress}>
-        <View style={[styles.box, { borderColor: colors.primary }]}>
-          <View style={styles.innerBox}>
-            <Feather name="plus" style={[styles.icon, { color: colors.primary }]} />
-            <Text style={[styles.text, { color: colors.primary }]}>
-              {I18n.t('create')}
-            </Text>
-          </View>
-        </View>
-      </Pressable>
-    </View>
-  );
-}
-
-export default AddNewItemCard;

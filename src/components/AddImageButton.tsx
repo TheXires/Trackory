@@ -9,26 +9,6 @@ interface Props {
   onPress: () => void;
 }
 
-const styles = StyleSheet.create({
-  addPhotoButton: {
-    alignItems: 'center',
-    aspectRatio: 1,
-    borderColor: permanentColors.primary,
-    borderRadius: 25,
-    borderWidth: 6,
-    justifyContent: 'center',
-    width: 150,
-  },
-  addPhotoButtonContainer: {
-    alignItems: 'center',
-  },
-  addPhotoButtonText: {
-    color: permanentColors.primary,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-});
-
 function AddImageButton({ imageUri, onPress }: Props) {
   return (
     <Pressable style={styles.addPhotoButtonContainer} onPress={onPress}>
@@ -55,3 +35,23 @@ function AddImageButton({ imageUri, onPress }: Props) {
 }
 
 export default AddImageButton;
+
+const styles = StyleSheet.create({
+  addPhotoButton: {
+    alignItems: 'center',
+    aspectRatio: 1,
+    borderColor: permanentColors.primary,
+    borderRadius: 25,
+    borderWidth: 6,
+    justifyContent: 'center',
+    width: 150,
+  },
+  addPhotoButtonContainer: {
+    alignItems: 'center',
+  },
+  addPhotoButtonText: {
+    color: permanentColors.primary,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});

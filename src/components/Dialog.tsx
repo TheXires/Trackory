@@ -7,6 +7,19 @@ interface Props {
   children: React.ReactNode;
 }
 
+function Dialog({ show, onClose, children }: Props) {
+  if (!show) return null;
+
+  return (
+    <View style={styles.container}>
+      <Pressable style={styles.background} onPress={() => onClose()} />
+      <View style={styles.content}>{children}</View>
+    </View>
+  );
+}
+
+export default Dialog;
+
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#00000088',
@@ -29,16 +42,3 @@ const styles = StyleSheet.create({
     width: 300,
   },
 });
-
-function Dialog({ show, onClose, children }: Props) {
-  if (!show) return null;
-
-  return (
-    <View style={styles.container}>
-      <Pressable style={styles.background} onPress={() => onClose()} />
-      <View style={styles.content}>{children}</View>
-    </View>
-  );
-}
-
-export default Dialog;

@@ -14,35 +14,6 @@ interface Props {
   onClose: () => void;
 }
 
-const styles = StyleSheet.create({
-  buttonContainer: {
-    alignItems: 'flex-end',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    width: '100%',
-  },
-  container: {
-    padding: 5,
-  },
-  dialogButton: {
-    alignItems: 'flex-end',
-    marginRight: 5,
-    padding: 5,
-  },
-  dialogHeader: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  inputContainer: {
-    borderBottomColor: '#00000099',
-    borderBottomWidth: 1,
-    marginBottom: 10,
-    marginTop: 10,
-  },
-});
-
 function CalorieTargetDialog({ show, onClose }: Props) {
   const { settings, setSettings } = useContext<SettingsContextType>(SettingsContext);
   const [calorieTarget, setCalorieTarget] = useState<number | undefined>(
@@ -104,3 +75,32 @@ function CalorieTargetDialog({ show, onClose }: Props) {
 }
 
 export default CalorieTargetDialog;
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    alignItems: 'flex-end',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '100%',
+  },
+  container: {
+    padding: 5,
+  },
+  dialogButton: {
+    alignItems: 'flex-end',
+    marginRight: 5,
+    padding: 5,
+  },
+  dialogHeader: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  inputContainer: {
+    borderBottomColor: '#00000099',
+    borderBottomWidth: 1,
+    marginBottom: 10,
+    marginTop: 10,
+  },
+});

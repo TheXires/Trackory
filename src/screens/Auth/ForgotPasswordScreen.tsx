@@ -9,20 +9,6 @@ import { firebaseRequestPasswordReset } from '../../firebase/auth.firebase';
 import { LoadingContextType } from '../../interfaces/context';
 import { ForgotPasswordNavigationProp } from '../../navigation/types.navigation';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 10,
-    flexDirection: 'column',
-    padding: 15,
-  },
-  infoText: {
-    fontSize: 10,
-    marginTop: 5,
-    opacity: 0.6,
-    paddingHorizontal: 15,
-  },
-});
-
 function ForgotPasswordScreen() {
   const navigation = useNavigation<ForgotPasswordNavigationProp>();
 
@@ -72,3 +58,17 @@ function ForgotPasswordScreen() {
 }
 
 export default ForgotPasswordScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 10,
+    flexDirection: 'column',
+    padding: 15,
+  },
+  infoText: {
+    fontSize: 10,
+    marginTop: 5,
+    opacity: 0.6,
+    paddingHorizontal: 15,
+  },
+});

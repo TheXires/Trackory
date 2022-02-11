@@ -7,32 +7,6 @@ import CustomButton from '../../components/CustomButton';
 import { LandingPageNavigationProp } from '../../navigation/types.navigation';
 import { permanentColors } from '../../theme/colors';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  heading: {
-    fontSize: 26,
-    fontWeight: 'bold',
-  },
-  headingRow: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  lowerContainer: {
-    paddingBottom: 35,
-    paddingLeft: 15,
-    paddingRight: 15,
-    width: '100%',
-  },
-  upperContainer: {
-    marginTop: 70,
-  },
-});
-
 function LandingScreen() {
   const navigation = useNavigation<LandingPageNavigationProp>();
 
@@ -76,3 +50,29 @@ function LandingScreen() {
 }
 
 export default LandingScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  heading: {
+    fontSize: 26,
+    fontWeight: 'bold',
+  },
+  headingRow: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  lowerContainer: {
+    paddingBottom: 35,
+    paddingLeft: 15,
+    paddingRight: 15,
+    width: '100%',
+  },
+  upperContainer: {
+    marginTop: 70,
+  },
+});

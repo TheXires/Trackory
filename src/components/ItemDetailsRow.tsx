@@ -8,20 +8,6 @@ interface Props {
   value: number | null;
 }
 
-const styles = StyleSheet.create({
-  row: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 5,
-  },
-  text: {
-    fontSize: 16,
-    marginVertical: 5,
-    paddingVertical: 15,
-  },
-});
-
 function ItemDetailsRow({ description, unit, value }: Props) {
   const { colors } = useTheme();
 
@@ -36,3 +22,17 @@ function ItemDetailsRow({ description, unit, value }: Props) {
 }
 
 export default ItemDetailsRow;
+
+const styles = StyleSheet.create({
+  row: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 5,
+  },
+  text: {
+    fontSize: 16,
+    marginVertical: 5,
+    paddingVertical: 15,
+  },
+});

@@ -7,15 +7,6 @@ interface Props {
   onPress: () => void;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 15,
-  },
-  text: {
-    fontSize: 17,
-  },
-});
-
 function NavigationHeaderButton({ text, onPress }: Props) {
   const { colors } = useTheme();
 
@@ -27,3 +18,12 @@ function NavigationHeaderButton({ text, onPress }: Props) {
 }
 
 export default NavigationHeaderButton;
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 15,
+  },
+  text: {
+    fontSize: 17,
+  },
+});

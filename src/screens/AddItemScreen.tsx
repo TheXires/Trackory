@@ -16,14 +16,6 @@ import {
 import { Item } from '../interfaces/item';
 import { AddItemNavigationProp } from '../navigation/types.navigation';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 15,
-    paddingTop: 15,
-  },
-});
-
 function Separator() {
   return <View style={{ height: 20 }} />;
 }
@@ -87,3 +79,11 @@ function AddItemScreen() {
 }
 
 export default AddItemScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 15,
+    paddingTop: 15,
+  },
+});

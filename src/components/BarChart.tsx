@@ -10,24 +10,6 @@ interface Props {
   view: 'week' | 'year';
 }
 
-const styles = StyleSheet.create({
-  chart: {
-    alignItems: 'center',
-    borderRadius: 20,
-    display: 'flex',
-    paddingBottom: 20,
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: 20,
-    width: '100%',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: -15,
-  },
-});
-
 const dayInMs = 24 * 60 * 60 * 1000;
 
 const now = Date.now();
@@ -44,7 +26,6 @@ function CustomBarChart({ title, view }: Props) {
     switch (view) {
       case 'week':
         const newWeekLabels: string[] = [];
-        let counter1 = 6;
         let i, j;
         for (i = 0, j = 6; i < 7; i++, j--) {
           newWeekLabels[i] = dateformat(now - j * dayInMs, 'dd.mm');
@@ -99,3 +80,21 @@ function CustomBarChart({ title, view }: Props) {
 }
 
 export default CustomBarChart;
+
+const styles = StyleSheet.create({
+  chart: {
+    alignItems: 'center',
+    borderRadius: 20,
+    display: 'flex',
+    paddingBottom: 20,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 20,
+    width: '100%',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: -15,
+  },
+});

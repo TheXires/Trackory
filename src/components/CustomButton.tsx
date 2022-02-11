@@ -13,20 +13,6 @@ interface Props {
   textColor?: string;
 }
 
-const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    borderRadius: 25,
-    height: 50,
-    justifyContent: 'center',
-    paddingHorizontal: 25,
-  },
-  buttonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-});
-
 function CustomButton({
   value,
   onPress,
@@ -53,3 +39,17 @@ function CustomButton({
 }
 
 export default CustomButton;
+
+const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    borderRadius: 25,
+    height: 50,
+    justifyContent: 'center',
+    paddingHorizontal: 25,
+  },
+  buttonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+});

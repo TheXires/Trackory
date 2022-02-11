@@ -10,37 +10,6 @@ interface Props {
   calorieTarget: number;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    height: 80,
-    justifyContent: 'space-between',
-    paddingBottom: 5,
-    paddingTop: 5,
-    width: '100%',
-  },
-  innerProgressbar: {
-    backgroundColor: 'green',
-    borderRadius: 8,
-    height: 16,
-    width: '80%',
-  },
-  outerProgressbar: {
-    backgroundColor: 'lightgreen',
-    borderRadius: 8,
-    height: 16,
-    width: '50%',
-  },
-  subtext: {
-    fontSize: 10,
-    marginLeft: 8,
-    opacity: 0.6,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
-
 function HomeProgress({ todaysCalories, calorieTarget }: Props) {
   const { colors } = useTheme();
 
@@ -73,3 +42,34 @@ function HomeProgress({ todaysCalories, calorieTarget }: Props) {
 }
 
 export default HomeProgress;
+
+const styles = StyleSheet.create({
+  container: {
+    height: 80,
+    justifyContent: 'space-between',
+    paddingBottom: 5,
+    paddingTop: 5,
+    width: '100%',
+  },
+  innerProgressbar: {
+    backgroundColor: 'green',
+    borderRadius: 8,
+    height: 16,
+    width: '80%',
+  },
+  outerProgressbar: {
+    backgroundColor: 'lightgreen',
+    borderRadius: 8,
+    height: 16,
+    width: '50%',
+  },
+  subtext: {
+    fontSize: 10,
+    marginLeft: 8,
+    opacity: 0.6,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});

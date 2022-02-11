@@ -10,17 +10,6 @@ import { SettingsContext } from '../contexts/SettingsContext';
 import { ConsumedItem } from '../interfaces/item';
 import { ConsumedNavigationProp } from '../navigation/types.navigation';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  textDark: {
-    color: 'red',
-  },
-});
-
 function HomeScreen() {
   const { colors } = useTheme();
   const navigation = useNavigation<ConsumedNavigationProp>();
@@ -86,3 +75,14 @@ function HomeScreen() {
 }
 
 export default HomeScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  textDark: {
+    color: 'red',
+  },
+});

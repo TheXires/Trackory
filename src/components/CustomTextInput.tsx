@@ -15,14 +15,6 @@ interface Props {
   value: string;
 }
 
-const styles = StyleSheet.create({
-  heading: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginBottom: 3,
-  },
-});
-
 function CustomTextInput({
   autoCompleteType = undefined,
   autoCorrect = false,
@@ -58,3 +50,11 @@ function CustomTextInput({
 }
 
 export default CustomTextInput;
+
+const styles = StyleSheet.create({
+  heading: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 3,
+  },
+});

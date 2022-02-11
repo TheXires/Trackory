@@ -12,14 +12,6 @@ interface Props {
   value: number | undefined;
 }
 
-const styles = StyleSheet.create({
-  heading: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginBottom: 3,
-  },
-});
-
 function CustomNumberInput({
   hideTitle = false,
   onChangeText,
@@ -49,3 +41,11 @@ function CustomNumberInput({
 }
 
 export default CustomNumberInput;
+
+const styles = StyleSheet.create({
+  heading: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 3,
+  },
+});

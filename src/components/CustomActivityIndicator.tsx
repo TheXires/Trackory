@@ -8,12 +8,6 @@ interface Props {
   style?: StyleProp<ViewStyle> | undefined;
 }
 
-const styles = StyleSheet.create({
-  activityIndicator: {
-    margin: 25,
-  },
-});
-
 function CustomActivityIndicator({
   size = 'large',
   color = permanentColors.primary,
@@ -29,3 +23,9 @@ function CustomActivityIndicator({
 }
 
 export default CustomActivityIndicator;
+
+const styles = StyleSheet.create({
+  activityIndicator: {
+    margin: 25,
+  },
+});

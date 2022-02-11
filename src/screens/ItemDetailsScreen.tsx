@@ -20,41 +20,6 @@ import {
 } from '../navigation/types.navigation';
 import { permanentColors } from '../theme/colors';
 
-const styles = StyleSheet.create({
-  buttonContainer: {
-    alignItems: 'center',
-    flex: 1,
-    paddingBottom: Platform.OS === 'ios' ? 30 : 15,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  dataContainer: {
-    paddingHorizontal: 10,
-    paddingVertical: 15,
-  },
-  image: {
-    aspectRatio: 1 / 1,
-    borderRadius: 100,
-    height: 200,
-    marginBottom: 10,
-  },
-  imageContainer: {
-    alignItems: 'center',
-    height: '40%',
-    marginVertical: 20,
-  },
-  itemName: {
-    fontSize: 26,
-    fontWeight: 'bold',
-  },
-  text: {
-    fontSize: 16,
-    marginVertical: 5,
-  },
-});
-
 function ItemDetailsScreen() {
   const { colors } = useTheme();
   const navigation = useNavigation<ItemDetailsNavigationProp>();
@@ -155,3 +120,38 @@ function ItemDetailsScreen() {
 }
 
 export default ItemDetailsScreen;
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    alignItems: 'center',
+    flex: 1,
+    paddingBottom: Platform.OS === 'ios' ? 30 : 15,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  dataContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+  },
+  image: {
+    aspectRatio: 1 / 1,
+    borderRadius: 100,
+    height: 200,
+    marginBottom: 10,
+  },
+  imageContainer: {
+    alignItems: 'center',
+    height: '40%',
+    marginVertical: 20,
+  },
+  itemName: {
+    fontSize: 26,
+    fontWeight: 'bold',
+  },
+  text: {
+    fontSize: 16,
+    marginVertical: 5,
+  },
+});

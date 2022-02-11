@@ -11,66 +11,6 @@ interface Props {
   onSave: (quantity: number) => void;
 }
 
-const styles = StyleSheet.create({
-  bottomBar: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingRight: 10,
-    width: '100%',
-  },
-  bottomEditContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: 80,
-  },
-  container: {
-    backgroundColor: permanentColors.primary,
-    borderRadius: 25,
-    flexDirection: 'row',
-    height: 120,
-    width: '100%',
-  },
-  icon: {
-    color: permanentColors.textWhite,
-    padding: 5,
-  },
-  image: {
-    height: '100%',
-    width: '100%',
-  },
-  imageContainer: {
-    borderBottomLeftRadius: 25,
-    borderTopLeftRadius: 25,
-    height: 120,
-    overflow: 'hidden',
-    width: '25%',
-  },
-  informationContainer: {
-    height: '100%',
-    justifyContent: 'space-between',
-    padding: 10,
-    width: '75%',
-  },
-  quantity: {
-    color: permanentColors.textWhite,
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  text: {
-    color: permanentColors.textWhite,
-    fontSize: 13,
-    opacity: 0.6,
-  },
-  title: {
-    color: permanentColors.textWhite,
-    fontSize: 15,
-    fontWeight: 'bold',
-    opacity: 0.87,
-  },
-});
-
 function OverviewItem({ consumedItem, onSave }: Props) {
   const [edit, setEdit] = useState(false);
   const [quantity, setQuantity] = useState(consumedItem.quantity);
@@ -150,3 +90,63 @@ function OverviewItem({ consumedItem, onSave }: Props) {
 }
 
 export default OverviewItem;
+
+const styles = StyleSheet.create({
+  bottomBar: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingRight: 10,
+    width: '100%',
+  },
+  bottomEditContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 80,
+  },
+  container: {
+    backgroundColor: permanentColors.primary,
+    borderRadius: 25,
+    flexDirection: 'row',
+    height: 120,
+    width: '100%',
+  },
+  icon: {
+    color: permanentColors.textWhite,
+    padding: 5,
+  },
+  image: {
+    height: '100%',
+    width: '100%',
+  },
+  imageContainer: {
+    borderBottomLeftRadius: 25,
+    borderTopLeftRadius: 25,
+    height: 120,
+    overflow: 'hidden',
+    width: '25%',
+  },
+  informationContainer: {
+    height: '100%',
+    justifyContent: 'space-between',
+    padding: 10,
+    width: '75%',
+  },
+  quantity: {
+    color: permanentColors.textWhite,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  text: {
+    color: permanentColors.textWhite,
+    fontSize: 13,
+    opacity: 0.6,
+  },
+  title: {
+    color: permanentColors.textWhite,
+    fontSize: 15,
+    fontWeight: 'bold',
+    opacity: 0.87,
+  },
+});

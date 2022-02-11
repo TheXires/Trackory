@@ -5,13 +5,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import CustomBarChart from '../components/BarChart';
 import CustomButton from '../components/CustomButton';
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 15,
-    paddingHorizontal: 15,
-  },
-});
-
 function StatisticsScreen() {
   const [view, setView] = useState<'week' | 'year'>('week');
 
@@ -32,3 +25,10 @@ function StatisticsScreen() {
 }
 
 export default StatisticsScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 15,
+    paddingHorizontal: 15,
+  },
+});

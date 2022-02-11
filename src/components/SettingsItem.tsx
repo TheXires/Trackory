@@ -10,17 +10,6 @@ interface Props {
   color?: string | undefined;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    height: 70,
-    justifyContent: 'space-between',
-    padding: 10,
-    width: '100%',
-  },
-});
-
 function SettingsItem({ onPress, left, right = null, color = undefined }: Props) {
   const { colors } = useTheme();
 
@@ -37,3 +26,14 @@ function SettingsItem({ onPress, left, right = null, color = undefined }: Props)
 }
 
 export default SettingsItem;
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 70,
+    justifyContent: 'space-between',
+    padding: 10,
+    width: '100%',
+  },
+});

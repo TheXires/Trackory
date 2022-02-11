@@ -9,6 +9,25 @@ interface Props {
   onPress: () => void;
 }
 
+function ItemCard({ item, onPress }: Props) {
+  const { colors } = useTheme();
+
+  const image = item.imgUrl ? { uri: item.imgUrl } : placeholderImg;
+
+  return (
+    <View style={styles.container}>
+      <Pressable onPress={onPress}>
+        <Image source={image} style={styles.image} />
+        <View style={styles.textContainer}>
+          <Text style={[styles.text, { color: colors.text }]}>{item.name}</Text>
+        </View>
+      </Pressable>
+    </View>
+  );
+}
+
+export default ItemCard;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -29,22 +48,3 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
-
-function ItemCard({ item, onPress }: Props) {
-  const { colors } = useTheme();
-
-  const image = item.imgUrl ? { uri: item.imgUrl } : placeholderImg;
-
-  return (
-    <View style={styles.container}>
-      <Pressable onPress={onPress}>
-        <Image source={image} style={styles.image} />
-        <View style={styles.textContainer}>
-          <Text style={[styles.text, { color: colors.text }]}>{item.name}</Text>
-        </View>
-      </Pressable>
-    </View>
-  );
-}
-
-export default ItemCard;

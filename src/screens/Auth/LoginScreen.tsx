@@ -20,31 +20,6 @@ import { firebaseSignIn } from '../../firebase/auth.firebase';
 import { LoadingContextType } from '../../interfaces/context';
 import { LoginNavigationProp } from '../../navigation/types.navigation';
 
-const styles = StyleSheet.create({
-  bottomContainer: {
-    paddingTop: '10%',
-    width: '100%',
-  },
-  container: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-    padding: 15,
-  },
-  heading: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    marginBottom: 15,
-  },
-  image: {
-    aspectRatio: 1107 / 728,
-    height: '30%',
-  },
-  textInput: {
-    fontSize: 16,
-  },
-});
-
 function LoginScreen() {
   const { colors } = useTheme();
   const navigation = useNavigation<LoginNavigationProp>();
@@ -118,3 +93,28 @@ function LoginScreen() {
 }
 
 export default LoginScreen;
+
+const styles = StyleSheet.create({
+  bottomContainer: {
+    paddingTop: '10%',
+    width: '100%',
+  },
+  container: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    padding: 15,
+  },
+  heading: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 15,
+  },
+  image: {
+    aspectRatio: 1107 / 728,
+    height: '30%',
+  },
+  textInput: {
+    fontSize: 16,
+  },
+});

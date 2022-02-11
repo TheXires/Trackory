@@ -7,28 +7,6 @@ interface Props {
   progress: number;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    width: '100%',
-  },
-  datacontainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '20%',
-  },
-  progress: {
-    borderRadius: 8,
-    height: 16,
-  },
-  progressbar: {
-    backgroundColor: permanentColors.border,
-    borderRadius: 8,
-    height: 16,
-    width: '80%',
-  },
-});
-
 function Progressbar({ progress }: Props) {
   const percent = progress * 100;
   const { colors } = useTheme();
@@ -55,3 +33,25 @@ function Progressbar({ progress }: Props) {
 }
 
 export default Progressbar;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    width: '100%',
+  },
+  datacontainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '20%',
+  },
+  progress: {
+    borderRadius: 8,
+    height: 16,
+  },
+  progressbar: {
+    backgroundColor: permanentColors.border,
+    borderRadius: 8,
+    height: 16,
+    width: '80%',
+  },
+});

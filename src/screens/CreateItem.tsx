@@ -15,26 +15,6 @@ import { NewItem } from '../interfaces/item';
 import { CreateItemNavigationProp } from '../navigation/types.navigation';
 import { permanentColors } from '../theme/colors';
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 15,
-    paddingTop: 15,
-  },
-  expandButton: {
-    color: permanentColors.primary,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  expandButtonContainer: {
-    alignItems: 'center',
-    marginBottom: 50,
-    marginTop: 25,
-  },
-  inputContainer: {
-    width: '100%',
-  },
-});
-
 function CreateItemScreen() {
   const { addItem } = useContext<ItemContextType>(ItemContext);
   const { colors } = useTheme();
@@ -174,3 +154,23 @@ function CreateItemScreen() {
 }
 
 export default CreateItemScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 15,
+    paddingTop: 15,
+  },
+  expandButton: {
+    color: permanentColors.primary,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  expandButtonContainer: {
+    alignItems: 'center',
+    marginBottom: 50,
+    marginTop: 25,
+  },
+  inputContainer: {
+    width: '100%',
+  },
+});

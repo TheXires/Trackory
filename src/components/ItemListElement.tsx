@@ -12,6 +12,27 @@ interface Props {
   onPress: () => void;
 }
 
+function ItemListElement({ item, onPress }: Props) {
+  const { colors } = useTheme();
+
+  const image = item.imgUrl ? { uri: item.imgUrl } : placeholderImg;
+
+  return (
+    <>
+      <RectButton style={styles.container} onPress={() => onPress()}>
+        <View style={styles.dataContainer}>
+          <Image style={styles.image} source={image} />
+          <Text style={[styles.itemName, { color: colors.text }]}>{item.name}</Text>
+        </View>
+        <Feather name="chevron-right" size={24} color={colors.text} />
+      </RectButton>
+      <HorizontalLine />
+    </>
+  );
+}
+
+export default ItemListElement;
+
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -34,24 +55,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-function ItemListElement({ item, onPress }: Props) {
-  const { colors } = useTheme();
-
-  const image = item.imgUrl ? { uri: item.imgUrl } : placeholderImg;
-
-  return (
-    <>
-      <RectButton style={styles.container} onPress={() => onPress()}>
-        <View style={styles.dataContainer}>
-          <Image style={styles.image} source={image} />
-          <Text style={[styles.itemName, { color: colors.text }]}>{item.name}</Text>
-        </View>
-        <Feather name="chevron-right" size={24} color={colors.text} />
-      </RectButton>
-      <HorizontalLine />
-    </>
-  );
-}
-
-export default ItemListElement;
