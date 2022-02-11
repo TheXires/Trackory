@@ -5,6 +5,7 @@ import {
   firebaseGetConsumptions,
 } from '../firebase/consumption.firebase';
 import { HistoryContextType } from '../interfaces/context';
+import { CustomError } from '../interfaces/error';
 import { ConsumedItem, Item } from '../interfaces/item';
 
 export const HistoryContext = createContext({} as HistoryContextType);
@@ -28,15 +29,11 @@ export function HistoryProvider(props: any) {
     quantity: number,
   ) => {
     try {
-      const res = await firebaseConsumeItem(daysInThePast, item, quantity);
-      // TODO übersetzung
-      if (res === -1) {
-        Alert.alert('toAdd', 'toAdd', [{ text: 'OK' }]);
-        throw 'unable to add item to consumptions';
-      }
+      await firebaseConsumeItem(daysInThePast, item, quantity);
       refreshConsumedItems(daysInThePast, true);
     } catch (error) {
       console.error(`consumeItem ${error}`);
+      throw error;
     }
   };
 

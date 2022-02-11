@@ -1,17 +1,19 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import { CustomError } from '../interfaces/error';
 import { Item, NewItem } from '../interfaces/item';
 import { firebaseImageUpload } from './fileupload.firebase';
 
 /**
  * get all items from firestore
  *
+ * @error auth/no-valid-user
  * @returns array of available items
  */
 export const firebaseGetAllItems = async (): Promise<Item[]> => {
   try {
     const currentUserId = auth().currentUser?.uid;
-    if (!currentUserId) throw 'no current user found';
+    if (!currentUserId) throw new CustomError('auth/no-valid-user');
     const response = await firestore()
       .collection('users')
       .doc(currentUserId)
@@ -32,20 +34,21 @@ export const firebaseGetAllItems = async (): Promise<Item[]> => {
     return items;
   } catch (error) {
     console.error('getAllItems error: ', error);
+    throw error;
   }
-  return [];
 };
 
 /**
  * get an item from firestore by id
  *
  * @param itemId id of the item to get
+ * @error auth/no-valid-user
  * @returns the item on success, otherwise null
  */
 export const firebaseGetItem = async (itemId: string): Promise<Item | null> => {
   try {
     const currentUserId = auth().currentUser?.uid;
-    if (!currentUserId) throw 'no current user found';
+    if (!currentUserId) throw new CustomError('auth/no-valid-user');
     const response = await firestore()
       .collection('users')
       .doc(currentUserId)
@@ -59,13 +62,14 @@ export const firebaseGetItem = async (itemId: string): Promise<Item | null> => {
     } as Item;
   } catch (error) {
     console.error('getItem error: ', error);
+    throw error;
   }
-  return null;
 };
 
 /**
  * updates an existing item
  *
+ * @error auth/no-valid-user
  * @returns 1 on success, otherwise -1
  */
 export const firebaseUpdateItem = async (
@@ -75,7 +79,7 @@ export const firebaseUpdateItem = async (
   const updatedItem = item;
   try {
     const currentUserId = auth().currentUser?.uid;
-    if (!currentUserId) throw 'no current user found';
+    if (!currentUserId) throw new CustomError('auth/no-valid-user');
     let downloadUrl;
     if (newImageUri) {
       downloadUrl = await firebaseImageUpload(item.id, newImageUri);
@@ -91,52 +95,50 @@ export const firebaseUpdateItem = async (
     return 1;
   } catch (error) {
     console.error('updateItem error: ', error);
+    throw error;
   }
-  return -1;
 };
 
 /**
  * adds an item to firestore and returns the document id
  *
  * @param newItem item to add to firestore
+ * @error auth/no-valid-user
  * @returns document id on success, otherwise null
  */
 export const firebaseAddItem = async (
   newItem: NewItem,
   imageUri?: string | undefined,
-): Promise<Item | null> => {
+): Promise<void> => {
   try {
     const currentUserId = auth().currentUser?.uid;
-    if (!currentUserId) throw 'no current user found';
+    if (!currentUserId) throw new CustomError('auth/no-valid-user');
     const response = await firestore()
       .collection('users')
       .doc(currentUserId)
       .collection('items')
       .add(newItem);
-    if (!response) throw 'unable to create item in firestore';
-    if (!imageUri) return { id: response.id, ...newItem };
+    if (!imageUri) return;
     const downloadUrl = await firebaseImageUpload(response.id, imageUri);
-    if (!downloadUrl) throw 'unable to upload image';
     const itemWithImg: Item = { id: response.id, ...newItem, imgUrl: downloadUrl };
-    const updateResponse = await firebaseUpdateItem(itemWithImg);
-    if (updateResponse === -1) throw 'unable to add image to item';
-    return itemWithImg;
+    await firebaseUpdateItem(itemWithImg);
   } catch (error) {
     console.error('addNewItem error: ', error);
+    throw error;
   }
-  return null;
 };
 
 /**
  * delete an item from firestore by id
  *
  * @param itemId
+ * @error auth/no-valid-user
  * @returns
  */
 export const firebaseRemoveItem = async (itemId: string): Promise<void> => {
   try {
     const currentUserId = auth().currentUser?.uid;
-    if (!currentUserId) throw 'no current user found';
+    if (!currentUserId) throw new CustomError('auth/no-valid-user');
     await firestore()
       .collection('users')
       .doc(currentUserId)
@@ -145,6 +147,6 @@ export const firebaseRemoveItem = async (itemId: string): Promise<void> => {
       .delete();
   } catch (error) {
     console.error('removeItem error: ', error);
-    throw 'firebase/unknown';
+    throw error;
   }
 };

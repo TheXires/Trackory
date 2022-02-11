@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
-import { Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
+import { Alert, Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
 import exportAdapter from '../adapter/exportData/exportDataAdapter';
 import importAdapter from '../adapter/importData/importDataAdapter';
 import CalorieTargetDialog from '../components/CalorieTargetDialog';
@@ -31,8 +31,8 @@ function SettingsScreen() {
   const signUserOut = async () => {
     try {
       await firebaseSignOut();
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      Alert.alert(I18n.t('errorTitle'), I18n.t(error.code), [{ text: 'OK' }]);
     }
   };
 

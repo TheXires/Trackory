@@ -13,6 +13,7 @@ import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseRemoveItem } from '../firebase/items.firebase';
 import { ItemContextType, LoadingContextType } from '../interfaces/context';
+import { CustomError } from '../interfaces/error';
 import { Item } from '../interfaces/item';
 import {
   ItemDetailsNavigationProp,
@@ -45,15 +46,14 @@ function ItemDetailsScreen() {
   const deleteItem = async () => {
     showLoadingPopup(true, I18n.t('deleteItem'));
     try {
-      if (!item?.id) throw 'no itemId to remove';
+      if (!item?.id) throw new CustomError('unexpectedError');
       await firebaseRemoveItem(item.id);
       refreshItems();
       showLoadingPopup(false);
       navigation.goBack();
-    } catch (error) {
+    } catch (error: any) {
       showLoadingPopup(false);
-      console.error(`unable to remove item: ${error}`);
-      Alert.alert(I18n.t('errorTitle'), I18n.t('unexpectedError'), [{ text: 'OK' }]);
+      Alert.alert(I18n.t('errorTitle'), I18n.t(error.code), [{ text: 'OK' }]);
     }
   };
 

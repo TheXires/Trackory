@@ -22,8 +22,8 @@ const exportJsonAdapter: ExportAdapter = {
         message: JSON.stringify(toShare),
       });
     } catch (error) {
-      Alert.alert(I18n.t('errorTitle'), I18n.t('exportError'), [{ text: 'OK' }]);
       console.error(`export error: ${error}`);
+      Alert.alert(I18n.t('errorTitle'), I18n.t('exportError'), [{ text: 'OK' }]);
     }
   },
 };

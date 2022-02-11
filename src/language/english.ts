@@ -24,9 +24,15 @@ export default {
   camera_unavailable: 'Camera not available',
   permission: 'Camera access denied',
 
+  // create Item
+  'create/no-name': 'A name is required to create the item',
+
+  // update Item
+
   // Firebase Auth
   loginErrorTitle: 'Login error',
   registrationErrorTitle: 'Registration error',
+  'auth/no-valid-user': 'Please try to log in again',
   'auth/email-already-in-use': 'Email is already in use',
   'auth/invalid-email': 'Invalid email',
   'auth/operation-not-allowed': 'Auth server error',

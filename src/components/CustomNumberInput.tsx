@@ -1,7 +1,7 @@
 import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, TextInput } from 'react-native';
-import convertTextToInteger from '../util/numberconverter';
+import { convertTextToInteger } from '../util/numberconverter';
 import InputContainer from './InputContainer';
 
 interface Props {

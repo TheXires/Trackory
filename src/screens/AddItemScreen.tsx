@@ -41,14 +41,13 @@ function AddItemScreen() {
   }, [searchTerm, items]);
 
   const onPress = async (item: Item) => {
-    // TODO richtigen Text einfügen
-    showLoadingPopup(true, I18n.t('toAdd'));
+    showLoadingPopup(true, I18n.t('add'));
     try {
       await consumeItem(0, item, 1);
       showLoadingPopup(false);
       navigation.goBack();
     } catch (error) {
-      console.error(error);
+      console.error('AddItemScreen onPress:', error);
       showLoadingPopup(false);
     }
   };

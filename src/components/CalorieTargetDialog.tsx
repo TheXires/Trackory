@@ -6,7 +6,7 @@ import { SettingsContext } from '../contexts/SettingsContext';
 import { SettingsContextType } from '../interfaces/context';
 import { Settings } from '../interfaces/settings';
 import { permanentColors } from '../theme/colors';
-import convertTextToInteger from '../util/numberconverter';
+import { convertTextToInteger } from '../util/numberconverter';
 import Dialog from './Dialog';
 
 interface Props {
