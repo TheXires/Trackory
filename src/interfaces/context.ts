@@ -2,7 +2,6 @@ import { ConsumedItem, Item, NewItem } from './item';
 import { Settings } from './settings';
 
 export interface ItemContextType {
-  addItem: (newItem: NewItem, imageUri?: undefined | string) => Promise<void>;
   items: Item[];
   refreshItems: () => Promise<void>;
   refreshingItems: boolean;

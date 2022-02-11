@@ -1,133 +1,95 @@
 import { Feather } from '@expo/vector-icons';
-import { useNavigation, useTheme } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import I18n from 'i18n-js';
-import React, { useContext, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import update from 'immutability-helper';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { Alert, StyleSheet, Text, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import AddImageButton from '../components/AddImageButton';
-import CustomButton from '../components/CustomButton';
 import CustomNumberInput from '../components/CustomNumberInput';
 import CustomTextInput from '../components/CustomTextInput';
-import { ItemContext } from '../contexts/ItemContext';
+import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { ItemContextType, LoadingContextType } from '../interfaces/context';
-import { NewItem } from '../interfaces/item';
+import { firebaseAddItem } from '../firebase/items.firebase';
+import { LoadingContextType } from '../interfaces/context';
+import { CustomError } from '../interfaces/error';
+import { NewItem, NewItemPropertyType } from '../interfaces/item';
 import { CreateItemNavigationProp } from '../navigation/types.navigation';
 import { permanentColors } from '../theme/colors';
+import { takeImage } from '../util/image';
+import { createNewItem } from '../util/item';
 
 function CreateItemScreen() {
-  const { addItem } = useContext<ItemContextType>(ItemContext);
-  const { colors } = useTheme();
   const navigation = useNavigation<CreateItemNavigationProp>();
 
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
-  const [calories, setCalories] = useState<number>();
-  const [carbohydrate, setCarbohydrate] = useState<number>();
+  const [item, setItem] = useState<NewItem>({} as NewItem);
   const [expanded, setExpanded] = useState<boolean>(false);
-  const [fat, setFat] = useState<number>();
-  const [name, setName] = useState<string>('');
-  const [protein, setProtein] = useState<number>();
   const [imageUri, setImageUri] = useState<undefined | string>(undefined);
 
-  const handleCreation = async () => {
+  const handleCreation = useCallback(async () => {
     showLoadingPopup(true, I18n.t('create'));
-    if (name == null || name === '') return;
-    if (calories == null || calories < 0) return;
     try {
-      const newItem: NewItem = {
-        calories: calories ?? 0,
-        carbohydrates: carbohydrate ?? 0,
-        fat: fat ?? 0,
-        imgUrl: '',
-        name,
-        protein: protein ?? 0,
-      };
-      await addItem(newItem, imageUri);
+      if (!item.name || item.name === '') throw new CustomError('create/no-name');
+      await firebaseAddItem(createNewItem(item), imageUri);
       showLoadingPopup(false);
       navigation.goBack();
-    } catch (error) {
-      console.error(error);
-      // TODO übersetzung hinzufügen
-      Alert.alert(I18n.t('errorTitle'), 'to add', [{ text: 'OK' }]);
+    } catch (error: any) {
       showLoadingPopup(false);
+      Alert.alert(I18n.t('errorTitle'), I18n.t(error.code), [{ text: 'OK' }]);
     }
-  };
+  }, [item]);
 
-  const camera = async () => {
-    try {
-      const res = await launchCamera({
-        cameraType: 'back',
-        maxHeight: 400,
-        maxWidth: 400,
-        mediaType: 'photo',
-        quality: 0.9,
-      });
-      if (res.didCancel) return;
-      if (res.errorCode) throw res.errorCode;
-      if (!res.assets) return;
-      setImageUri(res.assets[0].uri);
-    } catch (error: any) {
-      Alert.alert(I18n.t('errorTitle'), I18n.t(error), [{ text: 'OK' }]);
-    }
-  };
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () =>
+        NavigationHeaderButton({
+          onPress: () => handleCreation(),
+          text: I18n.t('create'),
+        }),
+    });
+  }, [handleCreation]);
 
-  const pickImage = async () => {
-    try {
-      const res = await launchImageLibrary({
-        maxHeight: 400,
-        maxWidth: 400,
-        mediaType: 'photo',
-        quality: 0.9,
-        selectionLimit: 1,
-      });
-      if (res.didCancel) return;
-      if (res.errorCode) throw res.errorCode;
-      if (!res.assets) return;
-      setImageUri(res.assets[0].uri);
-    } catch (error: any) {
-      Alert.alert(I18n.t('errorTitle'), I18n.t(error), [{ text: 'OK' }]);
-    }
+  const change = (input: string | number | undefined, field: NewItemPropertyType) => {
+    setItem(update(item, { [field]: { $set: input } }));
   };
 
   return (
-    <>
-      <ScrollView
-        contentContainerStyle={[styles.container, { backgroundColor: colors.background }]}
-        bounces={false}
-      >
+    <KeyboardAwareScrollView bounces={false}>
+      <View style={styles.container}>
         <View style={styles.inputContainer}>
           <CustomTextInput
-            onChangeText={(text) => setName(text)}
+            onChangeText={(text) => change(text, 'name')}
             placeholder="Sandwich..."
             title={I18n.t('itemName')}
-            value={name}
+            value={item.name}
           />
           <CustomNumberInput
-            onChangeText={(input) => setCalories(input)}
+            onChangeText={(input) => change(input, 'calories')}
             placeholder="123"
             title={I18n.t('calories')}
-            value={calories}
+            value={item.calories}
           />
           {expanded && (
             <>
               <CustomNumberInput
-                onChangeText={(input) => setFat(input)}
+                onChangeText={(input) => change(input, 'carbohydrates')}
                 placeholder="123"
                 title={I18n.t('carbohydrates')}
-                value={carbohydrate}
+                value={item.carbohydrates}
               />
               <CustomNumberInput
-                onChangeText={(input) => setCarbohydrate(input)}
+                onChangeText={(input) => change(input, 'fat')}
                 placeholder="123"
                 title={I18n.t('fat')}
-                value={fat}
+                value={item.fat}
               />
               <CustomNumberInput
-                onChangeText={(input) => setProtein(input)}
+                onChangeText={(input) => change(input, 'protein')}
                 placeholder="123"
                 title={I18n.t('protein')}
-                value={protein}
+                value={item.protein}
               />
             </>
           )}
@@ -138,18 +100,12 @@ function CreateItemScreen() {
             {I18n.t(expanded ? 'less' : 'more')}
           </Text>
         </View>
-        {/* <AddImageButton onPress={camera} imageUri={imageUri} /> */}
-        <AddImageButton onPress={pickImage} imageUri={imageUri} />
-      </ScrollView>
-      <View style={{ bottom: 30, position: 'absolute', right: 15 }}>
-        <CustomButton
-          value={I18n.t('create')}
-          onPress={handleCreation}
-          textColor={colors.primary}
-          buttonColor={colors.background}
+        <AddImageButton
+          onPress={async () => setImageUri(await takeImage())}
+          imageUri={imageUri}
         />
       </View>
-    </>
+    </KeyboardAwareScrollView>
   );
 }
 

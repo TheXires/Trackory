@@ -1,0 +1,52 @@
+import I18n from 'i18n-js';
+import { Alert } from 'react-native';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { CustomError } from '../interfaces/error';
+
+/**
+ * opens camera to take a picture
+ *
+ * @returns image file url on success, otherwise undefined
+ */
+export const takeImage = async (): Promise<string | undefined> => {
+  try {
+    const res = await launchCamera({
+      cameraType: 'back',
+      maxHeight: 400,
+      maxWidth: 400,
+      mediaType: 'photo',
+      quality: 0.9,
+    });
+    if (res.didCancel) return undefined;
+    if (res.errorCode) throw new CustomError(res.errorCode);
+    if (!res.assets) return undefined;
+    return res.assets[0].uri;
+  } catch (error: any) {
+    Alert.alert(I18n.t('errorTitle'), I18n.t(error.code), [{ text: 'OK' }]);
+  }
+  return undefined;
+};
+
+/**
+ * opens gallery to select a picture
+ *
+ * @returns image file url on success, otherwise undefined
+ */
+export const selectImage = async (): Promise<string | undefined> => {
+  try {
+    const res = await launchImageLibrary({
+      maxHeight: 400,
+      maxWidth: 400,
+      mediaType: 'photo',
+      quality: 0.9,
+      selectionLimit: 1,
+    });
+    if (res.didCancel) return undefined;
+    if (res.errorCode) throw new CustomError(res.errorCode);
+    if (!res.assets) return undefined;
+    return res.assets[0].uri;
+  } catch (error: any) {
+    Alert.alert(I18n.t('errorTitle'), I18n.t(error.code), [{ text: 'OK' }]);
+  }
+  return undefined;
+};
