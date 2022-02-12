@@ -33,7 +33,7 @@ function RegistrationScreen() {
   }, [email, password]);
 
   const signUserUp = async () => {
-    showLoadingPopup(true, I18n.t('registration'));
+    showLoadingPopup(true, I18n.t('register'));
     try {
       await firebaseSignUp(email, password);
     } catch (error: any) {
