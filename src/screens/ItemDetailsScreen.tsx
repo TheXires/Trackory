@@ -15,10 +15,7 @@ import { firebaseRemoveItem } from '../firebase/items.firebase';
 import { ItemContextType, LoadingContextType } from '../interfaces/context';
 import { CustomError } from '../interfaces/error';
 import { Item } from '../interfaces/item';
-import {
-  ItemDetailsNavigationProp,
-  ItemDetailsRouteProp,
-} from '../navigation/types.navigation';
+import { ItemDetailsNavigationProp, ItemDetailsRouteProp } from '../navigation/types.navigation';
 import { permanentColors } from '../theme/colors';
 
 function ItemDetailsScreen() {
@@ -46,8 +43,8 @@ function ItemDetailsScreen() {
   const deleteItem = async () => {
     showLoadingPopup(true, I18n.t('deleteItem'));
     try {
-      if (!item?.id) throw new CustomError('unexpectedError');
-      await firebaseRemoveItem(item.id);
+      if (!item) throw new CustomError('unexpectedError');
+      await firebaseRemoveItem(item);
       refreshItems();
       showLoadingPopup(false);
       navigation.goBack();

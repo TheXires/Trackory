@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
@@ -30,6 +31,7 @@ function SettingsScreen() {
 
   const signUserOut = async () => {
     try {
+      await AsyncStorage.clear();
       await firebaseSignOut();
     } catch (error: any) {
       Alert.alert(I18n.t('errorTitle'), I18n.t(error.code), [{ text: 'OK' }]);

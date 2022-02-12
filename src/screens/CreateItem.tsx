@@ -9,9 +9,10 @@ import AddImageButton from '../components/AddImageButton';
 import CustomNumberInput from '../components/CustomNumberInput';
 import CustomTextInput from '../components/CustomTextInput';
 import NavigationHeaderButton from '../components/NavigationHeaderButton';
+import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseAddItem } from '../firebase/items.firebase';
-import { LoadingContextType } from '../interfaces/context';
+import { ItemContextType, LoadingContextType } from '../interfaces/context';
 import { CustomError } from '../interfaces/error';
 import { NewItem, NewItemPropertyType } from '../interfaces/item';
 import { CreateItemNavigationProp } from '../navigation/types.navigation';
@@ -23,6 +24,7 @@ function CreateItemScreen() {
   const navigation = useNavigation<CreateItemNavigationProp>();
 
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
+  const { refreshItems } = useContext<ItemContextType>(ItemContext);
 
   const [item, setItem] = useState<NewItem>({} as NewItem);
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -33,13 +35,14 @@ function CreateItemScreen() {
     try {
       if (!item.name || item.name === '') throw new CustomError('create/no-name');
       await firebaseAddItem(createNewItem(item), imageUri);
+      await refreshItems();
       showLoadingPopup(false);
       navigation.goBack();
     } catch (error: any) {
       showLoadingPopup(false);
       Alert.alert(I18n.t('errorTitle'), I18n.t(error.code), [{ text: 'OK' }]);
     }
-  }, [item]);
+  }, [item, imageUri]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -100,10 +103,7 @@ function CreateItemScreen() {
             {I18n.t(expanded ? 'less' : 'more')}
           </Text>
         </View>
-        <AddImageButton
-          onPress={async () => setImageUri(await takeImage())}
-          imageUri={imageUri}
-        />
+        <AddImageButton onPress={async () => setImageUri(await takeImage())} imageUri={imageUri} />
       </View>
     </KeyboardAwareScrollView>
   );

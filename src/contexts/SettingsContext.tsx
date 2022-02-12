@@ -1,10 +1,12 @@
 import React, { createContext, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   firebaseGetUserSettings,
   firebaseUpdateUserSettings,
 } from '../firebase/settings.firebase';
 import { SettingsContextType } from '../interfaces/context';
 import { Settings } from '../interfaces/settings';
+import { USER_SETTINGS } from '../constants';
 
 export const SettingsContext = createContext({} as SettingsContextType);
 
@@ -14,8 +16,11 @@ export function SettingsProvider(props: any) {
   useEffect(() => {
     const loadUserSettings = async () => {
       try {
+        const localSettings = await AsyncStorage.getItem(USER_SETTINGS);
+        if (localSettings) setSettings(JSON.parse(localSettings));
         const userSettings = await firebaseGetUserSettings();
         setSettings(userSettings);
+        await AsyncStorage.setItem(USER_SETTINGS, JSON.stringify(userSettings));
       } catch (error) {
         console.error(error);
       }

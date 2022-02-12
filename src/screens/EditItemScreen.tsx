@@ -16,10 +16,7 @@ import { firebaseUpdateItem } from '../firebase/items.firebase';
 import { ItemContextType, LoadingContextType } from '../interfaces/context';
 import { CustomError } from '../interfaces/error';
 import { Item, UpdateItem, UpdateItemPropertyType } from '../interfaces/item';
-import {
-  EditItemNavigationProp,
-  EditItemRouteProp,
-} from '../navigation/types.navigation';
+import { EditItemNavigationProp, EditItemRouteProp } from '../navigation/types.navigation';
 import { permanentColors } from '../theme/colors';
 import { takeImage } from '../util/image';
 import { mergeItems } from '../util/item';
@@ -39,7 +36,7 @@ function EditItemScreen() {
     showLoadingPopup(true, I18n.t('save'));
     try {
       if (!item) throw new CustomError('unexpectedError');
-      await firebaseUpdateItem(mergeItems(updatedItem, item), updatedItem.imgUri);
+      await firebaseUpdateItem(mergeItems(updatedItem, item), updatedItem.imgUrl);
       await refreshItems();
       showLoadingPopup(false);
       navigation.goBack();
@@ -65,14 +62,14 @@ function EditItemScreen() {
   }, [route]);
 
   useEffect(() => {
-    if (updatedItem.imgUri && updatedItem.imgUri !== '') {
-      setShownImage(updatedItem.imgUri);
+    if (updatedItem.imgUrl && updatedItem.imgUrl !== '') {
+      setShownImage(updatedItem.imgUrl);
     } else if (item?.imgUrl && item?.imgUrl !== '') {
       setShownImage(item?.imgUrl);
     } else {
       setShownImage(undefined);
     }
-  }, [item, updatedItem.imgUri]);
+  }, [item, updatedItem.imgUrl]);
 
   const change = (input: string | number | undefined, field: UpdateItemPropertyType) => {
     setUpdatedItem(update(updatedItem, { [field]: { $set: input } }));

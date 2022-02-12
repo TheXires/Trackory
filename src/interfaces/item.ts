@@ -12,7 +12,7 @@ export interface NewItem {
   calories: number;
   carbohydrates: number;
   fat: number;
-  imgUri: string | undefined;
+  imgUrl: string | undefined;
   name: string;
   protein: number;
 }
@@ -28,7 +28,7 @@ export interface UpdateItem {
   calories: number | undefined;
   carbohydrates: number | undefined;
   fat: number | undefined;
-  imgUri: string | undefined;
+  imgUrl: string | undefined;
   name: string | undefined;
   protein: number | undefined;
 }
