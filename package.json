@@ -5,9 +5,8 @@
   "scripts": {
     "start": "expo start",
     "dev": "expo start --dev-client",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
+    "android": "eas build -p android --profile preview",
+    "ios": "eas build -p ios --profile preview",
     "eject": "expo eject",
     "format": "prettier . --write",
     "lint": "eslint ./src/"
