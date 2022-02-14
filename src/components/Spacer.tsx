@@ -2,11 +2,11 @@ import React from 'react';
 import { View } from 'react-native';
 
 interface Props {
-  hight: number;
+  height: number;
 }
 
-function Spacer({ hight }: Props) {
-  return <View style={{ height: hight }} />;
+function Spacer({ height }: Props) {
+  return <View style={{ height }} />;
 }
 
 export default Spacer;

@@ -45,7 +45,7 @@ function HomeScreen() {
     />
   );
 
-  const renderSpacer = () => <Spacer hight={15} />;
+  const renderSpacer = () => <Spacer height={15} />;
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -57,8 +57,8 @@ function HomeScreen() {
         data={consumedItems}
         keyExtractor={(item: ConsumedItem) => item.id}
         renderItem={({ item }) => renderedItem(item)}
-        ListHeaderComponent={<Spacer hight={15} />}
-        ListFooterComponent={<Spacer hight={100} />}
+        ListHeaderComponent={<Spacer height={15} />}
+        ListFooterComponent={<Spacer height={100} />}
         ItemSeparatorComponent={renderSpacer}
         showsVerticalScrollIndicator={false}
         refreshControl={

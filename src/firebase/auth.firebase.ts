@@ -1,5 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import functions from '@react-native-firebase/functions';
 import { CustomError } from '../interfaces/error';
 
 /**
@@ -74,10 +75,7 @@ export const firebaseChangeEmail = async (currentPassword: string, newEmail: str
   try {
     const currentUserEmail = auth().currentUser?.email;
     if (!currentUserEmail) throw new CustomError('auth/no-valid-user');
-    const currentUser = await auth().signInWithEmailAndPassword(
-      currentUserEmail,
-      currentPassword,
-    );
+    const currentUser = await auth().signInWithEmailAndPassword(currentUserEmail, currentPassword);
     await currentUser.user.updateEmail(newEmail);
   } catch (error: any) {
     console.error(error);
@@ -98,17 +96,11 @@ export const firebaseChangeEmail = async (currentPassword: string, newEmail: str
  * @error auth/weak-password
  * @error auth/requires-recent-login
  */
-export const firebaseChangePassword = async (
-  currentPassword: string,
-  newPassword: string,
-) => {
+export const firebaseChangePassword = async (currentPassword: string, newPassword: string) => {
   try {
     const currentUserEmail = auth().currentUser?.email;
     if (!currentUserEmail) throw new CustomError('auth/no-valid-user');
-    const currentUser = await auth().signInWithEmailAndPassword(
-      currentUserEmail,
-      currentPassword,
-    );
+    const currentUser = await auth().signInWithEmailAndPassword(currentUserEmail, currentPassword);
     await currentUser.user.updatePassword(newPassword);
   } catch (error: any) {
     console.error(error);
@@ -134,5 +126,16 @@ export const firebaseRequestPasswordReset = async (email: string) => {
   } catch (error: any) {
     console.error(error);
     throw error;
+  }
+};
+
+export const firebaseDeleteAccount = async () => {
+  try {
+    console.log('called firebaseDeleteAccount');
+    const res = await functions().httpsCallable('deleteUser')();
+    console.log('res:', res);
+    console.log('res.data:', res.data);
+  } catch (error) {
+    console.error('firebaseDeleteAccount:', error);
   }
 };

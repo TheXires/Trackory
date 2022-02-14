@@ -82,8 +82,7 @@ export default {
   password: ' Password',
   forgotPassword: 'Forgot Password',
   resetPassword: 'Reset password',
-  resetPasswordInfoText:
-    'A link to reset the password will be sent to the provided email.',
+  resetPasswordInfoText: 'A link to reset the password will be sent to the provided email.',
   sendingEmail: 'Sending email',
   emailSentTitle: 'Email sent',
   emailSentMessage:
@@ -110,6 +109,9 @@ export default {
   imprint: 'Imprint',
   changePassword: 'Change Password',
   changeEmail: 'Change Email',
+  deleteUserDialogTitle: 'Delete Account?',
+  deleteUserDialogMessage:
+    'Do you really want to delete your account? This action cannot be undone.',
 
   // ChangeEmail
   newEmail: 'New Email',

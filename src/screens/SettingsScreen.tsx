@@ -9,14 +9,18 @@ import importAdapter from '../adapter/importData/importDataAdapter';
 import CalorieTargetDialog from '../components/CalorieTargetDialog';
 import HorizontalLine from '../components/HorizontalLine';
 import SettingsItem from '../components/SettingsItem';
+import Spacer from '../components/Spacer';
+import { LoadingContext } from '../contexts/LoadingContext';
 import { SettingsContext } from '../contexts/SettingsContext';
-import { firebaseSignOut } from '../firebase/auth.firebase';
-import { SettingsContextType } from '../interfaces/context';
+import { firebaseDeleteAccount, firebaseSignOut } from '../firebase/auth.firebase';
+import { LoadingContextType, SettingsContextType } from '../interfaces/context';
 import { SettingsNavigationProp } from '../navigation/types.navigation';
 
 function SettingsScreen() {
   const { colors } = useTheme();
   const navigation = useNavigation<SettingsNavigationProp>();
+
+  const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
   const { settings } = useContext<SettingsContextType>(SettingsContext);
   const [showCalorieTargetDialog, setShowCalorieTargetDialog] = useState<boolean>(false);
@@ -39,8 +43,24 @@ function SettingsScreen() {
   };
 
   const deleteUser = async () => {
-    // TODO to implement
-    alert('to implement');
+    // TODO übersetzung hinzufügen
+    showLoadingPopup(true, 'toAdd');
+    try {
+      await firebaseDeleteAccount();
+      await AsyncStorage.clear();
+      await firebaseSignOut();
+      showLoadingPopup(false);
+    } catch (error) {
+      showLoadingPopup(false);
+      console.error('deleteUser:', error);
+    }
+  };
+
+  const deleteUserSecurityPopup = () => {
+    Alert.alert(I18n.t('deleteUserDialogTitle'), I18n.t('deleteUserDialogMessage'), [
+      { style: 'cancel', text: I18n.t('cancel') },
+      { onPress: () => deleteUser(), style: 'destructive', text: I18n.t('delete') },
+    ]);
   };
 
   return (
@@ -135,11 +155,12 @@ function SettingsScreen() {
           <SettingsItem
             left={I18n.t('deleteAccount')}
             color={colors.notification}
-            onPress={() => deleteUser()}
+            onPress={() => deleteUserSecurityPopup()}
           />
 
           {/* logout */}
           <SettingsItem left={I18n.t('logout')} onPress={() => signUserOut()} />
+          <Spacer height={20} />
         </View>
       </ScrollView>
 

@@ -110,6 +110,9 @@ export default {
   imprint: 'Impressum',
   changePassword: 'Password ändern',
   changeEmail: 'Email ändern',
+  deleteUserDialogTitle: 'Konto löschen?',
+  deleteUserDialogMessage:
+    'Möchtest du wirklich deinen Account löschen? Diese Aktion kann nicht rückgängig gemacht werden.',
 
   // Change Email
   newEmail: 'Neue Email',
