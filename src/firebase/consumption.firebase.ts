@@ -10,9 +10,7 @@ import { getStartOfDayInPast } from '../util/time';
  * @param daysInThePast
  * @error auth/no-valid-user
  */
-export const firebaseGetConsumptions = async (
-  daysInThePast: number,
-): Promise<ConsumedItem[]> => {
+export const firebaseGetConsumptions = async (daysInThePast: number): Promise<ConsumedItem[]> => {
   const date = getStartOfDayInPast(daysInThePast);
   try {
     const currentUserId = auth().currentUser?.uid;
@@ -23,7 +21,7 @@ export const firebaseGetConsumptions = async (
       .collection('consumptions')
       .where('date', '==', date)
       .get();
-    if (response.docs.length < 1) return [];
+    if (response.docs.length < 1 || response.docs[0].data().deleted) return [];
     return response.docs[0].data().items;
   } catch (error) {
     console.error(`getConsumptions error: ${error}`);
@@ -51,48 +49,58 @@ export const firebaseConsumeItem = async (
   try {
     const currentUserId = auth().currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
+
     const res = await firestore()
       .collection('users')
       .doc(currentUserId)
       .collection('consumptions')
       .where('date', '==', date)
       .get();
+
+    const document = res.docs[0];
     const consumedItems = res.docs[0]?.data().items;
-    const consumptionID = res.docs[0]?.id;
-    // if there are no consumptions for the date
-    if (consumedItems == null) {
+
+    if (!document) {
       await firestore()
         .collection('users')
         .doc(currentUserId)
         .collection('consumptions')
-        .add({ date, items: [{ ...item, quantity: amount }] });
+        .add({
+          date,
+          deleted: false,
+          items: [{ ...item, quantity: amount }],
+          lastModified: Date.now(),
+        });
       return;
     }
+
+    if (document && document.data().deleted) {
+      await document.ref.update({
+        deleted: false,
+        items: [{ ...item, quantity: amount }],
+        lastModified: Date.now(),
+      });
+      return;
+    }
+
     const index = consumedItems.findIndex((element: Item) => element.id === item.id);
     if (index === -1) {
-      // if there already were items but not this item
       consumedItems.push({ ...item, quantity: amount });
     } else {
-      // if there already was this item
       consumedItems[index].quantity += amount;
       if (consumedItems[index].quantity <= 0) consumedItems.splice(index, 1);
-      // if there are no consumptions after changing the amount
       if (consumedItems.length <= 0) {
-        await firestore()
-          .collection('users')
-          .doc(currentUserId)
-          .collection('consumptions')
-          .doc(consumptionID)
-          .delete();
+        await document.ref.update({
+          date,
+          deleted: true,
+          items: firestore.FieldValue.delete(),
+          lastModified: Date.now(),
+        });
         return;
       }
     }
-    await firestore()
-      .collection('users')
-      .doc(currentUserId)
-      .collection('consumptions')
-      .doc(consumptionID)
-      .update({ items: consumedItems });
+
+    await document.ref.update({ items: consumedItems, lastModified: Date.now() });
     return;
   } catch (error: any) {
     console.error(`consumeItem error: ${error}`);
