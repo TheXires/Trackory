@@ -131,10 +131,7 @@ export const firebaseRequestPasswordReset = async (email: string) => {
 
 export const firebaseDeleteAccount = async () => {
   try {
-    console.log('called firebaseDeleteAccount');
-    const res = await functions().httpsCallable('deleteUser')();
-    console.log('res:', res);
-    console.log('res.data:', res.data);
+    await functions().httpsCallable('deleteUser')();
   } catch (error) {
     console.error('firebaseDeleteAccount:', error);
   }

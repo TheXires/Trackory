@@ -3,9 +3,11 @@ import dateformat from 'dateformat';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
+import { DailyStatistic } from '../interfaces/statistics';
 import { permanentColors } from '../theme/colors';
 
 interface Props {
+  data: DailyStatistic[];
   title: string;
   view: 'week' | 'year';
 }
@@ -14,11 +16,10 @@ const dayInMs = 24 * 60 * 60 * 1000;
 
 const now = Date.now();
 
-function CustomBarChart({ title, view }: Props) {
+function CustomBarChart({ data, title, view }: Props) {
   const { colors } = useTheme();
 
   const [labels, setLabels] = useState<string[]>([]);
-  const [data, setData] = useState();
   const [a, setA] = useState<number>(1);
   const [b, setB] = useState<number>(7);
 
@@ -49,6 +50,17 @@ function CustomBarChart({ title, view }: Props) {
         break;
     }
   }, [view]);
+
+  useEffect(() => {
+    // TODO hier weiter machen, in dem erst die labels erstellt werden und dann die Daten an den
+    // ensprechenden Stellen hinzugefügt werden. buildLabelForWeeksInPast bereits vorläufig unten erstellt
+    if (data.length <= 0) return;
+    const tempLabel: string[] = [];
+    data.forEach((element) => {
+      tempLabel.push(dateformat(element.date, 'dd.mm'));
+    });
+    console.log('labels', tempLabel);
+  }, [data]);
 
   return (
     <View>
@@ -98,3 +110,7 @@ const styles = StyleSheet.create({
     marginBottom: -15,
   },
 });
+
+const buildLabelForWeeksInPast = (weeksInPast: number) => {
+  // TODO hier weiter machen
+};
