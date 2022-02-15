@@ -5,6 +5,7 @@ import FloatingActionButton from '../components/FloatingActionButton';
 import HomeProgress from '../components/HomeProgress';
 import OverviewItem from '../components/OverviewItem';
 import Spacer from '../components/Spacer';
+import TopBar from '../components/TopBar';
 import { HistoryContext } from '../contexts/HistoryContext';
 import { SettingsContext } from '../contexts/SettingsContext';
 import { ConsumedItem } from '../interfaces/item';
@@ -21,18 +22,11 @@ function HomeScreen() {
   const [todaysCalories, setTodaysCalories] = useState<number>(0);
 
   useEffect(() => {
-    const caloriesSum = consumedItems.reduce(
-      (sum, item) => sum + item.calories * item.quantity,
-      0,
-    );
+    const caloriesSum = consumedItems.reduce((sum, item) => sum + item.calories * item.quantity, 0);
     setTodaysCalories(caloriesSum);
   }, [consumedItems]);
 
-  const changeQuantity = async (
-    daysInThePast: number,
-    item: ConsumedItem,
-    quantity: number,
-  ) => {
+  const changeQuantity = async (daysInThePast: number, item: ConsumedItem, quantity: number) => {
     const changeQuantityBy = quantity - item.quantity;
     consumeItem(daysInThePast, item, changeQuantityBy);
     return null;
@@ -49,10 +43,13 @@ function HomeScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <HomeProgress
-        calorieTarget={settings?.calorieTarget ?? 0}
-        todaysCalories={todaysCalories}
-      />
+      {/* <HomeProgress calorieTarget={settings?.calorieTarget ?? 0} todaysCalories={todaysCalories} /> */}
+      <TopBar onLeftPress={() => alert('pressed left')} onRightPress={() => alert('pressed right')}>
+        <HomeProgress
+          calorieTarget={settings?.calorieTarget ?? 0}
+          todaysCalories={todaysCalories}
+        />
+      </TopBar>
       <FlatList
         data={consumedItems}
         keyExtractor={(item: ConsumedItem) => item.id}

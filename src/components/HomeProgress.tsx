@@ -36,7 +36,6 @@ function HomeProgress({ todaysCalories, calorieTarget }: Props) {
           </Text>
         )}
       </View>
-      <HorizontalLine />
     </View>
   );
 }
@@ -45,23 +44,9 @@ export default HomeProgress;
 
 const styles = StyleSheet.create({
   container: {
-    height: 80,
-    justifyContent: 'space-between',
-    paddingBottom: 5,
-    paddingTop: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
     width: '100%',
-  },
-  innerProgressbar: {
-    backgroundColor: 'green',
-    borderRadius: 8,
-    height: 16,
-    width: '80%',
-  },
-  outerProgressbar: {
-    backgroundColor: 'lightgreen',
-    borderRadius: 8,
-    height: 16,
-    width: '50%',
   },
   subtext: {
     fontSize: 10,
@@ -71,5 +56,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 5,
   },
 });

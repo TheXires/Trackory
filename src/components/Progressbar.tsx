@@ -18,8 +18,7 @@ function Progressbar({ progress }: Props) {
           style={[
             styles.progress,
             {
-              backgroundColor:
-                percent <= 100 ? permanentColors.success : permanentColors.error,
+              backgroundColor: percent <= 100 ? permanentColors.success : permanentColors.error,
               width: `${Math.min(Math.round(percent), 100)}%`,
             },
           ]}
@@ -40,9 +39,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   datacontainer: {
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
-    width: '20%',
+    width: '15%',
   },
   progress: {
     borderRadius: 8,
@@ -52,6 +51,6 @@ const styles = StyleSheet.create({
     backgroundColor: permanentColors.border,
     borderRadius: 8,
     height: 16,
-    width: '80%',
+    width: '85%',
   },
 });
