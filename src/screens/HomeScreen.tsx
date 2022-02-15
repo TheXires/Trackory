@@ -1,4 +1,6 @@
 import { useNavigation, useTheme } from '@react-navigation/native';
+import dateformat from 'dateformat';
+import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import FloatingActionButton from '../components/FloatingActionButton';
@@ -10,6 +12,7 @@ import { HistoryContext } from '../contexts/HistoryContext';
 import { SettingsContext } from '../contexts/SettingsContext';
 import { ConsumedItem } from '../interfaces/item';
 import { ConsumedNavigationProp } from '../navigation/types.navigation';
+import { getStartOfDay } from '../util/time';
 
 function HomeScreen() {
   const { colors } = useTheme();
@@ -20,11 +23,16 @@ function HomeScreen() {
     useContext(HistoryContext);
 
   const [todaysCalories, setTodaysCalories] = useState<number>(0);
+  const [daysInPast, setDaysInPast] = useState<number>(0);
 
   useEffect(() => {
     const caloriesSum = consumedItems.reduce((sum, item) => sum + item.calories * item.quantity, 0);
     setTodaysCalories(caloriesSum);
   }, [consumedItems]);
+
+  useEffect(() => {
+    refreshConsumedItems(daysInPast);
+  }, [daysInPast]);
 
   const changeQuantity = async (daysInThePast: number, item: ConsumedItem, quantity: number) => {
     const changeQuantityBy = quantity - item.quantity;
@@ -35,18 +43,29 @@ function HomeScreen() {
   const renderedItem = (item: ConsumedItem) => (
     <OverviewItem
       consumedItem={item}
-      onSave={(quantity: number) => changeQuantity(0, item, quantity)}
+      onSave={(quantity: number) => changeQuantity(daysInPast, item, quantity)}
     />
   );
+
+  const changeDay = (direction: number) => {
+    const newDaysInPast = daysInPast + direction;
+    setDaysInPast(newDaysInPast < 0 ? 0 : newDaysInPast);
+  };
 
   const renderSpacer = () => <Spacer height={15} />;
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      {/* <HomeProgress calorieTarget={settings?.calorieTarget ?? 0} todaysCalories={todaysCalories} /> */}
-      <TopBar onLeftPress={() => alert('pressed left')} onRightPress={() => alert('pressed right')}>
+      <TopBar
+        onLeftPress={() => changeDay(1)}
+        onRightPress={() => changeDay(-1)}
+        rightButtonDisabled={daysInPast === 0}
+      >
         <HomeProgress
           calorieTarget={settings?.calorieTarget ?? 0}
+          title={
+            daysInPast === 0 ? I18n.t('today') : dateformat(getStartOfDay(daysInPast), 'dd.mm')
+          }
           todaysCalories={todaysCalories}
         />
       </TopBar>
@@ -61,12 +80,15 @@ function HomeScreen() {
         refreshControl={
           <RefreshControl
             refreshing={refreshingConsumedItems}
-            onRefresh={() => refreshConsumedItems(0)}
+            onRefresh={() => refreshConsumedItems(daysInPast)}
             tintColor={colors.primary}
           />
         }
       />
-      <FloatingActionButton icon="plus" onPress={() => navigation.navigate('AddItem')} />
+      <FloatingActionButton
+        icon="plus"
+        onPress={() => navigation.navigate('AddItem', { daysInPast })}
+      />
     </View>
   );
 }

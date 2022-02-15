@@ -1,9 +1,10 @@
 import { useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
-import { RefreshControl, StyleSheet, View } from 'react-native';
+import { RefreshControl, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import CustomBarChart from '../components/BarChart';
+import TopBar from '../components/TopBar';
 import { StatisticContext } from '../contexts/StatisticContext';
 import { StatisticsContextType } from '../interfaces/context';
 import { separateDailyStatisticData } from '../util/statistics';
@@ -23,21 +24,35 @@ function StatisticsScreen() {
   const [proteinWeekData, setProteinWeekData] = useState<number[]>([]);
 
   useEffect(() => {
-    setLabels(getDateLabels(weeksInPast));
-  }, []);
-
-  useEffect(() => {
     const res = separateDailyStatisticData(dailyStatistics, weeksInPast);
     setCalorieWeekData(res.calories);
     setCarbohydratesWeekData(res.carbohydrates);
     setFatWeekData(res.fat);
     setProteinWeekData(res.protein);
+    setLabels(getDateLabels(weeksInPast));
   }, [dailyStatistics]);
 
+  useEffect(() => {
+    refreshDailyStatistics();
+  }, [weeksInPast]);
+
+  const changeWeek = (direction: number) => {
+    const newWeeksInPast = weeksInPast + direction;
+    setWeeksInPast(newWeeksInPast < 0 ? 0 : newWeeksInPast);
+  };
+
   return (
-    <View>
+    <View style={styles.container}>
+      <TopBar
+        onLeftPress={() => changeWeek(1)}
+        onRightPress={() => changeWeek(-1)}
+        rightButtonDisabled={weeksInPast === 0}
+      >
+        {/* TODO hier noch etwas für finden */}
+        <Text>Hier noch etwas für finden</Text>
+      </TopBar>
       <ScrollView
-        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
             refreshing={refreshingDailyStatistics}
@@ -59,7 +74,6 @@ export default StatisticsScreen;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 15,
     paddingHorizontal: 15,
   },
 });

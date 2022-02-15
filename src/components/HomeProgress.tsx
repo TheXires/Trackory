@@ -2,15 +2,15 @@ import { useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import HorizontalLine from './HorizontalLine';
 import Progressbar from './Progressbar';
 
 interface Props {
+  title: string;
   todaysCalories: number;
   calorieTarget: number;
 }
 
-function HomeProgress({ todaysCalories, calorieTarget }: Props) {
+function HomeProgress({ title, todaysCalories, calorieTarget }: Props) {
   const { colors } = useTheme();
 
   const [caloriesLeft, setCaloriesLeft] = useState<number>(0);
@@ -23,7 +23,7 @@ function HomeProgress({ todaysCalories, calorieTarget }: Props) {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { color: colors.text }]}>{I18n.t('today')}</Text>
+      <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
       <View>
         <Progressbar progress={percent} />
         {caloriesLeft > 0 ? (

@@ -17,7 +17,7 @@ export type BottomTabParamList = {
 
 export type RootStackParamList = {
   Main: NavigatorScreenParams<BottomTabParamList>;
-  AddItem: undefined;
+  AddItem: { daysInPast: number };
   CreateItem: undefined;
   Settings: undefined;
   ItemDetails: { itemId: string };
@@ -58,5 +58,6 @@ export type ChangePasswordNavigationProp = StackNavigationProp<RootStackParamLis
 
 // routeParams
 export type ItemDetailsRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;
+export type AddItemRouteProp = RouteProp<RootStackParamList, 'AddItem'>;
 export type EditItemRouteProp = RouteProp<RootStackParamList, 'EditItem'>;
 export type CreateItemRouteProp = RouteProp<RootStackParamList, 'CreateItem'>;
