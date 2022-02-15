@@ -9,6 +9,7 @@ import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { HistoryProvider } from '../contexts/HistoryContext';
 import { ItemProvider } from '../contexts/ItemContext';
 import { SettingsProvider } from '../contexts/SettingsContext';
+import { StatisticProvider } from '../contexts/StatisticContext';
 import AddItemScreen from '../screens/AddItemScreen';
 import ChangeEmailScreen from '../screens/ChangeEmailScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
@@ -28,82 +29,84 @@ function RootStackNavigator() {
     <SettingsProvider>
       <ItemProvider>
         <HistoryProvider>
-          <RootStack.Navigator
-            initialRouteName="Main"
-            screenOptions={{ headerTitleAlign: 'center' }}
-          >
-            <RootStack.Screen
-              name="Main"
-              component={BottomNavigator}
-              options={{ headerShown: false }}
-            />
-            <RootStack.Screen
-              name="AddItem"
-              component={AddItemScreen}
-              options={{
-                headerBackTitle: I18n.t('back'),
-                title: I18n.t('addItemTitle'),
-              }}
-            />
-            <RootStack.Screen
-              name="CreateItem"
-              component={CreateItemScreen}
-              options={{
-                headerLeft: () =>
-                  NavigationHeaderButton({
-                    onPress: () => navigation.goBack(),
-                    text: I18n.t('cancel'),
-                  }),
-                title: I18n.t('createItemTitle'),
-              }}
-            />
-            <RootStack.Screen
-              name="Settings"
-              component={SettingsScreen}
-              options={{
-                headerBackTitle: I18n.t('back'),
-                title: I18n.t('settingsTitle'),
-              }}
-            />
-            <RootStack.Screen
-              name="ItemDetails"
-              component={ItemDetailsScreen}
-              options={{
-                headerBackTitle: I18n.t('back'),
-                title: I18n.t('itemDetailsTitle'),
-              }}
-            />
-            <RootStack.Group screenOptions={{ presentation: 'modal' }}>
+          <StatisticProvider>
+            <RootStack.Navigator
+              initialRouteName="Main"
+              screenOptions={{ headerTitleAlign: 'center' }}
+            >
               <RootStack.Screen
-                name="EditItem"
-                component={EditItemScreen}
+                name="Main"
+                component={BottomNavigator}
+                options={{ headerShown: false }}
+              />
+              <RootStack.Screen
+                name="AddItem"
+                component={AddItemScreen}
+                options={{
+                  headerBackTitle: I18n.t('back'),
+                  title: I18n.t('addItemTitle'),
+                }}
+              />
+              <RootStack.Screen
+                name="CreateItem"
+                component={CreateItemScreen}
                 options={{
                   headerLeft: () =>
                     NavigationHeaderButton({
                       onPress: () => navigation.goBack(),
                       text: I18n.t('cancel'),
                     }),
-                  title: I18n.t('EditItemTitle'),
+                  title: I18n.t('createItemTitle'),
                 }}
               />
-            </RootStack.Group>
-            <RootStack.Screen
-              name="ChangeEmail"
-              component={ChangeEmailScreen}
-              options={{
-                headerBackTitle: I18n.t('back'),
-                title: I18n.t('changeEmailTitle'),
-              }}
-            />
-            <RootStack.Screen
-              name="ChangePassword"
-              component={ChangePasswordScreen}
-              options={{
-                headerBackTitle: I18n.t('back'),
-                title: I18n.t('changePasswordTitle'),
-              }}
-            />
-          </RootStack.Navigator>
+              <RootStack.Screen
+                name="Settings"
+                component={SettingsScreen}
+                options={{
+                  headerBackTitle: I18n.t('back'),
+                  title: I18n.t('settingsTitle'),
+                }}
+              />
+              <RootStack.Screen
+                name="ItemDetails"
+                component={ItemDetailsScreen}
+                options={{
+                  headerBackTitle: I18n.t('back'),
+                  title: I18n.t('itemDetailsTitle'),
+                }}
+              />
+              <RootStack.Group screenOptions={{ presentation: 'modal' }}>
+                <RootStack.Screen
+                  name="EditItem"
+                  component={EditItemScreen}
+                  options={{
+                    headerLeft: () =>
+                      NavigationHeaderButton({
+                        onPress: () => navigation.goBack(),
+                        text: I18n.t('cancel'),
+                      }),
+                    title: I18n.t('EditItemTitle'),
+                  }}
+                />
+              </RootStack.Group>
+              <RootStack.Screen
+                name="ChangeEmail"
+                component={ChangeEmailScreen}
+                options={{
+                  headerBackTitle: I18n.t('back'),
+                  title: I18n.t('changeEmailTitle'),
+                }}
+              />
+              <RootStack.Screen
+                name="ChangePassword"
+                component={ChangePasswordScreen}
+                options={{
+                  headerBackTitle: I18n.t('back'),
+                  title: I18n.t('changePasswordTitle'),
+                }}
+              />
+            </RootStack.Navigator>
+          </StatisticProvider>
         </HistoryProvider>
       </ItemProvider>
     </SettingsProvider>

@@ -1,5 +1,6 @@
 import { ConsumedItem, Item, NewItem } from './item';
 import { Settings } from './settings';
+import { DailyStatistic } from './statistics';
 
 export interface ItemContextType {
   items: Item[];
@@ -21,4 +22,10 @@ export interface SettingsContextType {
 
 export interface LoadingContextType {
   showLoadingPopup: (isLoading: boolean, title?: string | undefined) => void;
+}
+
+export interface StatisticsContextType {
+  dailyStatistics: DailyStatistic[];
+  refreshDailyStatistics: () => Promise<void>;
+  refreshingDailyStatistics: boolean;
 }

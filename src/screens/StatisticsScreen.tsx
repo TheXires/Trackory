@@ -1,39 +1,55 @@
+import { useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import CustomBarChart from '../components/BarChart';
-import { firebaseGetDailyStatistics } from '../firebase/statistics.firebase';
-import { DailyStatistic } from '../interfaces/statistics';
+import { StatisticContext } from '../contexts/StatisticContext';
+import { StatisticsContextType } from '../interfaces/context';
+import { separateDailyStatisticData } from '../util/statistics';
+import { getDateLabels } from '../util/time';
 
 function StatisticsScreen() {
-  const [view, setView] = useState<'week' | 'year'>('week');
-  const [statistics, setStatistics] = useState<DailyStatistic[]>([]);
+  const { colors } = useTheme();
+
+  const { dailyStatistics, refreshDailyStatistics, refreshingDailyStatistics } =
+    useContext<StatisticsContextType>(StatisticContext);
+
+  const [labels, setLabels] = useState<string[]>([]);
+  const [weeksInPast, setWeeksInPast] = useState<number>(0);
+  const [calorieWeekData, setCalorieWeekData] = useState<number[]>([]);
+  const [carbohydratesWeekData, setCarbohydratesWeekData] = useState<number[]>([]);
+  const [fatWeekData, setFatWeekData] = useState<number[]>([]);
+  const [proteinWeekData, setProteinWeekData] = useState<number[]>([]);
 
   useEffect(() => {
-    // TODO darf nicht bei jedem auruf mit 0 aufgerufen werden. Vielleicht einen context erstellen
-    // muss auf jeden Fall zwischen gespeichert werden.
-    const getDailyStatistics = async () => {
-      const response = await firebaseGetDailyStatistics(0);
-      setStatistics(response);
-    };
-    getDailyStatistics();
+    setLabels(getDateLabels(weeksInPast));
   }, []);
 
   useEffect(() => {
-    console.log('statistics changed');
-    console.log(statistics);
-  }, [statistics]);
+    const res = separateDailyStatisticData(dailyStatistics, weeksInPast);
+    setCalorieWeekData(res.calories);
+    setCarbohydratesWeekData(res.carbohydrates);
+    setFatWeekData(res.fat);
+    setProteinWeekData(res.protein);
+  }, [dailyStatistics]);
 
   return (
     <View>
-      {/* <CustomButton value={view} onPress={() => setView(view === 'week' ? 'year' : 'week')} />
-      <CustomButton value="update" onPress={() => firebaseUpdateStatistics()} /> */}
-      <ScrollView contentContainerStyle={styles.container}>
-        <CustomBarChart title={I18n.t('calories')} view={view} data={statistics} />
-        <CustomBarChart title={I18n.t('fat')} view={view} data={statistics} />
-        <CustomBarChart title={I18n.t('carbohydrates')} view={view} data={statistics} />
-        <CustomBarChart title={I18n.t('protein')} view={view} data={statistics} />
+      <ScrollView
+        contentContainerStyle={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshingDailyStatistics}
+            onRefresh={refreshDailyStatistics}
+            tintColor={colors.primary}
+          />
+        }
+      >
+        <CustomBarChart title={I18n.t('calories')} labels={labels} data={calorieWeekData} />
+        <CustomBarChart title={I18n.t('fat')} labels={labels} data={carbohydratesWeekData} />
+        <CustomBarChart title={I18n.t('carbohydrates')} labels={labels} data={fatWeekData} />
+        <CustomBarChart title={I18n.t('protein')} labels={labels} data={proteinWeekData} />
       </ScrollView>
     </View>
   );

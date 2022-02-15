@@ -11,7 +11,7 @@ import { DailyStatistic } from '../interfaces/statistics';
  */
 export const firebaseUpdateStatistics = async () => {
   try {
-    await functions().httpsCallable('createStatistics')();
+    await functions().httpsCallable('createDailyStatistics')();
   } catch (error) {
     console.error('updateStatistics', error);
   }
@@ -23,9 +23,7 @@ export const firebaseUpdateStatistics = async () => {
  * @param lastUpdated time of last update in ms or 0 if first call
  * @returns array of
  */
-export const firebaseGetDailyStatistics = async (
-  lastUpdated: number,
-): Promise<DailyStatistic[]> => {
+export const firebaseGetDailyStatistics = async (): Promise<DailyStatistic[] | null> => {
   try {
     const currentUserId = auth().currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
@@ -33,13 +31,13 @@ export const firebaseGetDailyStatistics = async (
       .collection('users')
       .doc(currentUserId)
       .collection('statistics')
-      .where('lastModified', '>=', lastUpdated)
+      .doc('dailyStatistics')
       .get();
     AsyncStorage.setItem(DAILY_STATISTICS_LAST_UPDATED, Date.now().toString());
-    if (!response.docs[0]) return [];
-    return response.docs[0].data().data;
+    if (!response.data()?.data) return null;
+    return response.data()?.data;
   } catch (error) {
     console.error('firebaseGetDailyStatistics error: ', error);
   }
-  return [];
+  return null;
 };

@@ -1,73 +1,24 @@
 import { useTheme } from '@react-navigation/native';
-import dateformat from 'dateformat';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
-import { DailyStatistic } from '../interfaces/statistics';
 import { permanentColors } from '../theme/colors';
 
 interface Props {
-  data: DailyStatistic[];
+  data: number[];
+  labels: string[];
   title: string;
-  view: 'week' | 'year';
 }
 
-const dayInMs = 24 * 60 * 60 * 1000;
-
-const now = Date.now();
-
-function CustomBarChart({ data, title, view }: Props) {
+function CustomBarChart({ data, labels, title }: Props) {
   const { colors } = useTheme();
-
-  const [labels, setLabels] = useState<string[]>([]);
-  const [a, setA] = useState<number>(1);
-  const [b, setB] = useState<number>(7);
-
-  useEffect(() => {
-    switch (view) {
-      case 'week':
-        const newWeekLabels: string[] = [];
-        let i, j;
-        for (i = 0, j = 6; i < 7; i++, j--) {
-          newWeekLabels[i] = dateformat(now - j * dayInMs, 'dd.mm');
-        }
-        setLabels(newWeekLabels);
-        setA(0.9);
-        setB(7);
-        break;
-      case 'year':
-        const newYearLabels: string[] = [];
-        let k, l;
-        for (k = 0, l = 11; k < 12; k++, l--) {
-          // TODO rechnet nicht richtig. Muss überarbeitet werden
-          newYearLabels[k] = dateformat(now - l * dayInMs * 31, 'mm');
-        }
-        setLabels(newYearLabels);
-        setA(0.5);
-        setB(12);
-        break;
-      default:
-        break;
-    }
-  }, [view]);
-
-  useEffect(() => {
-    // TODO hier weiter machen, in dem erst die labels erstellt werden und dann die Daten an den
-    // ensprechenden Stellen hinzugefügt werden. buildLabelForWeeksInPast bereits vorläufig unten erstellt
-    if (data.length <= 0) return;
-    const tempLabel: string[] = [];
-    data.forEach((element) => {
-      tempLabel.push(dateformat(element.date, 'dd.mm'));
-    });
-    console.log('labels', tempLabel);
-  }, [data]);
 
   return (
     <View>
       <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
       <BarChart
         data={{
-          datasets: [{ data: new Array(b).fill(Math.floor(Math.random() * 2500)) }],
+          datasets: [{ data }],
           labels,
         }}
         width={Dimensions.get('window').width - 30} // from react-native
@@ -77,7 +28,7 @@ function CustomBarChart({ data, title, view }: Props) {
         chartConfig={{
           backgroundGradientFrom: permanentColors.primary,
           backgroundGradientTo: permanentColors.primary,
-          barPercentage: a,
+          barPercentage: 0.8,
           color: () => `rgba(255, 255, 255, 1)`,
           decimalPlaces: 0,
         }}
@@ -110,7 +61,3 @@ const styles = StyleSheet.create({
     marginBottom: -15,
   },
 });
-
-const buildLabelForWeeksInPast = (weeksInPast: number) => {
-  // TODO hier weiter machen
-};

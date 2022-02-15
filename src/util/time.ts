@@ -1,3 +1,6 @@
+import dateformat from 'dateformat';
+import { DAY_IN_MS } from '../constants';
+
 /**
  * get the start time of a day in the past in ms.
  * When daysInPast less than 0, get the start time of today in ms
@@ -5,13 +8,13 @@
  * @param daysInPast amount of days in the past.
  * @returns start of day in the past
  */
-export const getStartOfDayInPast = (daysInPast: number): number => {
+export const getStartOfDay = (daysInPast: number): number => {
   const todayStart = new Date();
   todayStart.setUTCHours(0, 0, 0, 0);
   if (daysInPast < 0) {
     return todayStart.getTime();
   }
-  return todayStart.getTime() - 1000 * 60 * 60 * 24 * daysInPast;
+  return todayStart.getTime() - DAY_IN_MS * daysInPast;
 };
 
 /**
@@ -21,11 +24,27 @@ export const getStartOfDayInPast = (daysInPast: number): number => {
  * @param daysInPast amount of days in the past.
  * @returns end of day in the past
  */
-export const getEndOfDayInPast = (daysInPast: number): number => {
+export const getEndOfDay = (daysInPast: number): number => {
   const todayEnd = new Date();
   todayEnd.setUTCHours(23, 59, 59, 999);
   if (daysInPast < 0) {
     return todayEnd.getTime();
   }
-  return todayEnd.getTime() - 1000 * 60 * 60 * 24 * daysInPast;
+  return todayEnd.getTime() - DAY_IN_MS * daysInPast;
+};
+
+/**
+ * get date label for 7 days in format 'dd.mm', starting with date most in the past
+ *
+ * @param weeksInPast 0 for current week or number of weeks in the past
+ * @returns string array with labels for 7 days
+ */
+export const getDateLabels = (weeksInPast: number) => {
+  const startDay = weeksInPast >= 0 ? 7 * weeksInPast : 0;
+  const startTime = getStartOfDay(startDay);
+  const labels: string[] = [];
+  for (let i = 6; i >= 0; i -= 1) {
+    labels.push(dateformat(startTime - i * DAY_IN_MS, 'dd.mm'));
+  }
+  return labels;
 };

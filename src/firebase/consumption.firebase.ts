@@ -2,7 +2,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { CustomError } from '../interfaces/error';
 import { ConsumedItem, Item } from '../interfaces/item';
-import { getStartOfDayInPast } from '../util/time';
+import { getStartOfDay } from '../util/time';
 
 /**
  * gets all consumptions of a specific day
@@ -11,7 +11,7 @@ import { getStartOfDayInPast } from '../util/time';
  * @error auth/no-valid-user
  */
 export const firebaseGetConsumptions = async (daysInThePast: number): Promise<ConsumedItem[]> => {
-  const date = getStartOfDayInPast(daysInThePast);
+  const date = getStartOfDay(daysInThePast);
   try {
     const currentUserId = auth().currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
@@ -45,7 +45,7 @@ export const firebaseConsumeItem = async (
   item: Item,
   amount: number,
 ): Promise<void> => {
-  const date = getStartOfDayInPast(daysInThePast);
+  const date = getStartOfDay(daysInThePast);
   try {
     const currentUserId = auth().currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
