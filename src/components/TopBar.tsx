@@ -17,18 +17,16 @@ function TopBar({ children, onLeftPress, onRightPress }: Props) {
   return (
     <>
       <View style={styles.container}>
-        <View
-          style={[styles.buttonContainer, { alignItems: 'flex-start' }]}
-          // onPress={onLeftPress}
-        >
-          <Feather name="chevron-left" size={24} color={colors.text} />
+        <View style={[styles.buttonContainer, { alignItems: 'flex-start' }]}>
+          <TouchableOpacity onPress={onLeftPress} style={styles.button}>
+            <Feather name="chevron-left" size={24} color={colors.text} />
+          </TouchableOpacity>
         </View>
         <View style={styles.innerContainer}>{children}</View>
-        <View
-          style={[styles.buttonContainer, { alignItems: 'flex-end' }]}
-          // onPress={onRightPress}
-        >
-          <Feather name="chevron-right" size={24} color={colors.text} />
+        <View style={[styles.buttonContainer, { alignItems: 'flex-end' }]}>
+          <TouchableOpacity onPress={onRightPress} style={styles.button}>
+            <Feather name="chevron-right" size={24} color={colors.text} />
+          </TouchableOpacity>
         </View>
       </View>
       <HorizontalLine />
@@ -39,9 +37,14 @@ function TopBar({ children, onLeftPress, onRightPress }: Props) {
 export default TopBar;
 
 const styles = StyleSheet.create({
-  buttonContainer: {
+  button: {
+    flex: 1,
     justifyContent: 'center',
-    width: '5%',
+  },
+  buttonContainer: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    width: '7%',
   },
   container: {
     flexDirection: 'row',
