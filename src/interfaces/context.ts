@@ -10,7 +10,7 @@ export interface ItemContextType {
 
 export interface HistoryContextType {
   consumedItems: ConsumedItem[];
-  refreshConsumedItems: (date: number) => Promise<void>;
+  refreshConsumedItems: (date: number, hidden?: boolean) => Promise<void>;
   refreshingConsumedItems: boolean;
   consumeItem: (daysInThePast: number, item: Item, quantity: number) => Promise<void>;
 }

@@ -8,7 +8,7 @@ import {
 import { Item } from '../interfaces/item';
 
 /**
- * get the time of the last item fetch saved in the asyncStroage of the device
+ * get the time of the last item fetch saved in the asyncStorage of the device
  *
  * @returns time of last update in ms or 0
  */
@@ -19,7 +19,7 @@ export const getItemLastUpdateTimeFromStorage = async (): Promise<number> => {
 };
 
 /**
- * get all items saved in the asyncStroage of the device
+ * get all items saved in the asyncStorage of the device
  *
  * @returns
  */
@@ -30,7 +30,7 @@ export const getItemsFromStorage = async (): Promise<Item[]> => {
 };
 
 /**
- * get the time of the last daily statistics fetch saved in the asyncStroage of the device
+ * get the time of the last daily statistics fetch saved in the asyncStorage of the device
  *
  * @returns time of last update in ms or 0
  */

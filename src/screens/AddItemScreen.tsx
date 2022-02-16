@@ -5,6 +5,7 @@ import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import AddNewItemCard from '../components/AddNewItemCard';
 import ItemCard from '../components/ItemCard';
 import Searchbar from '../components/Searchbar';
+import Spacer from '../components/Spacer';
 import { HistoryContext } from '../contexts/HistoryContext';
 import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
@@ -58,6 +59,7 @@ function AddItemScreen() {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <ItemCard item={item} onPress={() => onPress(item)} />}
         ListHeaderComponent={<AddNewItemCard onPress={() => navigation.navigate('CreateItem')} />}
+        ListFooterComponent={<Spacer height={50} />}
         ItemSeparatorComponent={() => Separator()}
         showsVerticalScrollIndicator={false}
         refreshControl={

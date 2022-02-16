@@ -6,6 +6,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import FloatingActionButton from '../components/FloatingActionButton';
 import ItemListElement from '../components/ItemListElement';
 import Searchbar from '../components/Searchbar';
+import Spacer from '../components/Spacer';
 import { ItemContext } from '../contexts/ItemContext';
 import { ItemContextType } from '../interfaces/context';
 import { Item } from '../interfaces/item';
@@ -14,8 +15,7 @@ import { ItemsNavigationProp } from '../navigation/types.navigation';
 function ItemsScreen() {
   const { colors } = useTheme();
   const navigation = useNavigation<ItemsNavigationProp>();
-  const { items, refreshingItems, refreshItems } =
-    useContext<ItemContextType>(ItemContext);
+  const { items, refreshingItems, refreshItems } = useContext<ItemContextType>(ItemContext);
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
@@ -38,12 +38,14 @@ function ItemsScreen() {
         <Searchbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <FlatList
           data={filteredItems}
+          showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <ItemListElement
               item={item}
               onPress={() => navigation.navigate('ItemDetails', { itemId: item.id })}
             />
           )}
+          ListFooterComponent={<Spacer height={100} />}
           refreshControl={
             <RefreshControl
               refreshing={refreshingItems}
@@ -53,10 +55,7 @@ function ItemsScreen() {
           }
         />
       </View>
-      <FloatingActionButton
-        icon="edit-2"
-        onPress={() => navigation.navigate('CreateItem')}
-      />
+      <FloatingActionButton icon="edit-2" onPress={() => navigation.navigate('CreateItem')} />
     </>
   );
 }

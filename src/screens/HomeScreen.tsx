@@ -31,7 +31,7 @@ function HomeScreen() {
   }, [consumedItems]);
 
   useEffect(() => {
-    refreshConsumedItems(daysInPast);
+    refreshConsumedItems(daysInPast, true);
   }, [daysInPast]);
 
   const changeQuantity = async (daysInThePast: number, item: ConsumedItem, quantity: number) => {
