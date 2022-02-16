@@ -14,7 +14,7 @@ import { Item } from '../interfaces/item';
  */
 export const getItemLastUpdateTimeFromStorage = async (): Promise<number> => {
   const lastUpdatedString = await AsyncStorage.getItem(ITEMS_LAST_UPDATED);
-  const lastUpdated: number = !lastUpdatedString ? 0 : JSON.parse(lastUpdatedString);
+  const lastUpdated: number = lastUpdatedString ? JSON.parse(lastUpdatedString) : 0;
   return lastUpdated;
 };
 
@@ -25,7 +25,7 @@ export const getItemLastUpdateTimeFromStorage = async (): Promise<number> => {
  */
 export const getItemsFromStorage = async (): Promise<Item[]> => {
   const itemsString = await AsyncStorage.getItem(ITEMS);
-  const items: Item[] = !itemsString ? [] : JSON.parse(itemsString);
+  const items: Item[] = itemsString ? JSON.parse(itemsString) : [];
   return items;
 };
 
@@ -36,7 +36,7 @@ export const getItemsFromStorage = async (): Promise<Item[]> => {
  */
 export const getDailyStatisticsUpdateTimeFromStorage = async (): Promise<number> => {
   const lastUpdatedString = await AsyncStorage.getItem(DAILY_STATISTICS_LAST_UPDATED);
-  const lastUpdated: number = !lastUpdatedString ? 0 : JSON.parse(lastUpdatedString);
+  const lastUpdated: number = lastUpdatedString ? JSON.parse(lastUpdatedString) : 0;
   return lastUpdated;
 };
 
@@ -47,6 +47,6 @@ export const getDailyStatisticsUpdateTimeFromStorage = async (): Promise<number>
  */
 export const getDailyStatisticsFromStorage = async () => {
   const dailyStatisticsString = await AsyncStorage.getItem(DAILY_STATISTICS);
-  const dailyStatistics: Item[] = !dailyStatisticsString ? [] : JSON.parse(dailyStatisticsString);
+  const dailyStatistics: Item[] = dailyStatisticsString ? JSON.parse(dailyStatisticsString) : [];
   return dailyStatistics;
 };

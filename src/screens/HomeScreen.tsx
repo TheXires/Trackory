@@ -10,6 +10,7 @@ import Spacer from '../components/Spacer';
 import TopBar from '../components/TopBar';
 import { HistoryContext } from '../contexts/HistoryContext';
 import { SettingsContext } from '../contexts/SettingsContext';
+import { HistoryContextType } from '../interfaces/context';
 import { ConsumedItem } from '../interfaces/item';
 import { ConsumedNavigationProp } from '../navigation/types.navigation';
 import { getStartOfDay } from '../util/time';
@@ -20,7 +21,7 @@ function HomeScreen() {
 
   const { settings } = useContext(SettingsContext);
   const { consumedItems, refreshConsumedItems, refreshingConsumedItems, consumeItem } =
-    useContext(HistoryContext);
+    useContext<HistoryContextType>(HistoryContext);
 
   const [todaysCalories, setTodaysCalories] = useState<number>(0);
   const [daysInPast, setDaysInPast] = useState<number>(0);

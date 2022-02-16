@@ -9,8 +9,20 @@ import { getStartOfDay } from '../util/time';
  *
  * @param daysInThePast
  * @error auth/no-valid-user
+ * @return
  */
-export const firebaseGetConsumptions = async (daysInThePast: number): Promise<ConsumedItem[]> => {
+
+/**
+ * gets all consumptions of a specific day if they are modified after last update
+ *
+ * @param lastUpdated time of last update. 0 to fetch all
+ * @param daysInThePast
+ * @returns array with new consumed items or undefined if there are no changes after last update
+ */
+export const firebaseGetConsumptions = async (
+  lastUpdated: number,
+  daysInThePast: number,
+): Promise<ConsumedItem[] | undefined> => {
   const date = getStartOfDay(daysInThePast);
   try {
     const currentUserId = auth().currentUser?.uid;
@@ -20,8 +32,10 @@ export const firebaseGetConsumptions = async (daysInThePast: number): Promise<Co
       .doc(currentUserId)
       .collection('consumptions')
       .where('date', '==', date)
+      .where('lastModified', '>=', lastUpdated)
       .get();
-    if (response.docs.length < 1 || response.docs[0].data().deleted) return [];
+    if (response.docs.length < 1) return undefined;
+    if (response.docs[0].data().deleted) return [];
     return response.docs[0].data().items;
   } catch (error) {
     console.error(`getConsumptions error: ${error}`);

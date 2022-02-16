@@ -21,21 +21,14 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "react/jsx-filename-extension": [
-      "error",
-      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
-    ],
+    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "no-unused-expressions": "warn",
     "import/extensions": "off",
     "react/require-default-props": "off",
     "no-throw-literal": "warn",
-    "consistent-return": "warn",
+    "consistent-return": "off",
     "no-console": ["error", { "allow": ["error"] }],
-    "sort-keys": [
-      "error",
-      "asc",
-      { "caseSensitive": true, "natural": false, "minKeys": 2 }
-    ],
+    "sort-keys": ["error", "asc", { "caseSensitive": true, "natural": false, "minKeys": 2 }],
     "no-use-before-define": "off",
     "react-hooks/exhaustive-deps": "off",
     "import/prefer-default-export": "off"
