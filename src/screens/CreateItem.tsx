@@ -40,7 +40,7 @@ function CreateItemScreen() {
       navigation.goBack();
     } catch (error: any) {
       showLoadingPopup(false);
-      Alert.alert(I18n.t('errorTitle'), I18n.t(error.code), [{ text: 'OK' }]);
+      Alert.alert(I18n.t('errorTitle'), I18n.t(error.code));
     }
   }, [item, imageUri]);
 

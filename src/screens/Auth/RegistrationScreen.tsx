@@ -37,11 +37,7 @@ function RegistrationScreen() {
     try {
       await firebaseSignUp(email, password);
     } catch (error: any) {
-      Alert.alert(I18n.t('registrationErrorTitle'), I18n.t(error.code), [
-        {
-          text: 'OK',
-        },
-      ]);
+      Alert.alert(I18n.t('registrationErrorTitle'), I18n.t(error.code));
     }
     showLoadingPopup(false);
   };

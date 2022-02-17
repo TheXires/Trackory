@@ -39,11 +39,7 @@ function LoginScreen() {
     try {
       await firebaseSignIn(email, password);
     } catch (error: any) {
-      Alert.alert(I18n.t('loginErrorTitle'), I18n.t(error.code), [
-        {
-          text: 'OK',
-        },
-      ]);
+      Alert.alert(I18n.t('loginErrorTitle'), I18n.t(error.code));
     }
     showLoadingPopup(false);
   };

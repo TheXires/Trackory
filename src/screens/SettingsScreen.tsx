@@ -37,7 +37,7 @@ function SettingsScreen() {
       await AsyncStorage.clear();
       await firebaseSignOut();
     } catch (error: any) {
-      Alert.alert(I18n.t('errorTitle'), I18n.t(error.code), [{ text: 'OK' }]);
+      Alert.alert(I18n.t('errorTitle'), I18n.t(error.code));
     }
   };
 

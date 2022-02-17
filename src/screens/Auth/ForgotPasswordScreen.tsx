@@ -29,11 +29,7 @@ function ForgotPasswordScreen() {
       ]);
     } catch (error: any) {
       showLoadingPopup(false);
-      Alert.alert(I18n.t('errorTitle'), I18n.t(error), [
-        {
-          text: 'OK',
-        },
-      ]);
+      Alert.alert(I18n.t('errorTitle'), I18n.t(error));
     }
   };
 

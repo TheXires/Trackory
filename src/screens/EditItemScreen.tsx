@@ -42,7 +42,7 @@ function EditItemScreen() {
       navigation.goBack();
     } catch (error: any) {
       showLoadingPopup(false);
-      Alert.alert('toAdd', I18n.t(error.code), [{ text: 'OK' }]);
+      Alert.alert('toAdd', I18n.t(error.code));
     }
   }, [item, updatedItem]);
 
