@@ -4,10 +4,3 @@ export interface ExportAdapter {
    */
   exportData(): Promise<void>;
 }
-
-export interface ImportAdapter {
-  /**
-   * export data to external app or file
-   */
-  importData(): Promise<void>;
-}

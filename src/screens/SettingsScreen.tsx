@@ -5,7 +5,6 @@ import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
 import { Alert, Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
 import exportAdapter from '../adapter/exportData/exportDataAdapter';
-import importAdapter from '../adapter/importData/importDataAdapter';
 import CalorieTargetDialog from '../components/CalorieTargetDialog';
 import HorizontalLine from '../components/HorizontalLine';
 import SettingsItem from '../components/SettingsItem';
@@ -97,13 +96,6 @@ function SettingsScreen() {
             left={I18n.t('exportData')}
             right={<Feather name="upload" size={24} />}
             onPress={() => exportAdapter.exportData()}
-          />
-
-          {/* data import */}
-          <SettingsItem
-            left={I18n.t('importData')}
-            right={<Feather name="download" size={24} />}
-            onPress={() => importAdapter.importData()}
           />
 
           {/* share */}

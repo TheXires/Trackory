@@ -102,7 +102,7 @@ export default {
   calorieRequirementCalculator: 'Calorie Requirement Calculator',
   weight: 'Weight',
   exportData: 'Export Data',
-  importData: 'Import Data',
+  exportedData: 'Exported Data',
   recommendApp: 'Recommend app',
   privacyPolicy: 'Privacy Policy',
   termsOfService: 'Terms of Service',
@@ -112,6 +112,7 @@ export default {
   deleteUserDialogTitle: 'Delete Account?',
   deleteUserDialogMessage:
     'Do you really want to delete your account? This action cannot be undone.',
+  androidDataExportSuccess: 'Successfully exported data to the downloads folder',
 
   // ChangeEmail
   newEmail: 'New Email',
