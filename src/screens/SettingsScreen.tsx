@@ -62,6 +62,12 @@ function SettingsScreen() {
     ]);
   };
 
+  const exportData = async () => {
+    showLoadingPopup(true, 'toAdd');
+    await exportAdapter.exportData();
+    showLoadingPopup(false);
+  };
+
   return (
     <>
       <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
@@ -95,7 +101,7 @@ function SettingsScreen() {
           <SettingsItem
             left={I18n.t('exportData')}
             right={<Feather name="upload" size={24} />}
-            onPress={() => exportAdapter.exportData()}
+            onPress={exportData}
           />
 
           {/* share */}

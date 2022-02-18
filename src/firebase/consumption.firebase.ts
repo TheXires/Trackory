@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { CustomError } from '../interfaces/error';
-import { ConsumedItem, Item } from '../interfaces/item';
+import { ConsumedItem, Consumption, Item } from '../interfaces/item';
 import { getStartOfDay } from '../util/time';
 
 /**
@@ -37,6 +37,33 @@ export const firebaseGetConsumptions = async (
     if (response.docs.length < 1) return undefined;
     if (response.docs[0].data().deleted) return [];
     return response.docs[0].data().items;
+  } catch (error) {
+    console.error(`getConsumptions error: ${error}`);
+    throw error;
+  }
+};
+
+/**
+ * gets all consumptions
+ *
+ * @returns array with all consumed items
+ */
+export const firebaseGetAllConsumptions = async (): Promise<Consumption[]> => {
+  try {
+    const currentUserId = auth().currentUser?.uid;
+    if (!currentUserId) throw new CustomError('auth/no-valid-user');
+    const response = await firestore()
+      .collection('users')
+      .doc(currentUserId)
+      .collection('consumptions')
+      .get();
+    if (response.docs.length < 1 || response.docs[0].data().deleted) return [];
+    const result: Consumption[] = [];
+    response.docs.forEach((doc) => {
+      if (doc.data().deleted) return;
+      result.push({ date: doc.data().date, items: doc.data().items });
+    });
+    return result;
   } catch (error) {
     console.error(`getConsumptions error: ${error}`);
     throw error;

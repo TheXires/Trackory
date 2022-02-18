@@ -50,3 +50,8 @@ export interface ConsumedItem {
   protein: number;
   quantity: number;
 }
+
+export interface Consumption {
+  date: number;
+  items: ConsumedItem[];
+}
