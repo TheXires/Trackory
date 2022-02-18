@@ -4,7 +4,7 @@ import { useNavigation, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
 import { Alert, Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
-import exportAdapter from '../adapter/exportData/exportDataAdapter';
+import exportAdapter from '../adapter/exportAdapter/exportAdapter';
 import CalorieTargetDialog from '../components/CalorieTargetDialog';
 import HorizontalLine from '../components/HorizontalLine';
 import SettingsItem from '../components/SettingsItem';

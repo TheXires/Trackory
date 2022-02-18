@@ -1,5 +1,5 @@
 import { ExportAdapter } from '../../interfaces/adapters';
-import exportJsonAdapter from './jsonFile/exportJsonAdapter';
+import exportJsonAdapter from './exportAdapterCollection/exportJsonAdapter';
 
 const exportAdapter: ExportAdapter = {
   async exportData(): Promise<void> {
