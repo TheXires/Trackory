@@ -12,8 +12,10 @@ import { DailyStatistic } from '../interfaces/statistics';
 export const firebaseUpdateStatistics = async () => {
   try {
     await functions().httpsCallable('createDailyStatistics')();
-  } catch (error) {
+  } catch (error: any) {
     console.error('updateStatistics', error);
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-update-statistics', error);
   }
 };
 
@@ -36,8 +38,9 @@ export const firebaseGetDailyStatistics = async (): Promise<DailyStatistic[] | n
     AsyncStorage.setItem(DAILY_STATISTICS_LAST_UPDATED, Date.now().toString());
     if (!response.data()?.data) return null;
     return response.data()?.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error('firebaseGetDailyStatistics error: ', error);
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-get-statistics', error);
   }
-  return null;
 };

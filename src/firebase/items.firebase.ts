@@ -12,6 +12,7 @@ import { firebaseImageUpload } from './fileupload.firebase';
  *
  * @param lastUpdated time of the last item fetch in ms
  * @error auth/no-valid-user
+ * @error unable-to-get-item
  * @returns array of available items
  */
 export const firebaseGetAllItems = async (lastUpdated: number): Promise<ItemUpdates> => {
@@ -43,9 +44,10 @@ export const firebaseGetAllItems = async (lastUpdated: number): Promise<ItemUpda
       }
     });
     return { deletedItemIds, updatedItems };
-  } catch (error) {
+  } catch (error: any) {
     console.error('getAllItems error: ', error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-add-item', error);
   }
 };
 
@@ -54,6 +56,7 @@ export const firebaseGetAllItems = async (lastUpdated: number): Promise<ItemUpda
  *
  * @param itemId id of the item to get
  * @error auth/no-valid-user
+ * @error unable-to-get-item
  * @returns the item on success, otherwise null
  */
 export const firebaseGetItem = async (itemId: string): Promise<Item | null> => {
@@ -71,9 +74,10 @@ export const firebaseGetItem = async (itemId: string): Promise<Item | null> => {
       id: itemId,
       ...response.data(),
     } as Item;
-  } catch (error) {
+  } catch (error: any) {
     console.error('getItem error: ', error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-add-item', error);
   }
 };
 
@@ -81,6 +85,7 @@ export const firebaseGetItem = async (itemId: string): Promise<Item | null> => {
  * updates an existing item
  *
  * @error auth/no-valid-user
+ * @error unable-to-update-item
  */
 export const firebaseUpdateItem = async (item: Item, newImageUri?: string): Promise<void> => {
   const updatedItem = item;
@@ -99,9 +104,10 @@ export const firebaseUpdateItem = async (item: Item, newImageUri?: string): Prom
       .collection('items')
       .doc(updatedItem.id)
       .set({ ...updatedItem, lastModified: Date.now() });
-  } catch (error) {
+  } catch (error: any) {
     console.error('updateItem error: ', error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-add-item', error);
   }
 };
 
@@ -110,6 +116,7 @@ export const firebaseUpdateItem = async (item: Item, newImageUri?: string): Prom
  *
  * @param newItem item to add to firestore
  * @error auth/no-valid-user
+ * @error unable-to-add-item
  * @returns document id on success, otherwise null
  */
 export const firebaseAddItem = async (
@@ -128,9 +135,10 @@ export const firebaseAddItem = async (
     const downloadUrl = await firebaseImageUpload(response.id, imageUri);
     const itemWithImg: Item = { id: response.id, ...newItem, imgUrl: downloadUrl };
     await firebaseUpdateItem(itemWithImg);
-  } catch (error) {
+  } catch (error: any) {
     console.error('addNewItem error: ', error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-add-item', error);
   }
 };
 
@@ -139,6 +147,7 @@ export const firebaseAddItem = async (
  *
  * @param itemId
  * @error auth/no-valid-user
+ * @error unable-to-remove-item
  * @returns
  */
 export const firebaseRemoveItem = async (item: Item): Promise<void> => {
@@ -160,8 +169,9 @@ export const firebaseRemoveItem = async (item: Item): Promise<void> => {
         name: firestore.FieldValue.delete(),
         protein: firestore.FieldValue.delete(),
       });
-  } catch (error) {
+  } catch (error: any) {
     console.error('removeItem error: ', error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-add-item', error);
   }
 };

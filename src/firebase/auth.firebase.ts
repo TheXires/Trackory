@@ -12,13 +12,15 @@ import { CustomError } from '../interfaces/error';
  * @error auth/user-disabled
  * @error auth/user-not-found
  * @error auth/wrong-password
+ * @error unexpectedError
  */
 export const firebaseSignIn = async (email: string, password: string) => {
   try {
     await auth().signInWithEmailAndPassword(email, password);
   } catch (error: any) {
     console.error(error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unexpectedError', error);
   }
 };
 
@@ -31,6 +33,7 @@ export const firebaseSignIn = async (email: string, password: string) => {
  * @error auth/invalid-email
  * @error auth/operation-not-allowed
  * @error auth/weak-password
+ * @error unexpectedError
  */
 export const firebaseSignUp = async (email: string, password: string) => {
   try {
@@ -41,20 +44,24 @@ export const firebaseSignUp = async (email: string, password: string) => {
       .set({ settings: { calorieTarget: 2100 } });
   } catch (error: any) {
     console.error('firebase signUp error: ', error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unexpectedError', error);
   }
 };
 
 /**
  * loges the current firebase user out
- * @error unknownError
+ *
+ * @error unexpectedError
+ * @error unexpectedError
  */
 export const firebaseSignOut = async () => {
   try {
     await auth().signOut();
   } catch (error: any) {
     console.error('firebaseSignOut error: ', error);
-    throw new CustomError('unknownError');
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unexpectedError', error);
   }
 };
 
@@ -70,6 +77,7 @@ export const firebaseSignOut = async () => {
  * @error auth/user-disabled
  * @error auth/user-not-found
  * @error auth/wrong-password
+ * @error unexpectedError
  */
 export const firebaseChangeEmail = async (currentPassword: string, newEmail: string) => {
   try {
@@ -79,7 +87,8 @@ export const firebaseChangeEmail = async (currentPassword: string, newEmail: str
     await currentUser.user.updateEmail(newEmail);
   } catch (error: any) {
     console.error(error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unexpectedError', error);
   }
 };
 
@@ -95,6 +104,7 @@ export const firebaseChangeEmail = async (currentPassword: string, newEmail: str
  * @error auth/wrong-password
  * @error auth/weak-password
  * @error auth/requires-recent-login
+ * @error unexpectedError
  */
 export const firebaseChangePassword = async (currentPassword: string, newPassword: string) => {
   try {
@@ -104,7 +114,8 @@ export const firebaseChangePassword = async (currentPassword: string, newPasswor
     await currentUser.user.updatePassword(newPassword);
   } catch (error: any) {
     console.error(error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unexpectedError', error);
   }
 };
 
@@ -114,25 +125,31 @@ export const firebaseChangePassword = async (currentPassword: string, newPasswor
  * @param email
  * @error auth/invalid-continue-uri
  * @error auth/invalid-email
- * @error auth/missing-android-pkg-name
- * @error auth/missing-continue-uri
- * @error auth/missing-ios-bundle-id
- * @error auth/unauthorized-continue-uri
  * @error auth/user-not-found
+ * @error unexpectedError
  */
 export const firebaseRequestPasswordReset = async (email: string) => {
   try {
     await auth().sendPasswordResetEmail(email);
+    throw new CustomError('invalid value');
   } catch (error: any) {
     console.error(error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unexpectedError', error);
   }
 };
 
+/**
+ * deletes all user data and user from firebase
+ *
+ * @error unexpectedError
+ */
 export const firebaseDeleteAccount = async () => {
   try {
     await functions().httpsCallable('deleteUser')();
-  } catch (error) {
+  } catch (error: any) {
     console.error('firebaseDeleteAccount:', error);
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unexpectedError', error);
   }
 };

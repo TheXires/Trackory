@@ -8,6 +8,7 @@ import { CustomError } from '../interfaces/error';
  * @param itemId
  * @param imageUri
  * @error auth/no-valid-user
+ * @error unable-to-upload-image
  * @returns url of the image after the upload
  */
 export const firebaseImageUpload = async (
@@ -22,8 +23,9 @@ export const firebaseImageUpload = async (
       .ref(`${currentUserId}/images/${itemId}.jpg`)
       .getDownloadURL();
     return downloadUrl;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-upload-image', error);
   }
 };

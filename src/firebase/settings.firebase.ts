@@ -7,6 +7,7 @@ import { Settings } from '../interfaces/settings';
  * get the settings for the current user
  *
  * @error auth/no-valid-user
+ * @error unable-to-get-settings
  * @returns the settings of the user or undefined when an error occurred
  */
 export const firebaseGetUserSettings = async (): Promise<Settings> => {
@@ -17,9 +18,10 @@ export const firebaseGetUserSettings = async (): Promise<Settings> => {
     const userData = userDoc.data();
     if (!userData) throw 'no data for current user found';
     return userData.settings;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-get-settings', error);
   }
 };
 
@@ -28,6 +30,7 @@ export const firebaseGetUserSettings = async (): Promise<Settings> => {
  *
  * @param settings the new settings to set
  * @error auth/no-valid-user
+ * @error unable-to-set-settings
  * @returns 1 on success, otherwise -1
  */
 export const firebaseUpdateUserSettings = async (settings: Settings): Promise<void> => {
@@ -35,8 +38,9 @@ export const firebaseUpdateUserSettings = async (settings: Settings): Promise<vo
     const userId = auth().currentUser?.uid;
     if (!userId) throw new CustomError('auth/no-valid-user');
     await firestore().collection('users').doc(userId).update({ settings });
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-set-settings', error);
   }
 };

@@ -17,6 +17,7 @@ import { getStartOfDay } from '../util/time';
  *
  * @param lastUpdated time of last update. 0 to fetch all
  * @param daysInThePast
+ * @error unable-to-get-consumption
  * @returns array with new consumed items or undefined if there are no changes after last update
  */
 export const firebaseGetConsumptions = async (
@@ -37,15 +38,17 @@ export const firebaseGetConsumptions = async (
     if (response.docs.length < 1) return undefined;
     if (response.docs[0].data().deleted) return [];
     return response.docs[0].data().items;
-  } catch (error) {
+  } catch (error: any) {
     console.error(`getConsumptions error: ${error}`);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-get-consumption', error);
   }
 };
 
 /**
  * gets all consumptions
  *
+ * @error unable-to-get-consumption
  * @returns array with all consumed items
  */
 export const firebaseGetAllConsumptions = async (): Promise<Consumption[]> => {
@@ -64,9 +67,10 @@ export const firebaseGetAllConsumptions = async (): Promise<Consumption[]> => {
       result.push({ date: doc.data().date, items: doc.data().items });
     });
     return result;
-  } catch (error) {
+  } catch (error: any) {
     console.error(`getConsumptions error: ${error}`);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-get-consumption', error);
   }
 };
 
@@ -80,6 +84,7 @@ export const firebaseGetAllConsumptions = async (): Promise<Consumption[]> => {
  * @param item
  * @param amount number of items to add to existing ones
  * @error auth/no-valid-user
+ * @error unable-to-consume-item
  */
 export const firebaseConsumeItem = async (
   daysInThePast: number,
@@ -145,6 +150,7 @@ export const firebaseConsumeItem = async (
     return;
   } catch (error: any) {
     console.error(`consumeItem error: ${error}`);
-    throw error;
+    if (error.code != null) throw new CustomError(error.code, error.message);
+    throw new CustomError('unable-to-consume-item', error);
   }
 };
