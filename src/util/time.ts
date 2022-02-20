@@ -1,4 +1,5 @@
 import dateformat from 'dateformat';
+import { strftime } from 'i18n-js';
 import { DAY_IN_MS } from '../constants';
 
 /**
@@ -47,4 +48,18 @@ export const getDateLabels = (weeksInPast: number) => {
     labels.push(dateformat(startTime - i * DAY_IN_MS, 'dd.mm'));
   }
   return labels;
+};
+
+// TODO doc hinzufügen
+export const getFirstDateOfWeek = (weeksInPast: number): number => {
+  const day = weeksInPast < 1 ? 6 : 7 * weeksInPast + 6;
+  const startTime = getStartOfDay(day);
+  return startTime;
+};
+
+// TODO doc hinzufügen
+export const getLastDateOfWeek = (weeksInPast: number): number => {
+  const day = weeksInPast < 1 ? 0 : 7 * weeksInPast;
+  const startTime = getStartOfDay(day);
+  return startTime;
 };

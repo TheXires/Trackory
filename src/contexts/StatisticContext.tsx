@@ -3,7 +3,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import { DAILY_STATISTICS } from '../constants';
 import {
   firebaseGetDailyStatistics,
-  firebaseUpdateStatistics
+  firebaseUpdateStatistics,
 } from '../firebase/statistics.firebase';
 import { StatisticsContextType } from '../interfaces/context';
 import { DailyStatistic } from '../interfaces/statistics';
@@ -11,17 +11,13 @@ import { DailyStatistic } from '../interfaces/statistics';
 export const StatisticContext = createContext({} as StatisticsContextType);
 
 export function StatisticProvider(props: any) {
-  const [initialLoading, setInitialLoading] = useState<boolean>(true);
   const [dailyStatistics, setDailyStatistics] = useState<DailyStatistic[]>([]);
   const [refreshingDailyStatistics, setRefreshingDailyStatistics] = useState<boolean>(false);
 
   const getDailyStatistics = async () => {
     try {
-      if (initialLoading) {
-        const localDailyStatistics = await AsyncStorage.getItem(DAILY_STATISTICS);
-        if (localDailyStatistics) setDailyStatistics(JSON.parse(localDailyStatistics));
-        setInitialLoading(false);
-      }
+      const localDailyStatistics = await AsyncStorage.getItem(DAILY_STATISTICS);
+      if (localDailyStatistics) setDailyStatistics(JSON.parse(localDailyStatistics));
       const statistics = await firebaseGetDailyStatistics();
       setDailyStatistics(statistics ?? []);
       await AsyncStorage.setItem(DAILY_STATISTICS, JSON.stringify(statistics ?? []));
