@@ -1,10 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import I18n from 'i18n-js';
 import React, { createContext, useEffect, useState } from 'react';
-import { ITEMS, ITEMS_LAST_UPDATED } from '../constants';
+import { Alert } from 'react-native';
+import { ITEMS } from '../constants';
 import { firebaseGetAllItems } from '../firebase/items.firebase';
 import { ItemContextType } from '../interfaces/context';
 import { Item } from '../interfaces/item';
-import { deleteItems, mergeItemArrays, mergeItems } from '../util/item';
+import { deleteItems, mergeItemArrays } from '../util/item';
 import { getItemLastUpdateTimeFromStorage, getItemsFromStorage } from '../util/localStorage';
 
 export const ItemContext = createContext({} as ItemContextType);
@@ -31,8 +33,12 @@ export function ItemProvider(props: any) {
       const itemsAfterDeleting = deleteItems(itemsAfterMerging, deletedItemIds);
       setItems(itemsAfterDeleting);
       await AsyncStorage.setItem(ITEMS, JSON.stringify(itemsAfterDeleting));
-    } catch (error) {
+    } catch (error: any) {
       console.error(`refreshItems ${error}`);
+      Alert.alert(
+        I18n.t('errorTitle'),
+        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
     }
   };
 

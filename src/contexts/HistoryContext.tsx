@@ -1,4 +1,6 @@
+import I18n from 'i18n-js';
 import React, { createContext, useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import { firebaseConsumeItem, firebaseGetConsumptions } from '../firebase/consumption.firebase';
 import { HistoryContextType } from '../interfaces/context';
 import { ConsumedItem, Item } from '../interfaces/item';
@@ -19,8 +21,12 @@ export function HistoryProvider(props: any) {
       if (!newHistory) return;
       setConsumedItems(newHistory);
       await saveHistoryToStorage(daysInPast, Date.now(), newHistory);
-    } catch (error) {
+    } catch (error: any) {
       console.error(`refreshConsumedItems ${error}`);
+      Alert.alert(
+        I18n.t('errorTitle'),
+        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
     }
   };
 
@@ -28,9 +34,12 @@ export function HistoryProvider(props: any) {
     try {
       await firebaseConsumeItem(daysInPast, item, quantity);
       refreshConsumedItems(daysInPast, true);
-    } catch (error) {
+    } catch (error: any) {
       console.error(`consumeItem ${error}`);
-      throw error;
+      Alert.alert(
+        I18n.t('errorTitle'),
+        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
     }
   };
 

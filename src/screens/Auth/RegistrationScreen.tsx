@@ -37,7 +37,10 @@ function RegistrationScreen() {
     try {
       await firebaseSignUp(email, password);
     } catch (error: any) {
-      Alert.alert(I18n.t('registrationErrorTitle'), I18n.t(error.code));
+      Alert.alert(
+        I18n.t('errorTitle'),
+        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
     }
     showLoadingPopup(false);
   };

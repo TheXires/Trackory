@@ -39,7 +39,10 @@ function LoginScreen() {
     try {
       await firebaseSignIn(email, password);
     } catch (error: any) {
-      Alert.alert(I18n.t('loginErrorTitle'), I18n.t(error.code));
+      Alert.alert(
+        I18n.t('errorTitle'),
+        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
     }
     showLoadingPopup(false);
   };
@@ -52,9 +55,7 @@ function LoginScreen() {
       >
         <Image style={styles.image} source={loginImage} />
         <View style={styles.bottomContainer}>
-          <Text style={[styles.heading, { color: colors.primary }]}>
-            {I18n.t('login')}
-          </Text>
+          <Text style={[styles.heading, { color: colors.primary }]}>{I18n.t('login')}</Text>
           <CustomTextInput
             autoCompleteType="email"
             autoCorrect={false}

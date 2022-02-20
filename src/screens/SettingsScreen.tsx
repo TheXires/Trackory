@@ -37,7 +37,10 @@ function SettingsScreen() {
       await AsyncStorage.clear();
       await firebaseSignOut();
     } catch (error: any) {
-      Alert.alert(I18n.t('errorTitle'), I18n.t(error.code));
+      Alert.alert(
+        I18n.t('errorTitle'),
+        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
     }
   };
 
@@ -64,8 +67,17 @@ function SettingsScreen() {
 
   const exportData = async () => {
     showLoadingPopup(true, 'toAdd');
-    await exportAdapter.exportData();
-    showLoadingPopup(false);
+    try {
+      await exportAdapter.exportData();
+      showLoadingPopup(false);
+    } catch (error: any) {
+      console.error(error);
+      showLoadingPopup(false);
+      Alert.alert(
+        I18n.t('errorTitle'),
+        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
+    }
   };
 
   return (

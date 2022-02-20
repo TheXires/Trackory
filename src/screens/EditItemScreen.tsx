@@ -42,7 +42,10 @@ function EditItemScreen() {
       navigation.goBack();
     } catch (error: any) {
       showLoadingPopup(false);
-      Alert.alert('toAdd', I18n.t(error.code));
+      Alert.alert(
+        I18n.t('errorTitle'),
+        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
     }
   }, [item, updatedItem]);
 

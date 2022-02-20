@@ -8,6 +8,7 @@ import RNFS from 'react-native-fs';
 import { firebaseGetAllConsumptions } from '../../../firebase/consumption.firebase';
 import { firebaseGetAllItems } from '../../../firebase/items.firebase';
 import { ExportAdapter } from '../../../interfaces/adapters';
+import { CustomError } from '../../../interfaces/error';
 
 const exportJsonAdapter: ExportAdapter = {
   async exportData(): Promise<void> {
@@ -30,9 +31,9 @@ const exportJsonAdapter: ExportAdapter = {
         await RNFS.writeFile(path, JSON.stringify(toShare), 'utf8');
         Alert.alert(I18n.t('exportedData'), I18n.t('androidDataExportSuccess'));
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(`export error: ${error}`);
-      Alert.alert(I18n.t('errorTitle'), I18n.t('exportError'));
+      throw new CustomError('exportError', error);
     }
   },
 };

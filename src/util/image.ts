@@ -22,7 +22,10 @@ export const takeImage = async (): Promise<string | undefined> => {
     if (!res.assets) return undefined;
     return res.assets[0].uri;
   } catch (error: any) {
-    Alert.alert(I18n.t('errorTitle'), I18n.t(error.code));
+    Alert.alert(
+      I18n.t('errorTitle'),
+      I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+    );
   }
   return undefined;
 };
@@ -46,7 +49,10 @@ export const selectImage = async (): Promise<string | undefined> => {
     if (!res.assets) return undefined;
     return res.assets[0].uri;
   } catch (error: any) {
-    Alert.alert(I18n.t('errorTitle'), I18n.t(error.code));
+    Alert.alert(
+      I18n.t('errorTitle'),
+      I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+    );
   }
   return undefined;
 };

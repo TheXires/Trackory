@@ -1,12 +1,11 @@
-import React, { createContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  firebaseGetUserSettings,
-  firebaseUpdateUserSettings,
-} from '../firebase/settings.firebase';
+import I18n from 'i18n-js';
+import React, { createContext, useEffect, useState } from 'react';
+import { Alert } from 'react-native';
+import { USER_SETTINGS } from '../constants';
+import { firebaseGetUserSettings, firebaseUpdateUserSettings } from '../firebase/settings.firebase';
 import { SettingsContextType } from '../interfaces/context';
 import { Settings } from '../interfaces/settings';
-import { USER_SETTINGS } from '../constants';
 
 export const SettingsContext = createContext({} as SettingsContextType);
 
@@ -21,8 +20,12 @@ export function SettingsProvider(props: any) {
         const userSettings = await firebaseGetUserSettings();
         setSettings(userSettings);
         await AsyncStorage.setItem(USER_SETTINGS, JSON.stringify(userSettings));
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
+        Alert.alert(
+          I18n.t('errorTitle'),
+          I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        );
       }
     };
     loadUserSettings();
