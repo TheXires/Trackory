@@ -5,8 +5,8 @@ import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
 import { Alert, Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
 import exportAdapter from '../adapter/exportAdapter/exportAdapter';
-import CalorieTargetDialog from '../components/CalorieTargetDialog';
 import HorizontalLine from '../components/HorizontalLine';
+import InputDialog from '../components/InputDialog';
 import SettingsItem from '../components/SettingsItem';
 import Spacer from '../components/Spacer';
 import { LoadingContext } from '../contexts/LoadingContext';
@@ -21,8 +21,21 @@ function SettingsScreen() {
 
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
-  const { settings } = useContext<SettingsContextType>(SettingsContext);
+  const { settings, updateSettings } = useContext<SettingsContextType>(SettingsContext);
   const [showCalorieTargetDialog, setShowCalorieTargetDialog] = useState<boolean>(false);
+  const [showWeightDialog, setShowWeightDialog] = useState<boolean>(false);
+
+  const saveCalorieTarget = (newCalorieTarget: number | undefined) => {
+    if (!settings || !newCalorieTarget || newCalorieTarget === settings?.calorieTarget) return;
+    updateSettings({ ...settings, calorieTarget: newCalorieTarget });
+    setShowCalorieTargetDialog(false);
+  };
+
+  const saveWeight = (newWeight: number | undefined) => {
+    if (!settings || !newWeight || newWeight === settings?.weight) return;
+    updateSettings({ ...settings, weight: newWeight });
+    setShowWeightDialog(false);
+  };
 
   const openLink = (link: string) => {
     try {
@@ -45,16 +58,19 @@ function SettingsScreen() {
   };
 
   const deleteUser = async () => {
-    // TODO übersetzung hinzufügen
-    showLoadingPopup(true, 'toAdd');
+    showLoadingPopup(true, I18n.t('deleteAccount'));
     try {
       await firebaseDeleteAccount();
       await AsyncStorage.clear();
       await firebaseSignOut();
       showLoadingPopup(false);
-    } catch (error) {
-      showLoadingPopup(false);
+    } catch (error: any) {
       console.error('deleteUser:', error);
+      showLoadingPopup(false);
+      Alert.alert(
+        I18n.t('errorTitle'),
+        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
     }
   };
 
@@ -66,7 +82,7 @@ function SettingsScreen() {
   };
 
   const exportData = async () => {
-    showLoadingPopup(true, 'toAdd');
+    showLoadingPopup(true, 'exportData');
     try {
       await exportAdapter.exportData();
       showLoadingPopup(false);
@@ -102,10 +118,9 @@ function SettingsScreen() {
 
           {/* wight input */}
           <SettingsItem
-            left={`${I18n.t('weight')} (KG)`}
-            right={80}
-            // TODO to implement
-            onPress={() => alert('to implement')}
+            left={`${I18n.t('weight')} (${I18n.t('kilogramAbbreviation')})`}
+            right={settings?.weight ?? '80'}
+            onPress={() => setShowWeightDialog(true)}
           />
           <HorizontalLine />
 
@@ -175,9 +190,24 @@ function SettingsScreen() {
       </ScrollView>
 
       {/* Dialogs */}
-      <CalorieTargetDialog
-        show={showCalorieTargetDialog}
+      <InputDialog
+        headerText={I18n.t('dailyCalorieTarget')}
         onClose={() => setShowCalorieTargetDialog(false)}
+        onSave={(newValue) => saveCalorieTarget(newValue)}
+        placeholder="2100"
+        show={showCalorieTargetDialog}
+        text={I18n.t('dailyCalorieTargetQuestion')}
+        value={settings?.calorieTarget}
+      />
+      {/* TODO hier die richtigen Übersetzungen und Texte einfügen */}
+      <InputDialog
+        headerText={I18n.t('dailyCalorieTarget')}
+        onClose={() => setShowWeightDialog(false)}
+        onSave={(newValue) => saveWeight(newValue)}
+        placeholder="80"
+        show={showWeightDialog}
+        text={I18n.t('dailyCalorieTargetQuestion')}
+        value={settings?.weight}
       />
     </>
   );

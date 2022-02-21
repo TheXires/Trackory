@@ -1,7 +1,7 @@
 import { Item, NewItem, UpdateItem } from '../interfaces/item';
 
 /**
- * completes the item with values of an other item if value is undefined
+ * completes the item with values of the fallbackItem if value is undefined
  *
  * @param item the possibly not completed item
  * @param fallbackItem the item to fallback to

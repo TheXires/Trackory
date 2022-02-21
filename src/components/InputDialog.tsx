@@ -1,49 +1,48 @@
 import I18n from 'i18n-js';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { SettingsContext } from '../contexts/SettingsContext';
-import { SettingsContextType } from '../interfaces/context';
-import { Settings } from '../interfaces/settings';
 import { permanentColors } from '../theme/colors';
 import { convertTextToInteger } from '../util/numberconverter';
 import Dialog from './Dialog';
 
 interface Props {
-  show: boolean;
+  headerText: string;
   onClose: () => void;
+  onSave: (newValue: number | undefined) => void;
+  placeholder: string;
+  show: boolean;
+  text: string;
+  value: number | undefined;
 }
 
-function CalorieTargetDialog({ show, onClose }: Props) {
-  const { settings, setSettings } = useContext<SettingsContextType>(SettingsContext);
-  const [calorieTarget, setCalorieTarget] = useState<number | undefined>(
-    settings?.calorieTarget ?? undefined,
-  );
+function InputDialog({
+  headerText,
+  onClose,
+  onSave,
+  placeholder,
+  show,
+  text,
+  value,
+}: Props) {
+  const [localValue, setLocalValue] = useState<number | undefined>(value);
   const [canSave, setCanSave] = useState<boolean>(false);
 
   useEffect(() => {
-    // eslint-disable-next-line no-unused-expressions
-    calorieTarget == null ? setCanSave(false) : setCanSave(true);
-  }, [calorieTarget]);
-
-  const save = () => {
-    if (!calorieTarget) return;
-    const newSettings: Settings = { ...settings, calorieTarget };
-    setSettings(newSettings);
-    onClose();
-  };
+    setCanSave(localValue != null);
+  }, [localValue]);
 
   return (
     <Dialog show={show} onClose={() => onClose()}>
       <View style={styles.container}>
-        <Text style={styles.dialogHeader}>{I18n.t('dailyCalorieTarget')}</Text>
-        <Text>{I18n.t('dailyCalorieTargetQuestion')}</Text>
+        <Text style={styles.dialogHeader}>{headerText}</Text>
+        <Text>{text}</Text>
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="2100"
+            placeholder={placeholder}
             keyboardType="numeric"
-            value={calorieTarget?.toString()}
-            onChangeText={(input) => setCalorieTarget(convertTextToInteger(input))}
+            value={localValue?.toString()}
+            onChangeText={(input) => setLocalValue(convertTextToInteger(input))}
           />
         </View>
         <View style={styles.buttonContainer}>
@@ -58,7 +57,7 @@ function CalorieTargetDialog({ show, onClose }: Props) {
             disabled={!canSave}
             style={styles.dialogButton}
             activeOpacity={0.8}
-            onPress={save}
+            onPress={() => onSave(localValue)}
           >
             <Text
               style={{
@@ -74,7 +73,7 @@ function CalorieTargetDialog({ show, onClose }: Props) {
   );
 }
 
-export default CalorieTargetDialog;
+export default InputDialog;
 
 const styles = StyleSheet.create({
   buttonContainer: {

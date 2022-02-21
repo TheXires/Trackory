@@ -3,7 +3,7 @@ export interface Item {
   carbohydrates: number;
   fat: number;
   id: string;
-  imgUrl?: string;
+  imgUrl: string | undefined;
   name: string;
   protein: number;
 }
@@ -36,7 +36,7 @@ export type UpdateItemPropertyType =
   | 'calories'
   | 'carbohydrates'
   | 'fat'
-  | 'imgUri'
+  | 'imgUrl'
   | 'name'
   | 'protein';
 
@@ -45,7 +45,7 @@ export interface ConsumedItem {
   carbohydrates: number;
   fat: number;
   id: string;
-  imgUrl?: string;
+  imgUrl: string | undefined;
   name: string;
   protein: number;
   quantity: number;

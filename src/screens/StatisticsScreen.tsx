@@ -64,10 +64,26 @@ function StatisticsScreen() {
           />
         }
       >
-        <CustomBarChart title={I18n.t('calories')} labels={labels} data={calorieWeekData} />
-        <CustomBarChart title={I18n.t('fat')} labels={labels} data={carbohydratesWeekData} />
-        <CustomBarChart title={I18n.t('carbohydrates')} labels={labels} data={fatWeekData} />
-        <CustomBarChart title={I18n.t('protein')} labels={labels} data={proteinWeekData} />
+        <CustomBarChart
+          title={`${I18n.t('calories')} (${I18n.t('calorieAbbreviation')})`}
+          labels={labels}
+          data={calorieWeekData}
+        />
+        <CustomBarChart
+          title={`${I18n.t('carbohydrates')} (${I18n.t('gramAbbreviation')})`}
+          labels={labels}
+          data={fatWeekData}
+        />
+        <CustomBarChart
+          title={`${I18n.t('fat')} (${I18n.t('gramAbbreviation')})`}
+          labels={labels}
+          data={carbohydratesWeekData}
+        />
+        <CustomBarChart
+          title={`${I18n.t('protein')} (${I18n.t('gramAbbreviation')})`}
+          labels={labels}
+          data={proteinWeekData}
+        />
       </ScrollView>
     </View>
   );

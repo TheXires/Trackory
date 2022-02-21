@@ -41,11 +41,6 @@ export default {
   'auth/user-not-found': 'User does not exist',
   'auth/wrong-password': 'Wrong password',
   'auth/requires-recent-login': 'New login necessary',
-  'auth/missing-android-pkg-name': 'An unexpected error occurred',
-  'auth/missing-continue-uri': 'An unexpected error occurred',
-  'auth/missing-ios-bundle-id': 'An unexpected error occurred',
-  'auth/invalid-continue-uri': 'An unexpected error occurred',
-  'auth/unauthorized-continue-uri': 'An unexpected error occurred',
 
   // #Abbreviations
   calorieAbbreviation: 'cal',
@@ -98,7 +93,7 @@ export default {
   editItem: 'Edit Item',
 
   // Settings
-  calorieTarget: 'Calorie target',
+  calorieTarget: 'Daily calorie target',
   calorieRequirementCalculator: 'Calorie Requirement Calculator',
   weight: 'Weight',
   exportData: 'Export Data',

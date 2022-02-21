@@ -50,6 +50,7 @@ export default {
   // #Abbreviations
   calorieAbbreviation: 'kcal',
   gramAbbreviation: 'g',
+  kilogramAbbreviation: 'kg',
 
   // #Navigation
   overviewTitle: 'Übersicht',
@@ -99,7 +100,7 @@ export default {
   editItem: 'Item Bearbeiten',
 
   // Settings
-  calorieTarget: 'Kalorienziel',
+  calorieTarget: 'Tägliches Kalorienziel',
   calorieRequirementCalculator: 'Kalorienbedarfsrechner',
   weight: 'Gewicht',
   exportData: 'Daten exportieren',

@@ -3,7 +3,7 @@ import exportJsonAdapter from './exportAdapterCollection/exportJsonAdapter';
 
 const exportAdapter: ExportAdapter = {
   async exportData(): Promise<void> {
-    exportJsonAdapter.exportData();
+    await exportJsonAdapter.exportData();
   },
 };
 

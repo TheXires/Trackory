@@ -40,14 +40,9 @@ function AddItemScreen() {
 
   const onPress = async (item: Item) => {
     showLoadingPopup(true, I18n.t('add'));
-    try {
-      await consumeItem(daysInPast, item, 1);
-      showLoadingPopup(false);
-      navigation.goBack();
-    } catch (error) {
-      console.error('AddItemScreen onPress:', error);
-      showLoadingPopup(false);
-    }
+    await consumeItem(daysInPast, item, 1);
+    showLoadingPopup(false);
+    navigation.goBack();
   };
 
   return (

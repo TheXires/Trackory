@@ -17,7 +17,7 @@ export interface HistoryContextType {
 
 export interface SettingsContextType {
   settings: Settings | undefined;
-  setSettings: React.Dispatch<React.SetStateAction<Settings | undefined>>;
+  updateSettings: (newSettings: Settings) => Promise<void>;
 }
 
 export interface LoadingContextType {

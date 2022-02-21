@@ -25,13 +25,11 @@ export function LoadingProvider(props: any) {
 
   return (
     <LoadingContext.Provider
-      // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
         showLoadingPopup,
       }}
     >
       <>
-        {/* eslint-disable-next-line react/destructuring-assignment */}
         {props.children}
         <Dialog show={isVisible} onClose={() => null}>
           <View style={style.container}>

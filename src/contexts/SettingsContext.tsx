@@ -13,21 +13,6 @@ export function SettingsProvider(props: any) {
   const [settings, setSettings] = useState<Settings | undefined>(undefined);
 
   useEffect(() => {
-    const loadUserSettings = async () => {
-      try {
-        const localSettings = await AsyncStorage.getItem(USER_SETTINGS);
-        if (localSettings) setSettings(JSON.parse(localSettings));
-        const userSettings = await firebaseGetUserSettings();
-        setSettings(userSettings);
-        await AsyncStorage.setItem(USER_SETTINGS, JSON.stringify(userSettings));
-      } catch (error: any) {
-        console.error(error);
-        Alert.alert(
-          I18n.t('errorTitle'),
-          I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
-        );
-      }
-    };
     loadUserSettings();
   }, []);
 
@@ -36,10 +21,38 @@ export function SettingsProvider(props: any) {
     firebaseUpdateUserSettings(settings);
   }, [settings]);
 
+  const loadUserSettings = async () => {
+    try {
+      const localSettings = await AsyncStorage.getItem(USER_SETTINGS);
+      if (localSettings) setSettings(JSON.parse(localSettings));
+      const userSettings = await firebaseGetUserSettings();
+      setSettings(userSettings);
+      await AsyncStorage.setItem(USER_SETTINGS, JSON.stringify(userSettings));
+    } catch (error: any) {
+      console.error(error);
+      Alert.alert(
+        I18n.t('errorTitle'),
+        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
+    }
+  };
+
+  const updateSettings = async (newSettings: Settings) => {
+    try {
+      await firebaseUpdateUserSettings(newSettings);
+      await AsyncStorage.setItem(USER_SETTINGS, JSON.stringify(newSettings));
+      await loadUserSettings();
+    } catch (error: any) {
+      console.error(`updateSettings ${error}`);
+      Alert.alert(
+        I18n.t('errorTitle'),
+        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
+    }
+  };
+
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <SettingsContext.Provider value={{ setSettings, settings }}>
-      {/* eslint-disable-next-line react/destructuring-assignment */}
+    <SettingsContext.Provider value={{ settings, updateSettings }}>
       {props.children}
     </SettingsContext.Provider>
   );

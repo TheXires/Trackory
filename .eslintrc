@@ -31,7 +31,10 @@
     "sort-keys": ["error", "asc", { "caseSensitive": true, "natural": false, "minKeys": 2 }],
     "no-use-before-define": "off",
     "react-hooks/exhaustive-deps": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "react/jsx-no-constructed-context-values": "off",
+    "react/destructuring-assignment": "off"
   },
   "settings": {
     "import/resolver": {

@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import I18n from 'i18n-js';
+import { orderBy } from 'lodash';
 import React, { createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { ITEMS } from '../constants';
@@ -31,7 +32,8 @@ export function ItemProvider(props: any) {
       const { updatedItems, deletedItemIds } = await firebaseGetAllItems(lastUpdated);
       const itemsAfterMerging = mergeItemArrays(localItems, updatedItems);
       const itemsAfterDeleting = deleteItems(itemsAfterMerging, deletedItemIds);
-      setItems(itemsAfterDeleting);
+      const sortedItems = orderBy(itemsAfterDeleting, ['name'], ['asc']);
+      setItems(sortedItems);
       await AsyncStorage.setItem(ITEMS, JSON.stringify(itemsAfterDeleting));
     } catch (error: any) {
       console.error(`refreshItems ${error}`);
@@ -52,14 +54,12 @@ export function ItemProvider(props: any) {
 
   return (
     <ItemContext.Provider
-      // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
         items,
         refreshItems,
         refreshingItems,
       }}
     >
-      {/* eslint-disable-next-line react/destructuring-assignment */}
       {props.children}
     </ItemContext.Provider>
   );

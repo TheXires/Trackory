@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 import { DAILY_STATISTICS } from '../constants';
 import {
   firebaseGetDailyStatistics,
-  firebaseUpdateStatistics,
+  firebaseUpdateStatistics
 } from '../firebase/statistics.firebase';
 import { StatisticsContextType } from '../interfaces/context';
 import { DailyStatistic } from '../interfaces/statistics';
@@ -56,10 +56,8 @@ export function StatisticProvider(props: any) {
 
   return (
     <StatisticContext.Provider
-      // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{ dailyStatistics, refreshDailyStatistics, refreshingDailyStatistics }}
     >
-      {/* eslint-disable-next-line react/destructuring-assignment */}
       {props.children}
     </StatisticContext.Provider>
   );

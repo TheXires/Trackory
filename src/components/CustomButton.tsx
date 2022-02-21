@@ -27,11 +27,7 @@ function CustomButton({
     <RectButton
       enabled={enabled}
       onPress={() => onPress()}
-      style={[
-        styles.button,
-        { backgroundColor: enabled ? buttonColor : colors.border },
-        style,
-      ]}
+      style={[styles.button, { backgroundColor: enabled ? buttonColor : colors.border }, style]}
     >
       <Text style={[styles.buttonText, { color: textColor }]}>{value}</Text>
     </RectButton>

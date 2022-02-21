@@ -72,7 +72,7 @@ function EditItemScreen() {
     } else {
       setShownImage(undefined);
     }
-  }, [item, updatedItem.imgUrl]);
+  }, [item, updatedItem]);
 
   const change = (input: string | number | undefined, field: UpdateItemPropertyType) => {
     setUpdatedItem(update(updatedItem, { [field]: { $set: input } }));
@@ -91,7 +91,7 @@ function EditItemScreen() {
           >
             <Pressable
               style={styles.imageOverlay}
-              onPress={async () => change(await takeImage(), 'imgUri')}
+              onPress={async () => change(await takeImage(), 'imgUrl')}
             >
               <Feather name="edit" size={34} color={permanentColors.textWhite} />
             </Pressable>

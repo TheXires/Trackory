@@ -1,4 +1,5 @@
 import I18n from 'i18n-js';
+import { orderBy } from 'lodash';
 import React, { createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { firebaseConsumeItem, firebaseGetConsumptions } from '../firebase/consumption.firebase';
@@ -16,11 +17,13 @@ export function HistoryProvider(props: any) {
     if (!hidden) setRefreshingConsumedItems(true);
     try {
       const history = await getHistoryFromStorage(daysInPast);
-      setConsumedItems(history?.consumedItems ?? []);
+      const sortedHistoryItems = orderBy(history?.consumedItems ?? [], ['name'], ['asc']);
+      setConsumedItems(sortedHistoryItems);
       const newHistory = await firebaseGetConsumptions(history?.lastUpdated ?? 0, daysInPast);
       if (!newHistory) return;
-      setConsumedItems(newHistory);
-      await saveHistoryToStorage(daysInPast, Date.now(), newHistory);
+      const sortedNewHistoryItems = orderBy(newHistory, ['name'], ['asc']);
+      setConsumedItems(sortedNewHistoryItems);
+      await saveHistoryToStorage(daysInPast, Date.now(), sortedNewHistoryItems);
     } catch (error: any) {
       console.error(`refreshConsumedItems ${error}`);
       Alert.alert(
@@ -53,7 +56,6 @@ export function HistoryProvider(props: any) {
 
   return (
     <HistoryContext.Provider
-      // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
         consumeItem,
         consumedItems,
@@ -61,7 +63,6 @@ export function HistoryProvider(props: any) {
         refreshingConsumedItems,
       }}
     >
-      {/* eslint-disable-next-line react/destructuring-assignment */}
       {props.children}
     </HistoryContext.Provider>
   );
