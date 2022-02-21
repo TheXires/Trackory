@@ -1,11 +1,11 @@
-import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import update from 'immutability-helper';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Alert, ImageBackground, Pressable, StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import placeholderImage from '../../assets/itemPlaceholderImage.png';
+import ChangeImageButton from '../components/ChangeImageButton';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
 import CustomNumberInput from '../components/CustomNumberInput';
 import CustomTextInput from '../components/CustomTextInput';
@@ -17,7 +17,6 @@ import { ItemContextType, LoadingContextType } from '../interfaces/context';
 import { CustomError } from '../interfaces/error';
 import { Item, UpdateItem, UpdateItemPropertyType } from '../interfaces/item';
 import { EditItemNavigationProp, EditItemRouteProp } from '../navigation/types.navigation';
-import { permanentColors } from '../theme/colors';
 import { takeImage } from '../util/image';
 import { mergeItems } from '../util/item';
 
@@ -78,25 +77,21 @@ function EditItemScreen() {
     setUpdatedItem(update(updatedItem, { [field]: { $set: input } }));
   };
 
+  const deleteImage = () => {
+    setItem(update(item, { imgUrl: { $set: '' } }));
+    setUpdatedItem(update(updatedItem, { imgUrl: { $set: '' } }));
+  };
+
   if (!item) return <CustomActivityIndicator />;
 
   return (
     <KeyboardAwareScrollView bounces={false} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <ImageBackground
-            style={styles.image}
-            imageStyle={{ borderRadius: 100 }}
-            source={shownImage ? { uri: shownImage } : placeholderImage}
-          >
-            <Pressable
-              style={styles.imageOverlay}
-              onPress={async () => change(await takeImage(), 'imgUrl')}
-            >
-              <Feather name="edit" size={34} color={permanentColors.textWhite} />
-            </Pressable>
-          </ImageBackground>
-        </View>
+        <ChangeImageButton
+          imgUri={shownImage ? { uri: shownImage } : placeholderImage}
+          onDelete={deleteImage}
+          onPress={async () => change(await takeImage(), 'imgUrl')}
+        />
         <CustomTextInput
           onChangeText={(text) => change(text, 'name')}
           placeholder={item.name}
@@ -139,23 +134,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
     paddingTop: 15,
-  },
-  image: {
-    aspectRatio: 1 / 1,
-    borderRadius: 100,
-    height: 200,
-    marginBottom: 10,
-  },
-  imageContainer: {
-    alignItems: 'center',
-  },
-  imageOverlay: {
-    alignItems: 'center',
-    backgroundColor: '#66666688',
-    borderRadius: 100,
-    height: 200,
-    justifyContent: 'center',
-    width: 200,
   },
   title: {
     fontSize: 16,

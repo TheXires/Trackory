@@ -106,7 +106,11 @@ function CreateItemScreen() {
             {I18n.t(expanded ? 'less' : 'more')}
           </Text>
         </View>
-        <AddImageButton onPress={async () => setImageUri(await takeImage())} imageUri={imageUri} />
+        <AddImageButton
+          imageUri={imageUri}
+          onDelete={() => setImageUri(undefined)}
+          onPress={async () => setImageUri(await takeImage())}
+        />
       </View>
     </KeyboardAwareScrollView>
   );

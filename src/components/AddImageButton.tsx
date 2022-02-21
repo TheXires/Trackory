@@ -1,36 +1,28 @@
 import { Feather } from '@expo/vector-icons';
 import I18n from 'i18n-js';
 import React from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { permanentColors } from '../theme/colors';
+import ChangeImageButton from './ChangeImageButton';
 
 interface Props {
   imageUri: string | undefined;
+  onDelete: () => void;
   onPress: () => void;
 }
 
-function AddImageButton({ imageUri, onPress }: Props) {
+function AddImageButton({ imageUri, onDelete, onPress }: Props) {
   return (
-    <Pressable style={styles.addPhotoButtonContainer} onPress={onPress}>
+    <View style={styles.addPhotoButtonContainer}>
       {imageUri ? (
-        <Image
-          source={{
-            height: 300,
-            uri: imageUri,
-            width: 250,
-          }}
-          height={250}
-          width={250}
-        />
+        <ChangeImageButton imgUri={{ uri: imageUri }} onDelete={onDelete} onPress={onPress} />
       ) : (
-        <View style={styles.addPhotoButton}>
+        <Pressable style={styles.addPhotoButton} onPress={onPress}>
           <Feather name="plus" size={46} style={styles.addPhotoButtonText} />
-          <Text style={[styles.addPhotoButtonText, { fontSize: 18 }]}>
-            {I18n.t('addPhoto')}
-          </Text>
-        </View>
+          <Text style={[styles.addPhotoButtonText, { fontSize: 18 }]}>{I18n.t('addPhoto')}</Text>
+        </Pressable>
       )}
-    </Pressable>
+    </View>
   );
 }
 
@@ -53,5 +45,22 @@ const styles = StyleSheet.create({
     color: permanentColors.primary,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  image: {
+    aspectRatio: 1 / 1,
+    borderRadius: 100,
+    height: 200,
+    marginBottom: 10,
+  },
+  imageContainer: {
+    alignItems: 'center',
+  },
+  imageOverlay: {
+    alignItems: 'center',
+    backgroundColor: '#66666688',
+    borderRadius: 100,
+    height: 200,
+    justifyContent: 'center',
+    width: 200,
   },
 });
