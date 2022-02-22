@@ -11,17 +11,13 @@ import { CustomError } from '../interfaces/error';
  * @error unable-to-upload-image
  * @returns url of the image after the upload
  */
-export const firebaseImageUpload = async (
-  itemId: string,
-  imageUri: string,
-): Promise<string> => {
+export const firebaseImageUpload = async (itemId: string, imageUri: string): Promise<string> => {
   try {
     const currentUserId = auth().currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    await storage().ref(`${currentUserId}/images/${itemId}.jpg`).putFile(imageUri);
-    const downloadUrl = await storage()
-      .ref(`${currentUserId}/images/${itemId}.jpg`)
-      .getDownloadURL();
+    const ref = storage().ref(`${currentUserId}/images/${Date.now()})}.jpg`);
+    await ref.putFile(imageUri);
+    const downloadUrl = await ref.getDownloadURL();
     return downloadUrl;
   } catch (error: any) {
     console.error(error);

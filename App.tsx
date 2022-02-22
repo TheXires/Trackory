@@ -12,6 +12,7 @@ export default function App() {
   const theme = useColorScheme();
 
   I18n.fallbacks = true;
+  // eslint-disable-next-line sort-keys
   I18n.translations = { en, de };
   I18n.locale = Localization.locale;
 
