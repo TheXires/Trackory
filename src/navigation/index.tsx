@@ -1,27 +1,48 @@
+import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
 import auth from '@react-native-firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
+import { LoadingContext } from '../contexts/LoadingContext';
+import { LoadingContextType } from '../interfaces/context';
+import OfflineScreen from '../screens/OfflineScreen';
 import { MyDarkTheme, MyLightTheme } from '../theme/colors';
 import AuthNavigator from './AuthNavigator';
 import RootStackNavigator from './MainNavigator';
 
 export default function Root() {
   const scheme = useColorScheme();
+  const netInfo = useNetInfo();
+
+  const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(false);
+  const [offline, setOffline] = useState<boolean>(true);
 
   useEffect(() => {
-    const authListener = auth().onAuthStateChanged((user) =>
-      setIsAuthorized(user != null),
-    );
+    const authListener = auth().onAuthStateChanged((user) => setIsAuthorized(user != null));
+
     return authListener;
   }, []);
 
+  useEffect(() => {
+    setOffline(netInfo.isInternetReachable === false);
+  }, [netInfo]);
+
+  const checkConnection = async () => {
+    showLoadingPopup(true, 'lade');
+    const connection = await NetInfo.fetch();
+    setOffline(connection.isInternetReachable === false);
+    setTimeout(() => {
+      showLoadingPopup(false);
+    }, 1000);
+  };
+
+  if (offline) return <OfflineScreen onPress={checkConnection} />;
+
   return (
     <NavigationContainer theme={scheme === 'dark' ? MyDarkTheme : MyLightTheme}>
-      {isAuthorized === false && <AuthNavigator />}
-      {isAuthorized === true && <RootStackNavigator />}
+      {isAuthorized ? <RootStackNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }
