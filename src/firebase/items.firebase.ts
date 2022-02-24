@@ -92,9 +92,8 @@ export const firebaseUpdateItem = async (item: Item, newImageUri?: string): Prom
   try {
     const currentUserId = auth().currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    let downloadUrl;
     if (newImageUri) {
-      downloadUrl = await firebaseImageUpload(item.id, newImageUri);
+      const downloadUrl = await firebaseImageUpload(newImageUri);
       if (!downloadUrl) throw 'unable to upload image';
       updatedItem.imgUrl = downloadUrl;
     }
@@ -126,15 +125,13 @@ export const firebaseAddItem = async (
   try {
     const currentUserId = auth().currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    const response = await firestore()
+    let downloadUrl = '';
+    if (imageUri) downloadUrl = await firebaseImageUpload(imageUri);
+    await firestore()
       .collection('users')
       .doc(currentUserId)
       .collection('items')
-      .add({ ...newItem, lastModified: Date.now() });
-    if (!imageUri) return;
-    const downloadUrl = await firebaseImageUpload(response.id, imageUri);
-    const itemWithImg: Item = { id: response.id, ...newItem, imgUrl: downloadUrl };
-    await firebaseUpdateItem(itemWithImg);
+      .add({ ...newItem, imgUrl: downloadUrl, lastModified: Date.now() });
   } catch (error: any) {
     console.error('addNewItem error: ', error);
     if (error.code != null) throw new CustomError(error.code, error.message);
