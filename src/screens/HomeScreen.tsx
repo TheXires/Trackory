@@ -10,9 +10,9 @@ import Spacer from '../components/Spacer';
 import TopBar from '../components/TopBar';
 import { HistoryContext } from '../contexts/HistoryContext';
 import { SettingsContext } from '../contexts/SettingsContext';
-import { HistoryContextType } from '../interfaces/context';
-import { ConsumedItem } from '../interfaces/item';
-import { ConsumedNavigationProp } from '../navigation/types.navigation';
+import { HistoryContextType } from '../types/context';
+import { ConsumedItem } from '../types/item';
+import { ConsumedNavigationProp } from '../types/navigation';
 import { getStartOfDay } from '../util/time';
 
 function HomeScreen() {

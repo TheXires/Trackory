@@ -3,8 +3,8 @@ import { orderBy } from 'lodash';
 import React, { createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { firebaseConsumeItem, firebaseGetConsumptions } from '../firebase/consumption.firebase';
-import { HistoryContextType } from '../interfaces/context';
-import { ConsumedItem, Item } from '../interfaces/item';
+import { HistoryContextType } from '../types/context';
+import { ConsumedItem, Item } from '../types/item';
 import { getHistoryFromStorage, saveHistoryToStorage } from '../util/history';
 
 export const HistoryContext = createContext({} as HistoryContextType);

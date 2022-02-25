@@ -12,8 +12,8 @@ import Spacer from '../components/Spacer';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { SettingsContext } from '../contexts/SettingsContext';
 import { firebaseDeleteAccount, firebaseSignOut } from '../firebase/auth.firebase';
-import { LoadingContextType, SettingsContextType } from '../interfaces/context';
-import { SettingsNavigationProp } from '../navigation/types.navigation';
+import { LoadingContextType, SettingsContextType } from '../types/context';
+import { SettingsNavigationProp } from '../types/navigation';
 
 function SettingsScreen() {
   const { colors } = useTheme();

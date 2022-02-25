@@ -1,8 +1,8 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import NetInfo from '@react-native-community/netinfo';
-import { CustomError } from '../interfaces/error';
-import { ConsumedItem, Consumption, Item } from '../interfaces/item';
+import { CustomError } from '../types/error';
+import { ConsumedItem, Consumption, Item } from '../types/item';
 import { getStartOfDay } from '../util/time';
 
 /**

@@ -17,8 +17,8 @@ import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseSignIn } from '../../firebase/auth.firebase';
-import { LoadingContextType } from '../../interfaces/context';
-import { LoginNavigationProp } from '../../navigation/types.navigation';
+import { LoadingContextType } from '../../types/context';
+import { LoginNavigationProp } from '../../types/navigation';
 
 function LoginScreen() {
   const { colors } = useTheme();

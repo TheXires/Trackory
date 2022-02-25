@@ -12,12 +12,12 @@ import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseAddItem } from '../firebase/items.firebase';
-import { ItemContextType, LoadingContextType } from '../interfaces/context';
-import { CustomError } from '../interfaces/error';
-import { NewItem, NewItemPropertyType } from '../interfaces/item';
-import { CreateItemNavigationProp } from '../navigation/types.navigation';
+import { ItemContextType, LoadingContextType } from '../types/context';
+import { CustomError } from '../types/error';
+import { NewItem, NewItemPropertyType } from '../types/item';
+import { CreateItemNavigationProp } from '../types/navigation';
 import { permanentColors } from '../theme/colors';
-import { takeImage } from '../util/image';
+import { selectImage, takeImage } from '../util/image';
 import { createNewItem } from '../util/item';
 
 function CreateItemScreen() {
@@ -80,16 +80,16 @@ function CreateItemScreen() {
           {expanded && (
             <>
               <CustomNumberInput
-                onChangeText={(input) => change(input, 'carbohydrates')}
-                placeholder="123"
-                title={I18n.t('carbohydrates')}
-                value={item.carbohydrates}
-              />
-              <CustomNumberInput
                 onChangeText={(input) => change(input, 'fat')}
                 placeholder="123"
                 title={I18n.t('fat')}
                 value={item.fat}
+              />
+              <CustomNumberInput
+                onChangeText={(input) => change(input, 'carbohydrates')}
+                placeholder="123"
+                title={I18n.t('carbohydrates')}
+                value={item.carbohydrates}
               />
               <CustomNumberInput
                 onChangeText={(input) => change(input, 'protein')}

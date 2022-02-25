@@ -1,5 +1,5 @@
 import { DAY_IN_MS } from '../constants';
-import { DailyStatistic } from '../interfaces/statistics';
+import { DailyStatistic } from '../types/statistics';
 import { getStartOfDay } from './time';
 
 export const separateDailyStatisticData = (data: DailyStatistic[], weeksInPast: number) => {

@@ -4,8 +4,8 @@ import I18n from 'i18n-js';
 import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import { LoadingProvider } from './src/contexts/LoadingContext';
-import en from './src/language/english';
-import de from './src/language/german';
+import en from './src/i18n/english';
+import de from './src/i18n/german';
 import Navigation from './src/navigation';
 
 export default function App() {

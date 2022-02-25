@@ -5,8 +5,8 @@ import React, { createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { ITEMS } from '../constants';
 import { firebaseGetAllItems } from '../firebase/items.firebase';
-import { ItemContextType } from '../interfaces/context';
-import { Item } from '../interfaces/item';
+import { ItemContextType } from '../types/context';
+import { Item } from '../types/item';
 import { deleteItems, mergeItemArrays } from '../util/item';
 import { getItemLastUpdateTimeFromStorage, getItemsFromStorage } from '../util/localStorage';
 

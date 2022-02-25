@@ -7,8 +7,8 @@ import { Alert, Platform, Share } from 'react-native';
 import RNFS from 'react-native-fs';
 import { firebaseGetAllConsumptions } from '../../../firebase/consumption.firebase';
 import { firebaseGetAllItems } from '../../../firebase/items.firebase';
-import { ExportAdapter } from '../../../interfaces/adapters';
-import { CustomError } from '../../../interfaces/error';
+import { ExportAdapter } from '../../../types/adapters';
+import { CustomError } from '../../../types/error';
 
 const exportJsonAdapter: ExportAdapter = {
   async exportData(): Promise<void> {

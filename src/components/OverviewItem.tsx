@@ -3,7 +3,7 @@ import I18n from 'i18n-js';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import placeholderImg from '../../assets/itemPlaceholderImage.png';
-import { ConsumedItem } from '../interfaces/item';
+import { ConsumedItem } from '../types/item';
 import { permanentColors } from '../theme/colors';
 
 interface Props {

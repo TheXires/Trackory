@@ -9,9 +9,9 @@ import Spacer from '../components/Spacer';
 import { HistoryContext } from '../contexts/HistoryContext';
 import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { HistoryContextType, ItemContextType, LoadingContextType } from '../interfaces/context';
-import { Item } from '../interfaces/item';
-import { AddItemNavigationProp, AddItemRouteProp } from '../navigation/types.navigation';
+import { HistoryContextType, ItemContextType, LoadingContextType } from '../types/context';
+import { Item } from '../types/item';
+import { AddItemNavigationProp, AddItemRouteProp } from '../types/navigation';
 
 function Separator() {
   return <View style={{ height: 20 }} />;

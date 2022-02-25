@@ -7,7 +7,7 @@ import HeaderRightButton from '../components/HeaderRightButton';
 import HomeScreen from '../screens/HomeScreen';
 import ItemsScreen from '../screens/ItemsScreen';
 import StatisticsScreen from '../screens/StatisticsScreen';
-import { BottomTabParamList } from './types.navigation';
+import { BottomTabParamList } from '../types/navigation';
 
 interface IconProps {
   icon: 'home' | 'bar-chart-2' | 'coffee';

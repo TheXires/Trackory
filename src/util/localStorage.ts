@@ -5,7 +5,7 @@ import {
   ITEMS,
   ITEMS_LAST_UPDATED,
 } from '../constants';
-import { Item } from '../interfaces/item';
+import { Item } from '../types/item';
 
 /**
  * get the time of the last item fetch saved in the asyncStorage of the device

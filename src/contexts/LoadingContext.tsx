@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
 import Dialog from '../components/Dialog';
-import { LoadingContextType } from '../interfaces/context';
+import { LoadingContextType } from '../types/context';
 
 export const LoadingContext = createContext({} as LoadingContextType);
 

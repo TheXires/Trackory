@@ -8,9 +8,9 @@ import ItemListElement from '../components/ItemListElement';
 import Searchbar from '../components/Searchbar';
 import Spacer from '../components/Spacer';
 import { ItemContext } from '../contexts/ItemContext';
-import { ItemContextType } from '../interfaces/context';
-import { Item } from '../interfaces/item';
-import { ItemsNavigationProp } from '../navigation/types.navigation';
+import { ItemContextType } from '../types/context';
+import { Item } from '../types/item';
+import { ItemsNavigationProp } from '../types/navigation';
 
 function ItemsScreen() {
   const { colors } = useTheme();

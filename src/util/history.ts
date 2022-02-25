@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HISTORY } from '../constants';
-import { ConsumedItem } from '../interfaces/item';
-import { StoredHistory } from '../interfaces/localStorage';
+import { ConsumedItem } from '../types/item';
+import { StoredHistory } from '../types/localStorage';
 import { getStartOfDay } from './time';
 
 /**

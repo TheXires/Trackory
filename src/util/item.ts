@@ -1,4 +1,4 @@
-import { Item, NewItem, UpdateItem } from '../interfaces/item';
+import { Item, NewItem, UpdateItem } from '../types/item';
 
 /**
  * completes the item with values of the fallbackItem if value is undefined

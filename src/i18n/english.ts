@@ -19,6 +19,7 @@ export default {
   errorTitle: 'Error',
   exportError: 'Unable to export Data.',
   unexpectedError: 'An unexpected error occurred',
+  'no-internet-connection': 'No connection to the server could be established',
 
   // Camera
   camera_unavailable: 'Camera not available',

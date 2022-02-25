@@ -3,8 +3,8 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
 import { DAILY_STATISTICS_LAST_UPDATED } from '../constants';
-import { CustomError } from '../interfaces/error';
-import { DailyStatistic } from '../interfaces/statistics';
+import { CustomError } from '../types/error';
+import { DailyStatistic } from '../types/statistics';
 
 /**
  * calling cloudfunction to create and update daily statistics

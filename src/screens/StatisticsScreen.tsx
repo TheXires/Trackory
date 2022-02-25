@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import CustomBarChart from '../components/BarChart';
 import TopBar from '../components/TopBar';
 import { StatisticContext } from '../contexts/StatisticContext';
-import { StatisticsContextType } from '../interfaces/context';
+import { StatisticsContextType } from '../types/context';
 import { separateDailyStatisticData } from '../util/statistics';
 import { getDateLabels, getFirstDateOfWeek, getLastDateOfWeek } from '../util/time';
 
@@ -70,12 +70,12 @@ function StatisticsScreen() {
           data={calorieWeekData}
         />
         <CustomBarChart
-          title={`${I18n.t('carbohydrates')} (${I18n.t('gramAbbreviation')})`}
+          title={`${I18n.t('fat')} (${I18n.t('gramAbbreviation')})`}
           labels={labels}
           data={fatWeekData}
         />
         <CustomBarChart
-          title={`${I18n.t('fat')} (${I18n.t('gramAbbreviation')})`}
+          title={`${I18n.t('carbohydrates')} (${I18n.t('gramAbbreviation')})`}
           labels={labels}
           data={carbohydratesWeekData}
         />

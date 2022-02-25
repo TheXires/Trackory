@@ -13,10 +13,10 @@ import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseUpdateItem } from '../firebase/items.firebase';
-import { ItemContextType, LoadingContextType } from '../interfaces/context';
-import { CustomError } from '../interfaces/error';
-import { Item, UpdateItem, UpdateItemPropertyType } from '../interfaces/item';
-import { EditItemNavigationProp, EditItemRouteProp } from '../navigation/types.navigation';
+import { ItemContextType, LoadingContextType } from '../types/context';
+import { CustomError } from '../types/error';
+import { Item, UpdateItem, UpdateItemPropertyType } from '../types/item';
+import { EditItemNavigationProp, EditItemRouteProp } from '../types/navigation';
 import { takeImage } from '../util/image';
 import { mergeItems } from '../util/item';
 
@@ -111,16 +111,16 @@ function EditItemScreen() {
           value={updatedItem.fat}
         />
         <CustomNumberInput
-          onChangeText={(input) => change(input, 'protein')}
-          placeholder={item.protein.toString()}
-          title={I18n.t('protein')}
-          value={updatedItem.protein}
-        />
-        <CustomNumberInput
           onChangeText={(input) => change(input, 'carbohydrates')}
           placeholder={item.carbohydrates.toString()}
           title={I18n.t('carbohydrates')}
           value={updatedItem.carbohydrates}
+        />
+        <CustomNumberInput
+          onChangeText={(input) => change(input, 'protein')}
+          placeholder={item.protein.toString()}
+          title={I18n.t('protein')}
+          value={updatedItem.protein}
         />
       </View>
     </KeyboardAwareScrollView>

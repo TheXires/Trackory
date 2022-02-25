@@ -2,7 +2,7 @@ import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import placeholderImg from '../../assets/itemPlaceholderImage.png';
-import { Item } from '../interfaces/item';
+import { Item } from '../types/item';
 
 interface Props {
   item: Item;

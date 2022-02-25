@@ -18,7 +18,7 @@ import EditItemScreen from '../screens/EditItemScreen';
 import ItemDetailsScreen from '../screens/ItemDetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import BottomNavigator from './BottomNavigator';
-import { RootStackParamList } from './types.navigation';
+import { RootStackParamList } from '../types/navigation';
 
 const RootStack = createStackNavigator<RootStackParamList>();
 

@@ -1,7 +1,7 @@
 import I18n from 'i18n-js';
 import { Alert } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { CustomError } from '../interfaces/error';
+import { CustomError } from '../types/error';
 
 /**
  * opens camera to take a picture

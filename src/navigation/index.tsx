@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { LoadingContextType } from '../interfaces/context';
+import { LoadingContextType } from '../types/context';
 import OfflineScreen from '../screens/OfflineScreen';
 import { MyDarkTheme, MyLightTheme } from '../theme/colors';
 import AuthNavigator from './AuthNavigator';

@@ -6,8 +6,8 @@ import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseRequestPasswordReset } from '../../firebase/auth.firebase';
-import { LoadingContextType } from '../../interfaces/context';
-import { ForgotPasswordNavigationProp } from '../../navigation/types.navigation';
+import { LoadingContextType } from '../../types/context';
+import { ForgotPasswordNavigationProp } from '../../types/navigation';
 
 function ForgotPasswordScreen() {
   const navigation = useNavigation<ForgotPasswordNavigationProp>();

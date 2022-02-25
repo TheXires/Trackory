@@ -2,9 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { ITEMS_LAST_UPDATED } from '../constants';
-import { CustomError } from '../interfaces/error';
-import { ItemUpdates } from '../interfaces/firebase';
-import { Item, NewItem } from '../interfaces/item';
+import { CustomError } from '../types/error';
+import { ItemUpdates } from '../types/firebase';
+import { Item, NewItem } from '../types/item';
 import { firebaseImageUpload } from './fileupload.firebase';
 
 /**
@@ -28,9 +28,9 @@ export const firebaseGetAllItems = async (lastUpdated: number): Promise<ItemUpda
     AsyncStorage.setItem(ITEMS_LAST_UPDATED, Date.now().toString());
     const updatedItems: Item[] = [];
     const deletedItemIds: string[] = [];
-    response.forEach((document) => {
+    response.docs.forEach((document) => {
       if (document.data()?.deleted) {
-        deletedItemIds.push(document.data().id);
+        deletedItemIds.push(document.id);
       } else {
         updatedItems.push({
           calories: document.data().calories,

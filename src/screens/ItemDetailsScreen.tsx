@@ -12,10 +12,10 @@ import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseRemoveItem } from '../firebase/items.firebase';
-import { ItemContextType, LoadingContextType } from '../interfaces/context';
-import { CustomError } from '../interfaces/error';
-import { Item } from '../interfaces/item';
-import { ItemDetailsNavigationProp, ItemDetailsRouteProp } from '../navigation/types.navigation';
+import { ItemContextType, LoadingContextType } from '../types/context';
+import { CustomError } from '../types/error';
+import { Item } from '../types/item';
+import { ItemDetailsNavigationProp, ItemDetailsRouteProp } from '../types/navigation';
 import { permanentColors } from '../theme/colors';
 
 function ItemDetailsScreen() {
@@ -45,7 +45,7 @@ function ItemDetailsScreen() {
     try {
       if (!item) throw new CustomError('unexpectedError');
       await firebaseRemoveItem(item);
-      refreshItems();
+      await refreshItems();
       showLoadingPopup(false);
       navigation.goBack();
     } catch (error: any) {
@@ -92,18 +92,18 @@ function ItemDetailsScreen() {
             value={item.fat}
           />
           <HorizontalLine />
-          {/* protein */}
-          <ItemDetailsRow
-            description={I18n.t('protein')}
-            unit={I18n.t('gramAbbreviation')}
-            value={item.protein}
-          />
-          <HorizontalLine />
           {/* carbohydrates */}
           <ItemDetailsRow
             description={I18n.t('carbohydrates')}
             unit={I18n.t('gramAbbreviation')}
             value={item.carbohydrates}
+          />
+          <HorizontalLine />
+          {/* protein */}
+          <ItemDetailsRow
+            description={I18n.t('protein')}
+            unit={I18n.t('gramAbbreviation')}
+            value={item.protein}
           />
         </View>
       </View>

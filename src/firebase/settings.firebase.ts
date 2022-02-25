@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { CustomError } from '../interfaces/error';
-import { Settings } from '../interfaces/settings';
+import { CustomError } from '../types/error';
+import { Settings } from '../types/settings';
 
 /**
  * get the settings for the current user

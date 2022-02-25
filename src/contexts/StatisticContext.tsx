@@ -7,8 +7,8 @@ import {
   firebaseGetDailyStatistics,
   firebaseUpdateStatistics
 } from '../firebase/statistics.firebase';
-import { StatisticsContextType } from '../interfaces/context';
-import { DailyStatistic } from '../interfaces/statistics';
+import { StatisticsContextType } from '../types/context';
+import { DailyStatistic } from '../types/statistics';
 
 export const StatisticContext = createContext({} as StatisticsContextType);
 

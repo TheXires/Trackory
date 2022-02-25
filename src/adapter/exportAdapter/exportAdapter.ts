@@ -1,4 +1,4 @@
-import { ExportAdapter } from '../../interfaces/adapters';
+import { ExportAdapter } from '../../types/adapters';
 import exportJsonAdapter from './exportAdapterCollection/exportJsonAdapter';
 
 const exportAdapter: ExportAdapter = {

@@ -17,7 +17,7 @@ import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseSignUp } from '../../firebase/auth.firebase';
-import { LoadingContextType } from '../../interfaces/context';
+import { LoadingContextType } from '../../types/context';
 import { permanentColors } from '../../theme/colors';
 
 function RegistrationScreen() {

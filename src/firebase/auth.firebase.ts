@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
-import { CustomError } from '../interfaces/error';
+import { CustomError } from '../types/error';
 
 /**
  * logs the the user in
