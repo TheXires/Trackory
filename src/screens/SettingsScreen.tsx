@@ -201,12 +201,12 @@ function SettingsScreen() {
       />
       {/* TODO hier die richtigen Übersetzungen und Texte einfügen */}
       <InputDialog
-        headerText={I18n.t('dailyCalorieTarget')}
+        headerText={I18n.t('currentWeightTitle')}
         onClose={() => setShowWeightDialog(false)}
         onSave={(newValue) => saveWeight(newValue)}
         placeholder="80"
         show={showWeightDialog}
-        text={I18n.t('dailyCalorieTargetQuestion')}
+        text={I18n.t('currentWeightTitleQuestion')}
         value={settings?.weight}
       />
     </>

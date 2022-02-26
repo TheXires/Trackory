@@ -127,9 +127,11 @@ export default {
   deleteItemDialogText: 'Do your really want to delete this item?',
 
   // #Components
-  // CalorieTargetDialog
+  // Dialog
   dailyCalorieTarget: 'Daily Calorie Target',
   dailyCalorieTargetQuestion: 'Whats your daily calorie target?',
+  currentWeightTitle: 'Current Weight',
+  currentWeightTitleQuestion: 'How much do you currently weight?  (in kg)',
 
   // Home Progress
   today: 'Today',

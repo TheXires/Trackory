@@ -137,6 +137,8 @@ export default {
   // CalorieTargetDialog
   dailyCalorieTarget: 'Tägliches Kalorienziel',
   dailyCalorieTargetQuestion: 'Was ist dein tägliches Kalorienziel?',
+  currentWeightTitle: 'Aktuelles Gewicht',
+  currentWeightTitleQuestion: 'Wie viel wiegst du momentan? (in kg)',
 
   // Home Progress
   today: 'Heute',
