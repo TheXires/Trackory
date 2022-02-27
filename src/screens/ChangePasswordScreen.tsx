@@ -36,6 +36,8 @@ function ChangePasswordScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} bounces={false}>
+
+      {/* current password input */}
       <CustomTextInput
         autoCompleteType="password"
         onChangeText={(text) => setCurrentPassword(text)}
@@ -44,6 +46,8 @@ function ChangePasswordScreen() {
         title={I18n.t('currentPassword')}
         value={currentPassword}
       />
+
+      {/* new password input */}
       <CustomTextInput
         autoCompleteType="password"
         onChangeText={(text) => setNewPassword(text)}
@@ -52,6 +56,8 @@ function ChangePasswordScreen() {
         title={I18n.t('newPassword')}
         value={newPassword}
       />
+
+      {/* repeat new password input */}
       <CustomTextInput
         autoCompleteType="password"
         onChangeText={(text) => setNewRepeatedPassword(text)}
@@ -60,6 +66,8 @@ function ChangePasswordScreen() {
         title={I18n.t('repeatNewPassword')}
         value={newRepeatedPassword}
       />
+      
+      {/* Change password button */}
       <CustomButton
         value={I18n.t('changePassword')}
         onPress={changePassword}

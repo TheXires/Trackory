@@ -56,6 +56,8 @@ function LoginScreen() {
         <Image style={styles.image} source={loginImage} />
         <View style={styles.bottomContainer}>
           <Text style={[styles.heading, { color: colors.primary }]}>{I18n.t('login')}</Text>
+
+          {/* Email input */}
           <CustomTextInput
             autoCompleteType="email"
             autoCorrect={false}
@@ -65,6 +67,8 @@ function LoginScreen() {
             placeholder={I18n.t('email')}
             value={email}
           />
+
+          {/* Password input */}
           <CustomTextInput
             autoCompleteType="password"
             autoCorrect={false}
@@ -75,7 +79,11 @@ function LoginScreen() {
             secureTextEntry
             value={password}
           />
+
+          {/* Login button */}
           <CustomButton value={I18n.t('login')} enabled={canLogin} onPress={signUserIn} />
+          
+          {/* Forgot password button */}
           <CustomButton
             value={I18n.t('forgotPassword')}
             onPress={() => navigation.navigate('ForgotPassword')}

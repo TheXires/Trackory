@@ -33,12 +33,16 @@ function LandingScreen() {
         </View>
       </View>
       <View style={styles.lowerContainer}>
+        
+        {/* registration button */}
         <CustomButton
           value={I18n.t('register')}
           onPress={() => navigation.navigate('Registration')}
           buttonColor={permanentColors.success}
           style={{ marginBottom: 15 }}
         />
+
+        {/* login button */}
         <CustomButton
           value={I18n.t('login')}
           onPress={() => navigation.navigate('Login')}

@@ -38,6 +38,7 @@ function ForgotPasswordScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} bounces={false}>
+      {/* Email input */}
       <CustomTextInput
         autoCompleteType="email"
         keyboardType="email-address"
@@ -46,6 +47,8 @@ function ForgotPasswordScreen() {
         title={I18n.t('email')}
         value={email}
       />
+
+      {/* Request button */}
       <CustomButton
         value={I18n.t('resetPassword')}
         onPress={requestPasswordReset}

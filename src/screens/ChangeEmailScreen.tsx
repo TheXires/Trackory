@@ -36,6 +36,8 @@ function ChangeEmailScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} bounces={false}>
+
+      {/* Password input */}
       <CustomTextInput
         autoCompleteType="password"
         onChangeText={(text) => setPassword(text)}
@@ -44,6 +46,8 @@ function ChangeEmailScreen() {
         title={I18n.t('password')}
         value={password}
       />
+
+      {/* Email input */}
       <CustomTextInput
         autoCompleteType="email"
         keyboardType="email-address"
@@ -52,6 +56,8 @@ function ChangeEmailScreen() {
         title={I18n.t('newEmail')}
         value={newEmail}
       />
+      
+      {/* Change email button  */}
       <CustomButton
         value={I18n.t('changeEmail')}
         onPress={changeEmail}

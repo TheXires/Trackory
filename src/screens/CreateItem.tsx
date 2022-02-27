@@ -65,12 +65,16 @@ function CreateItemScreen() {
     <KeyboardAwareScrollView bounces={false}>
       <View style={styles.container}>
         <View style={styles.inputContainer}>
+
+          {/* Name input */}
           <CustomTextInput
             onChangeText={(text) => change(text, 'name')}
             placeholder="Sandwich..."
             title={I18n.t('itemName')}
             value={item.name}
           />
+
+          {/* Calorie input */}
           <CustomNumberInput
             onChangeText={(input) => change(input, 'calories')}
             placeholder="123"
@@ -79,18 +83,23 @@ function CreateItemScreen() {
           />
           {expanded && (
             <>
+              {/* Fat input */}
               <CustomNumberInput
                 onChangeText={(input) => change(input, 'fat')}
                 placeholder="123"
                 title={I18n.t('fat')}
                 value={item.fat}
               />
+
+              {/* Carbohydrates input */}
               <CustomNumberInput
                 onChangeText={(input) => change(input, 'carbohydrates')}
                 placeholder="123"
                 title={I18n.t('carbohydrates')}
                 value={item.carbohydrates}
               />
+
+              {/* Protein input */}
               <CustomNumberInput
                 onChangeText={(input) => change(input, 'protein')}
                 placeholder="123"
@@ -100,12 +109,16 @@ function CreateItemScreen() {
             </>
           )}
         </View>
+
+        {/* Expand/Collapse button */}
         <View style={styles.expandButtonContainer}>
           <Text style={styles.expandButton} onPress={() => setExpanded(!expanded)}>
             <Feather name={expanded ? 'minus' : 'plus'} size={18} />
             {I18n.t(expanded ? 'less' : 'more')}
           </Text>
         </View>
+        
+        {/* Add image button */}
         <AddImageButton
           imageUri={imageUri}
           onDelete={() => setImageUri(undefined)}

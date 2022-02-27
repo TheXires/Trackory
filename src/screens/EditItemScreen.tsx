@@ -49,6 +49,8 @@ function EditItemScreen() {
   }, [item, updatedItem]);
 
   useEffect(() => {
+    // need to add save button here, because its not possible to add it in navigator
+    // every time any input changed the function called on button press need to be updated with new values
     navigation.setOptions({
       headerRight: () =>
         NavigationHeaderButton({
@@ -87,35 +89,47 @@ function EditItemScreen() {
   return (
     <KeyboardAwareScrollView bounces={false} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
+
+        {/* Change image button */}
         <ChangeImageButton
           imgUri={shownImage ? { uri: shownImage } : placeholderImage}
           onDelete={deleteImage}
           onPress={async () => change(await takeImage(), 'imgUrl')}
         />
+
+        {/* Name input */}
         <CustomTextInput
           onChangeText={(text) => change(text, 'name')}
           placeholder={item.name}
           title={I18n.t('itemName')}
           value={updatedItem.name ?? ''}
         />
+
+        {/* Calorie input */}
         <CustomNumberInput
           onChangeText={(input) => change(input, 'calories')}
           placeholder={item.calories.toString()}
           title={I18n.t('calories')}
           value={updatedItem.calories}
         />
+
+        {/* Fat input */}
         <CustomNumberInput
           onChangeText={(input) => change(input, 'fat')}
           placeholder={item.fat.toString()}
           title={I18n.t('fat')}
           value={updatedItem.fat}
         />
+
+        {/* Carbohydrates input */}
         <CustomNumberInput
           onChangeText={(input) => change(input, 'carbohydrates')}
           placeholder={item.carbohydrates.toString()}
           title={I18n.t('carbohydrates')}
           value={updatedItem.carbohydrates}
         />
+        
+        {/* Protein input */}
         <CustomNumberInput
           onChangeText={(input) => change(input, 'protein')}
           placeholder={item.protein.toString()}

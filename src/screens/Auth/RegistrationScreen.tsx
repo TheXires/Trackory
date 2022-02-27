@@ -56,6 +56,8 @@ function RegistrationScreen() {
           <Text style={[styles.heading, { color: permanentColors.success }]}>
             {I18n.t('register')}
           </Text>
+
+          {/* Email input */}
           <CustomTextInput
             autoCompleteType="email"
             autoCorrect={false}
@@ -65,6 +67,8 @@ function RegistrationScreen() {
             placeholder={I18n.t('email')}
             value={email}
           />
+
+          {/* Password input */}
           <CustomTextInput
             autoCompleteType="password"
             autoCorrect={false}
@@ -75,6 +79,8 @@ function RegistrationScreen() {
             secureTextEntry
             value={password}
           />
+          
+          {/* Registration button */}
           <CustomButton
             value={I18n.t('register')}
             enabled={canRegister}

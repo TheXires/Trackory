@@ -69,8 +69,9 @@ function ItemDetailsScreen() {
   return (
     <View style={styles.container}>
       <View>
+        
+        {/* Item image */}
         <View style={styles.imageContainer}>
-          {/* Item image */}
           <Image
             style={styles.image}
             source={item.imgUrl !== '' ? { uri: item.imgUrl } : placeholderImage}
@@ -78,6 +79,7 @@ function ItemDetailsScreen() {
           <Text style={[styles.itemName, { color: colors.text }]}>{item.name}</Text>
         </View>
         <View style={styles.dataContainer}>
+
           {/* calories */}
           <ItemDetailsRow
             description={I18n.t('calories')}
@@ -85,6 +87,7 @@ function ItemDetailsScreen() {
             value={item.calories}
           />
           <HorizontalLine />
+
           {/* fat */}
           <ItemDetailsRow
             description={I18n.t('fat')}
@@ -92,6 +95,7 @@ function ItemDetailsScreen() {
             value={item.fat}
           />
           <HorizontalLine />
+
           {/* carbohydrates */}
           <ItemDetailsRow
             description={I18n.t('carbohydrates')}
@@ -99,6 +103,7 @@ function ItemDetailsScreen() {
             value={item.carbohydrates}
           />
           <HorizontalLine />
+
           {/* protein */}
           <ItemDetailsRow
             description={I18n.t('protein')}
@@ -107,6 +112,8 @@ function ItemDetailsScreen() {
           />
         </View>
       </View>
+
+      {/* delete button */}
       <View style={styles.buttonContainer}>
         <CustomButton
           value={I18n.t('deleteItem')}
