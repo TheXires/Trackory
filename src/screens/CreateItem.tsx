@@ -12,12 +12,12 @@ import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseAddItem } from '../firebase/items.firebase';
+import { permanentColors } from '../theme/colors';
 import { ItemContextType, LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
 import { NewItem, NewItemPropertyType } from '../types/item';
 import { CreateItemNavigationProp } from '../types/navigation';
-import { permanentColors } from '../theme/colors';
-import { selectImage, takeImage } from '../util/image';
+import { selectImage } from '../util/image';
 import { createNewItem } from '../util/item';
 
 function CreateItemScreen() {
@@ -28,13 +28,12 @@ function CreateItemScreen() {
 
   const [item, setItem] = useState<NewItem>({} as NewItem);
   const [expanded, setExpanded] = useState<boolean>(false);
-  const [imageUri, setImageUri] = useState<undefined | string>(undefined);
 
   const handleCreation = useCallback(async () => {
     showLoadingPopup(true, I18n.t('create'));
     try {
       if (!item.name || item.name === '') throw new CustomError('create/no-name');
-      await firebaseAddItem(createNewItem(item), imageUri);
+      await firebaseAddItem(createNewItem(item));
       await refreshItems();
       showLoadingPopup(false);
       navigation.goBack();
@@ -45,7 +44,7 @@ function CreateItemScreen() {
         I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
-  }, [item, imageUri]);
+  }, [item]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -65,7 +64,6 @@ function CreateItemScreen() {
     <KeyboardAwareScrollView bounces={false}>
       <View style={styles.container}>
         <View style={styles.inputContainer}>
-
           {/* Name input */}
           <CustomTextInput
             onChangeText={(text) => change(text, 'name')}
@@ -117,12 +115,12 @@ function CreateItemScreen() {
             {I18n.t(expanded ? 'less' : 'more')}
           </Text>
         </View>
-        
+
         {/* Add image button */}
         <AddImageButton
-          imageUri={imageUri}
-          onDelete={() => setImageUri(undefined)}
-          onPress={async () => setImageUri(await takeImage())}
+          imageUri={item.imgUrl}
+          onDelete={() => change(undefined, 'imgUrl')}
+          onPress={async () => change(await selectImage(), 'imgUrl')}
         />
       </View>
     </KeyboardAwareScrollView>

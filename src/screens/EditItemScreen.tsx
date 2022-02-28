@@ -35,7 +35,7 @@ function EditItemScreen() {
     showLoadingPopup(true, I18n.t('save'));
     try {
       if (!item) throw new CustomError('unexpectedError');
-      await firebaseUpdateItem(mergeItems(updatedItem, item), updatedItem.imgUrl);
+      await firebaseUpdateItem(mergeItems(updatedItem, item));
       await refreshItems();
       showLoadingPopup(false);
       navigation.goBack();
@@ -66,14 +66,20 @@ function EditItemScreen() {
   }, [route]);
 
   useEffect(() => {
-    if (updatedItem.imgUrl && updatedItem.imgUrl !== '') {
+    if (updatedItem.imgUrl || updatedItem.imgUrl === '') {
       setShownImage(updatedItem.imgUrl);
-    } else if (item?.imgUrl && item?.imgUrl !== '') {
+    } else if (item?.imgUrl) {
       setShownImage(item?.imgUrl);
     } else {
       setShownImage(undefined);
     }
   }, [item, updatedItem]);
+
+  // TODO entfernen
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log(updatedItem);
+  }, [updatedItem]);
 
   const change = (input: string | number | undefined, field: UpdateItemPropertyType) => {
     setUpdatedItem(update(updatedItem, { [field]: { $set: input } }));
@@ -89,12 +95,11 @@ function EditItemScreen() {
   return (
     <KeyboardAwareScrollView bounces={false} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-
         {/* Change image button */}
         <ChangeImageButton
           imgUri={shownImage ? { uri: shownImage } : placeholderImage}
           onDelete={deleteImage}
-          onPress={async () => change(await takeImage(), 'imgUrl')}
+          onPress={async () => change((await takeImage()) ?? '', 'imgUrl')}
         />
 
         {/* Name input */}
@@ -128,7 +133,7 @@ function EditItemScreen() {
           title={I18n.t('carbohydrates')}
           value={updatedItem.carbohydrates}
         />
-        
+
         {/* Protein input */}
         <CustomNumberInput
           onChangeText={(input) => change(input, 'protein')}

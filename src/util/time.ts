@@ -1,5 +1,4 @@
 import dateformat from 'dateformat';
-import { strftime } from 'i18n-js';
 import { DAY_IN_MS } from '../constants';
 
 /**

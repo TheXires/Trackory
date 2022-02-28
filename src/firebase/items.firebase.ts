@@ -87,13 +87,16 @@ export const firebaseGetItem = async (itemId: string): Promise<Item | null> => {
  * @error auth/no-valid-user
  * @error unable-to-update-item
  */
-export const firebaseUpdateItem = async (item: Item, newImageUri?: string): Promise<void> => {
+export const firebaseUpdateItem = async (item: Item): Promise<void> => {
   const updatedItem = item;
   try {
     const currentUserId = auth().currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    if (newImageUri) {
-      const downloadUrl = await firebaseImageUpload(newImageUri);
+    // need to check whether the url of the image starts with 'https://' or not
+    // to know if the image is already uploaded and no action is necessary
+    // or is the uri of a local image that needs to be uploaded
+    if (item.imgUrl && !item.imgUrl?.startsWith('https://')) {
+      const downloadUrl = await firebaseImageUpload(item.imgUrl);
       if (!downloadUrl) throw 'unable to upload image';
       updatedItem.imgUrl = downloadUrl;
     }
@@ -118,15 +121,12 @@ export const firebaseUpdateItem = async (item: Item, newImageUri?: string): Prom
  * @error unable-to-add-item
  * @returns document id on success, otherwise null
  */
-export const firebaseAddItem = async (
-  newItem: NewItem,
-  imageUri?: string | undefined,
-): Promise<void> => {
+export const firebaseAddItem = async (newItem: NewItem): Promise<void> => {
   try {
     const currentUserId = auth().currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
     let downloadUrl = '';
-    if (imageUri) downloadUrl = await firebaseImageUpload(imageUri);
+    if (newItem.imgUrl) downloadUrl = await firebaseImageUpload(newItem.imgUrl);
     await firestore()
       .collection('users')
       .doc(currentUserId)

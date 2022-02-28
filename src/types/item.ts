@@ -20,7 +20,7 @@ export type NewItemPropertyType =
   | 'calories'
   | 'carbohydrates'
   | 'fat'
-  | 'imgUri'
+  | 'imgUrl'
   | 'name'
   | 'protein';
 
