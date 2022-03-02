@@ -5,3 +5,8 @@ export interface DailyStatistic {
   fat: number;
   protein: number;
 }
+
+export interface WeightHistory {
+  date: number;
+  weight: number;
+}

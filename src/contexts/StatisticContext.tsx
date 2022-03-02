@@ -2,19 +2,37 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import I18n from 'i18n-js';
 import React, { createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
-import { DAILY_STATISTICS } from '../constants';
+import { DAILY_STATISTICS, WEIGHT_HISTORY } from '../constants';
 import {
   firebaseGetDailyStatistics,
+  firebaseGetWeightHistory,
   firebaseUpdateStatistics
 } from '../firebase/statistics.firebase';
 import { StatisticsContextType } from '../types/context';
-import { DailyStatistic } from '../types/statistics';
+import { DailyStatistic, WeightHistory } from '../types/statistics';
 
 export const StatisticContext = createContext({} as StatisticsContextType);
 
 export function StatisticProvider(props: any) {
+  const [weightHistory, setWeightHistory] = useState<WeightHistory[]>([]);
   const [dailyStatistics, setDailyStatistics] = useState<DailyStatistic[]>([]);
   const [refreshingDailyStatistics, setRefreshingDailyStatistics] = useState<boolean>(false);
+
+  const getWeightHistory = async () => {
+    try {
+      const localWeightHistory = await AsyncStorage.getItem(WEIGHT_HISTORY);
+      if (localWeightHistory) setDailyStatistics(JSON.parse(localWeightHistory));
+      const history = await firebaseGetWeightHistory();
+      setWeightHistory(history ?? []);
+      await AsyncStorage.setItem(DAILY_STATISTICS, JSON.stringify(history ?? []));
+    } catch (error: any) {
+      console.error('getWeightHistory error:', error);
+      Alert.alert(
+        I18n.t('errorTitle'),
+        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
+    }
+  };
 
   const getDailyStatistics = async () => {
     try {
@@ -24,7 +42,7 @@ export function StatisticProvider(props: any) {
       setDailyStatistics(statistics ?? []);
       await AsyncStorage.setItem(DAILY_STATISTICS, JSON.stringify(statistics ?? []));
     } catch (error: any) {
-      console.error(`getDailyStatistics ${error}`);
+      console.error('getDailyStatistics error:', error);
       Alert.alert(
         I18n.t('errorTitle'),
         I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
@@ -47,6 +65,7 @@ export function StatisticProvider(props: any) {
   };
 
   useEffect(() => {
+    getWeightHistory();
     getDailyStatistics();
   }, []);
 

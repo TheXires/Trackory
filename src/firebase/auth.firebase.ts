@@ -25,7 +25,7 @@ export const firebaseSignIn = async (email: string, password: string) => {
 };
 
 /**
- * creates a new user and logs the user in
+ * creates a new user with some default values and logs the user in
  *
  * @param email
  * @param password
@@ -41,7 +41,7 @@ export const firebaseSignUp = async (email: string, password: string) => {
     await firestore()
       .collection('users')
       .doc(response.user.uid)
-      .set({ settings: { calorieTarget: 2100 } });
+      .set({ settings: { calorieTarget: 2000, wight: 0 } });
   } catch (error: any) {
     console.error('firebase signUp error: ', error);
     if (error.code != null) throw new CustomError(error.code, error.message);

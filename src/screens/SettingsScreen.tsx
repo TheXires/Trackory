@@ -119,7 +119,7 @@ function SettingsScreen() {
           {/* wight input */}
           <SettingsItem
             left={`${I18n.t('weight')} (${I18n.t('kilogramAbbreviation')})`}
-            right={settings?.weight ?? '80'}
+            right={settings?.weight ?? '0'}
             onPress={() => setShowWeightDialog(true)}
           />
           <HorizontalLine />

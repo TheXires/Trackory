@@ -7,6 +7,7 @@ import { Alert, Platform, Share } from 'react-native';
 import RNFS from 'react-native-fs';
 import { firebaseGetAllConsumptions } from '../../../firebase/consumption.firebase';
 import { firebaseGetAllItems } from '../../../firebase/items.firebase';
+import { firebaseGetWeightHistory } from '../../../firebase/statistics.firebase';
 import { ExportAdapter } from '../../../types/adapters';
 import { CustomError } from '../../../types/error';
 
@@ -15,9 +16,11 @@ const exportJsonAdapter: ExportAdapter = {
     try {
       const items = (await firebaseGetAllItems(0)).updatedItems;
       const consumptions = await firebaseGetAllConsumptions();
+      const weightHistory = await firebaseGetWeightHistory();
       const toShare = {
         consumptions,
         items,
+        weightHistory,
       };
       if (Platform.OS === 'ios') {
         const path = `${RNFS.DocumentDirectoryPath}/export-data-${Date.now()}.json`;
