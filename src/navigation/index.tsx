@@ -1,12 +1,13 @@
 import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
 import auth from '@react-native-firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
+import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { LoadingContextType } from '../types/context';
 import OfflineScreen from '../screens/OfflineScreen';
 import { MyDarkTheme, MyLightTheme } from '../theme/colors';
+import { LoadingContextType } from '../types/context';
 import AuthNavigator from './AuthNavigator';
 import RootStackNavigator from './MainNavigator';
 
@@ -21,7 +22,6 @@ export default function Root() {
 
   useEffect(() => {
     const authListener = auth().onAuthStateChanged((user) => setIsAuthorized(user != null));
-
     return authListener;
   }, []);
 
@@ -30,12 +30,12 @@ export default function Root() {
   }, [netInfo]);
 
   const checkConnection = async () => {
-    showLoadingPopup(true, 'lade');
-    const connection = await NetInfo.fetch();
-    setOffline(connection.isInternetReachable === false);
-    setTimeout(() => {
+    showLoadingPopup(true, I18n.t('reconnect'));
+    setTimeout(async () => {
+      const connection = await NetInfo.fetch();
+      setOffline(connection.isInternetReachable === false);
       showLoadingPopup(false);
-    }, 1000);
+    }, 1500);
   };
 
   if (offline) return <OfflineScreen onPress={checkConnection} />;

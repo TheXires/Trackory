@@ -132,6 +132,12 @@ export default {
   deleteItemDialogTitle: 'Item löschen',
   deleteItemDialogText: 'Möchtest du das Item wirklich löschen?',
 
+  // Offline
+  clientOffline: 'Du bist momentan offline.',
+  reconnectMessage: 'Stelle eine Verbindung zum Internet her und versuche es erneut.',
+  retry: 'Neu laden',
+  reconnect: 'Stelle Verbindung her...',
+
   // #Components
   // CalorieTargetDialog
   dailyCalorieTarget: 'Tägliches Kalorienziel',
