@@ -1,6 +1,5 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import NetInfo from '@react-native-community/netinfo';
 import { CustomError } from '../types/error';
 import { ConsumedItem, Consumption, Item } from '../types/item';
 import { getStartOfDay } from '../util/time';
@@ -94,8 +93,6 @@ export const firebaseConsumeItem = async (
 ): Promise<void> => {
   const date = getStartOfDay(daysInThePast);
   try {
-    if (!(await NetInfo.fetch()).isInternetReachable)
-      throw new CustomError('no-internet-connection');
     const currentUserId = auth().currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
 
