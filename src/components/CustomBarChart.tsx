@@ -2,7 +2,6 @@ import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
-import { permanentColors } from '../theme/colors';
 
 interface Props {
   data: number[];
@@ -28,8 +27,8 @@ function CustomBarChart({ data, labels, title }: Props) {
         yAxisLabel=""
         yAxisSuffix=""
         chartConfig={{
-          backgroundGradientFrom: permanentColors.primary,
-          backgroundGradientTo: permanentColors.primary,
+          backgroundGradientFrom: colors.primary,
+          backgroundGradientTo: colors.primary,
           barPercentage: 0.8,
           color: () => `rgba(255, 255, 255, 1)`,
           decimalPlaces: 0,

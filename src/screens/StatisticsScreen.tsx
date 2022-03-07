@@ -5,7 +5,8 @@ import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import { Platform, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import CustomBarChart from '../components/BarChart';
+import CustomBarChart from '../components/CustomBarChart';
+import CustomLineChart from '../components/CustomLineChart';
 import TopBar from '../components/TopBar';
 import { StatisticContext } from '../contexts/StatisticContext';
 import { StatisticsContextType } from '../types/context';
@@ -89,6 +90,7 @@ function StatisticsScreen() {
           labels={labels}
           data={proteinWeekData}
         />
+        <CustomLineChart title={`${I18n.t('weight')}`} labels={labels} data={calorieWeekData} />
       </ScrollView>
     </View>
   );
