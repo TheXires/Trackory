@@ -13,6 +13,8 @@ interface Props {
 function CustomBarChart({ data, labels, title }: Props) {
   const { colors } = useTheme();
 
+  if (data.length === 0 || labels.length === 0) return null;
+
   return (
     <View>
       <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
