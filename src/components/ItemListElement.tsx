@@ -22,7 +22,7 @@ function ItemListElement({ item, onPress }: Props) {
       <RectButton style={styles.container} onPress={() => onPress()}>
         <View style={styles.dataContainer}>
           <Image style={styles.image} source={image} />
-          <Text style={[styles.itemName, { color: colors.text }]}>{item.name}</Text>
+          <Text style={[styles.itemName, { color: colors.text }]} numberOfLines={1} ellipsizeMode="tail">{item.name}</Text>
         </View>
         <Feather name="chevron-right" size={24} color={colors.text} />
       </RectButton>
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     width: 50,
   },
   itemName: {
+    flex: 0.9,
     fontSize: 16,
   },
 });

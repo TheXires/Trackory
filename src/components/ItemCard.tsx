@@ -19,7 +19,13 @@ function ItemCard({ item, onPress }: Props) {
       <Pressable onPress={onPress}>
         <Image source={image} style={styles.image} />
         <View style={styles.textContainer}>
-          <Text style={[styles.text, { color: colors.text }]}>{item.name}</Text>
+          <Text
+            style={[styles.text, { color: colors.text }]}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {item.name}
+          </Text>
         </View>
       </Pressable>
     </View>

@@ -41,7 +41,9 @@ function OverviewItem({ consumedItem, onSave }: Props) {
       </View>
       <View style={styles.informationContainer}>
         <View>
-          <Text style={styles.title}>{consumedItem.name}</Text>
+          <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+            {consumedItem.name}
+          </Text>
           <Text style={styles.text}>
             {I18n.t('caloriesPerItem', { itemCalories: consumedItem.calories })}
           </Text>
@@ -50,22 +52,12 @@ function OverviewItem({ consumedItem, onSave }: Props) {
           {edit ? (
             <>
               <View style={styles.bottomEditContainer}>
-                <Feather
-                  name="minus"
-                  size={18}
-                  style={styles.icon}
-                  onPress={handleDecrease}
-                />
+                <Feather name="minus" size={18} style={styles.icon} onPress={handleDecrease} />
                 <Text style={styles.quantity}>
                   <Feather name="x" />
                   {quantity}
                 </Text>
-                <Feather
-                  name="plus"
-                  size={18}
-                  style={styles.icon}
-                  onPress={handleIncrease}
-                />
+                <Feather name="plus" size={18} style={styles.icon} onPress={handleIncrease} />
               </View>
               <Feather name="check" size={18} style={styles.icon} onPress={saveChanges} />
             </>
@@ -75,12 +67,7 @@ function OverviewItem({ consumedItem, onSave }: Props) {
                 <Feather name="x" />
                 {consumedItem.quantity}
               </Text>
-              <Feather
-                name="edit-2"
-                size={18}
-                style={styles.icon}
-                onPress={() => setEdit(!edit)}
-              />
+              <Feather name="edit-2" size={18} style={styles.icon} onPress={() => setEdit(!edit)} />
             </>
           )}
         </View>

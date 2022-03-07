@@ -69,17 +69,22 @@ function ItemDetailsScreen() {
   return (
     <View style={styles.container}>
       <View>
-        
         {/* Item image */}
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
             source={item.imgUrl !== '' ? { uri: item.imgUrl } : placeholderImage}
           />
-          <Text style={[styles.itemName, { color: colors.text }]}>{item.name}</Text>
+          {/* Item name */}
+          <Text
+            style={[styles.itemName, { color: colors.text }]}
+            numberOfLines={3}
+            ellipsizeMode="tail"
+          >
+            {item.name}
+          </Text>
         </View>
         <View style={styles.dataContainer}>
-
           {/* calories */}
           <ItemDetailsRow
             description={I18n.t('calories')}
@@ -150,12 +155,14 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     alignItems: 'center',
-    height: '40%',
+    height: '42%',
     marginVertical: 20,
   },
   itemName: {
     fontSize: 26,
     fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
   },
   text: {
     fontSize: 16,
