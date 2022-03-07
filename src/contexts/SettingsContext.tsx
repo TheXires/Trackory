@@ -16,11 +16,6 @@ export function SettingsProvider(props: any) {
     loadUserSettings();
   }, []);
 
-  useEffect(() => {
-    if (!settings) return;
-    firebaseUpdateUserSettings(settings);
-  }, [settings]);
-
   const loadUserSettings = async () => {
     try {
       const localSettings = await AsyncStorage.getItem(USER_SETTINGS);

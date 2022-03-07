@@ -16,7 +16,7 @@ export const firebaseGetUserSettings = async (): Promise<Settings> => {
     if (!userId) throw new CustomError('auth/no-valid-user');
     const userDoc = await firestore().collection('users').doc(userId).get();
     const userData = userDoc.data();
-    if (!userData) throw 'no data for current user found';
+    if (!userData?.settings) throw new CustomError('unable-to-get-settings', 'no data for current user found');
     return userData.settings;
   } catch (error: any) {
     console.error(error);

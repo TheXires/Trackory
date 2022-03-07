@@ -3,7 +3,7 @@ import { useTheme } from '@react-navigation/native';
 import dateFormat from 'dateformat';
 import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
-import { RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { Platform, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import CustomBarChart from '../components/BarChart';
 import TopBar from '../components/TopBar';
@@ -41,7 +41,12 @@ function StatisticsScreen() {
   };
 
   return (
-    <View style={[styles.container, { marginBottom: bottomTabBarHeight }]}>
+    <View
+      style={[
+        styles.container,
+        { marginBottom: bottomTabBarHeight + (Platform.OS === 'ios' ? 0 : 25) },
+      ]}
+    >
       <TopBar
         onLeftPress={() => changeWeek(1)}
         onRightPress={() => changeWeek(-1)}
