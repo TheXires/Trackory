@@ -44,7 +44,7 @@ export const firebaseGetDailyStatistics = async (): Promise<DailyStatistic[] | n
 /**
  * gets the weight history of the current user
  *
- * @returns
+ * @returns array of the users weight history
  */
 export const firebaseGetWeightHistory = async (): Promise<WeightHistory[] | null> => {
   try {

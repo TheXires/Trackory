@@ -10,17 +10,24 @@ import CustomLineChart from '../components/CustomLineChart';
 import TopBar from '../components/TopBar';
 import { StatisticContext } from '../contexts/StatisticContext';
 import { StatisticsContextType } from '../types/context';
-import { separateDailyStatisticData } from '../util/statistics';
-import { getDateLabels, getFirstDateOfWeek, getLastDateOfWeek } from '../util/time';
+import { separateDailyStatisticData, separateWeightStatisticData } from '../util/statistics';
+import {
+  getWeeklyLabels,
+  getFirstDateOfWeek,
+  getLastDateOfWeek,
+  getMonthlyLabels,
+} from '../util/time';
 
 function StatisticsScreen() {
   const { colors } = useTheme();
   const bottomTabBarHeight = useBottomTabBarHeight();
 
-  const { dailyStatistics, refreshDailyStatistics, refreshingDailyStatistics } =
+  const { dailyStatistics, refreshDailyStatistics, refreshingDailyStatistics, weightHistory } =
     useContext<StatisticsContextType>(StatisticContext);
 
-  const [labels, setLabels] = useState<string[]>([]);
+  const [weeklyLabels, setWeeklyLabels] = useState<string[]>([]);
+  const [yearlyLabels, setYearlyLabels] = useState<string[]>([]);
+  const [weightYearData, setWeightYearData] = useState<number[]>([]);
   const [weeksInPast, setWeeksInPast] = useState<number>(0);
   const [calorieWeekData, setCalorieWeekData] = useState<number[]>([]);
   const [carbohydratesWeekData, setCarbohydratesWeekData] = useState<number[]>([]);
@@ -33,8 +40,14 @@ function StatisticsScreen() {
     setCarbohydratesWeekData(res.carbohydrates);
     setFatWeekData(res.fat);
     setProteinWeekData(res.protein);
-    setLabels(getDateLabels(weeksInPast));
+    setWeeklyLabels(getWeeklyLabels(weeksInPast));
   }, [dailyStatistics, weeksInPast]);
+
+  useEffect(() => {
+    const res = separateWeightStatisticData(weightHistory);
+    setWeightYearData(res);
+    setYearlyLabels(getMonthlyLabels());
+  }, [weightHistory]);
 
   const changeWeek = (direction: number) => {
     const newWeeksInPast = weeksInPast + direction;
@@ -72,25 +85,29 @@ function StatisticsScreen() {
       >
         <CustomBarChart
           title={`${I18n.t('calories')} (${I18n.t('calorieAbbreviation')})`}
-          labels={labels}
+          labels={weeklyLabels}
           data={calorieWeekData}
         />
         <CustomBarChart
           title={`${I18n.t('fat')} (${I18n.t('gramAbbreviation')})`}
-          labels={labels}
+          labels={weeklyLabels}
           data={fatWeekData}
         />
         <CustomBarChart
           title={`${I18n.t('carbohydrates')} (${I18n.t('gramAbbreviation')})`}
-          labels={labels}
+          labels={weeklyLabels}
           data={carbohydratesWeekData}
         />
         <CustomBarChart
           title={`${I18n.t('protein')} (${I18n.t('gramAbbreviation')})`}
-          labels={labels}
+          labels={weeklyLabels}
           data={proteinWeekData}
         />
-        <CustomLineChart title={`${I18n.t('weight')}`} labels={labels} data={calorieWeekData} />
+        <CustomLineChart
+          title={`${I18n.t('weight')} (${I18n.t('kilogramAbbreviation')}) - ${I18n.t('monthly')}`}
+          labels={yearlyLabels}
+          data={weightYearData}
+        />
       </ScrollView>
     </View>
   );

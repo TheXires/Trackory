@@ -1,6 +1,6 @@
 import { ConsumedItem, Item, NewItem } from './item';
 import { Settings } from './settings';
-import { DailyStatistic } from './statistics';
+import { DailyStatistic, WeightHistory } from './statistics';
 
 export interface ItemContextType {
   items: Item[];
@@ -28,4 +28,5 @@ export interface StatisticsContextType {
   dailyStatistics: DailyStatistic[];
   refreshDailyStatistics: () => Promise<void>;
   refreshingDailyStatistics: boolean;
+  weightHistory: WeightHistory[];
 }

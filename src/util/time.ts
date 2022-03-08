@@ -39,12 +39,22 @@ export const getEndOfDay = (daysInPast: number): number => {
  * @param weeksInPast 0 for current week or number of weeks in the past
  * @returns string array with labels for 7 days
  */
-export const getDateLabels = (weeksInPast: number) => {
+export const getWeeklyLabels = (weeksInPast: number) => {
   const startDay = weeksInPast >= 0 ? 7 * weeksInPast : 0;
   const startTime = getStartOfDay(startDay);
   const labels: string[] = [];
   for (let i = 6; i >= 0; i -= 1) {
     labels.push(dateformat(startTime - i * DAY_IN_MS, 'dd.mm'));
+  }
+  return labels;
+};
+
+// TODO docs hinzufügen
+export const getMonthlyLabels = () => {
+  const startTime = getStartOfDay(0);
+  const labels: string[] = [];
+  for (let i = 11; i >= 0; i -= 1) {
+    labels.push(dateformat(startTime - i * 30 * DAY_IN_MS, 'mm'));
   }
   return labels;
 };

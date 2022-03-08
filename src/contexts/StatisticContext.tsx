@@ -75,7 +75,7 @@ export function StatisticProvider(props: any) {
 
   return (
     <StatisticContext.Provider
-      value={{ dailyStatistics, refreshDailyStatistics, refreshingDailyStatistics }}
+      value={{ dailyStatistics, refreshDailyStatistics, refreshingDailyStatistics, weightHistory }}
     >
       {props.children}
     </StatisticContext.Provider>

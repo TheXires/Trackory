@@ -1,5 +1,5 @@
 import { DAY_IN_MS } from '../constants';
-import { DailyStatistic } from '../types/statistics';
+import { DailyStatistic, WeightHistory } from '../types/statistics';
 import { getStartOfDay } from './time';
 
 /**
@@ -27,4 +27,29 @@ export const separateDailyStatisticData = (data: DailyStatistic[], weeksInPast: 
   }
 
   return { calories, carbohydrates, fat, protein };
+};
+
+/**
+ * separates the weigth from the weightHistory array into a new array
+ *
+ * @param weightHistory
+ * @returns array with 12 entries (one value per month)
+ */
+export const separateWeightStatisticData = (weightHistory: WeightHistory[]) => {
+  const yearArray: number[] = Array(365).fill(0);
+  let weight = 0;
+  yearArray.forEach((_, index) => {
+    const date = getStartOfDay(365 - index);
+    const foundWeight = weightHistory.find((weightElement) => weightElement.date === date);
+    if (foundWeight) weight = foundWeight.weight;
+    yearArray[index] = weight;
+  });
+  const result: number[] = Array(12).fill(0);
+  // moving every 31th element from yearArray into a new 12 element array starting from last entry on both
+  let j = 11;
+  for (let i = yearArray.length - 1; i >= 0; i -= 31) {
+    result[j] = yearArray[i];
+    j -= 1;
+  }
+  return result;
 };

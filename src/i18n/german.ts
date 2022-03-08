@@ -11,6 +11,7 @@ export default {
   less: 'Weniger',
   ok: 'Ok',
   back: 'Zurück',
+  monthly: 'monatlich',
   securityInfoText:
     'Dies ist eine sicherheitsrelevante Operation, daher ist die Eingabe des Passwortes nötig.',
 
@@ -143,7 +144,7 @@ export default {
   dailyCalorieTarget: 'Tägliches Kalorienziel',
   dailyCalorieTargetQuestion: 'Was ist dein tägliches Kalorienziel?',
   currentWeightTitle: 'Aktuelles Gewicht',
-  currentWeightTitleQuestion: 'Wie viel wiegst du momentan? (in kg)',
+  currentWeightTitleQuestion: 'Wie viel wiegst du momentan?',
 
   // Home Progress
   today: 'Heute',

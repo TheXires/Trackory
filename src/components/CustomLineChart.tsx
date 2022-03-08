@@ -18,7 +18,6 @@ function CustomLineChart({ data, labels, title }: Props) {
     <View>
       <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
       <LineChart
-        bezier
         data={{
           datasets: [{ data }],
           labels,
@@ -35,7 +34,8 @@ function CustomLineChart({ data, labels, title }: Props) {
           decimalPlaces: 0,
         }}
         style={styles.chart}
-        withHorizontalLabels={false}
+        withHorizontalLabels
+        withHorizontalLines
         fromZero
         withInnerLines={false}
       />
@@ -51,8 +51,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     display: 'flex',
     paddingBottom: 20,
-    paddingLeft: 0,
-    paddingRight: 0,
     paddingTop: 20,
     width: '100%',
   },

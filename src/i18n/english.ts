@@ -11,6 +11,7 @@ export default {
   less: 'Less',
   ok: 'Ok',
   back: 'Back',
+  monthly: 'monthly',
   securityInfoText:
     'This is a security related operation, so it is necessary to enter the password.',
 
@@ -45,6 +46,7 @@ export default {
   // #Abbreviations
   calorieAbbreviation: 'cal',
   gramAbbreviation: 'g',
+  kilogramAbbreviation: 'kg',
 
   // #Navigation
   overviewTitle: 'Overview',
@@ -136,7 +138,7 @@ export default {
   dailyCalorieTarget: 'Daily Calorie Target',
   dailyCalorieTargetQuestion: 'Whats your daily calorie target?',
   currentWeightTitle: 'Current Weight',
-  currentWeightTitleQuestion: 'How much do you currently weight?  (in kg)',
+  currentWeightTitleQuestion: 'How much do you currently weight?',
 
   // Home Progress
   today: 'Today',

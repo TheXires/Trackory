@@ -206,7 +206,7 @@ function SettingsScreen() {
         onSave={(newValue) => saveWeight(newValue)}
         placeholder="80"
         show={showWeightDialog}
-        text={I18n.t('currentWeightTitleQuestion')}
+        text={`${I18n.t('currentWeightTitleQuestion')} (in ${I18n.t('kilogramAbbreviation')})`}
         value={settings?.weight}
       />
     </>
