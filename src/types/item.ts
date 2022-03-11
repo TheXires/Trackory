@@ -1,3 +1,6 @@
+/**
+ * Default Item
+ */
 export interface Item {
   calories: number;
   carbohydrates: number;
@@ -8,6 +11,9 @@ export interface Item {
   protein: number;
 }
 
+/**
+ * Special form of item without Id to create a new item
+ */
 export interface NewItem {
   calories: number;
   carbohydrates: number;
@@ -16,6 +22,9 @@ export interface NewItem {
   name: string;
   protein: number;
 }
+/**
+ * All properties of NewItem as Type
+ */
 export type NewItemPropertyType =
   | 'calories'
   | 'carbohydrates'
@@ -24,6 +33,9 @@ export type NewItemPropertyType =
   | 'name'
   | 'protein';
 
+  /**
+   * Special form of Item where all values are optional to update an item
+   */
 export interface UpdateItem {
   calories: number | undefined;
   carbohydrates: number | undefined;
@@ -32,6 +44,9 @@ export interface UpdateItem {
   name: string | undefined;
   protein: number | undefined;
 }
+/**
+ * All properties of UpdateItem as Type
+ */
 export type UpdateItemPropertyType =
   | 'calories'
   | 'carbohydrates'
@@ -40,6 +55,9 @@ export type UpdateItemPropertyType =
   | 'name'
   | 'protein';
 
+/**
+ * Special form of Item with quantity as number of consumptions
+ */
 export interface ConsumedItem {
   calories: number;
   carbohydrates: number;
@@ -51,6 +69,9 @@ export interface ConsumedItem {
   quantity: number;
 }
 
+/**
+ * Consumption with consumed items and date of consumption
+ */
 export interface Consumption {
   date: number;
   items: ConsumedItem[];

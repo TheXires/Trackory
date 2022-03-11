@@ -2,6 +2,9 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { CompositeNavigationProp, NavigatorScreenParams, RouteProp } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+/**
+ * Type containing all screens for authStack
+ */
 export type AuthStackParamList = {
   LandingPage: undefined;
   Login: undefined;
@@ -9,12 +12,18 @@ export type AuthStackParamList = {
   ForgotPassword: undefined;
 };
 
+/**
+ * Type containing all screens for bottomTab
+ */
 export type BottomTabParamList = {
   HomeScreen: undefined;
   Statistics: undefined;
   Items: undefined;
 };
 
+/**
+ * Type containing all screens for rotoStack
+ */
 export type RootStackParamList = {
   Main: NavigatorScreenParams<BottomTabParamList>;
   AddItem: { daysInPast: number };

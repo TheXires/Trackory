@@ -31,7 +31,7 @@ export const createNewItem = (item: NewItem) => {
     calories: item.calories ?? 0,
     carbohydrates: item.carbohydrates ?? 0,
     fat: item.fat ?? 0,
-    imgUrl: item.imgUrl ?? '',
+    imgUrl: item.imgUrl ?? undefined,
     name: item.name,
     protein: item.protein ?? 0,
   };

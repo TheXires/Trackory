@@ -1,3 +1,6 @@
+/**
+ * Statistics for a specific day
+ */
 export interface DailyStatistic {
   calories: number;
   carbohydrates: number;
@@ -6,6 +9,9 @@ export interface DailyStatistic {
   protein: number;
 }
 
+/**
+ * Weight history of the user
+ */
 export interface WeightHistory {
   date: number;
   weight: number;
