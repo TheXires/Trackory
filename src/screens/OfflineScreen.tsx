@@ -13,12 +13,16 @@ interface Props {
 function OfflineScreen({ onPress }: Props) {
   return (
     <View style={styles.container}>
+      {/* image */}
       <Image source={offlineImage} style={{ aspectRatio: 500 / 361, height: 150 }} />
       <Spacer height={50} />
+      {/* header */}
       <Text style={styles.title}>{I18n.t('clientOffline')}</Text>
       <Spacer height={10} />
+      {/* text */}
       <Text style={styles.text}>{I18n.t('reconnectMessage')}</Text>
       <Spacer height={30} />
+      {/* button */}
       <CustomButton value={I18n.t('retry')} onPress={onPress} />
     </View>
   );

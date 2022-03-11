@@ -16,6 +16,7 @@ function LandingScreen() {
       resizeMode="cover"
       style={{ height: '100%', width: '100%' }}
     >
+      {/* Heading */}
       <View style={styles.container}>
         <View style={styles.upperContainer}>
           <View style={[styles.headingRow, { marginLeft: '10%' }]}>
@@ -33,7 +34,6 @@ function LandingScreen() {
         </View>
       </View>
       <View style={styles.lowerContainer}>
-        
         {/* registration button */}
         <CustomButton
           value={I18n.t('register')}

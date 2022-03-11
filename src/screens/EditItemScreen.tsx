@@ -75,12 +75,6 @@ function EditItemScreen() {
     }
   }, [item, updatedItem]);
 
-  // TODO entfernen
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(updatedItem);
-  }, [updatedItem]);
-
   const change = (input: string | number | undefined, field: UpdateItemPropertyType) => {
     setUpdatedItem(update(updatedItem, { [field]: { $set: input } }));
   };

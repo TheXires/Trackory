@@ -51,6 +51,7 @@ function RegistrationScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={[styles.container, { backgroundColor: colors.background }]}
       >
+        {/* Image and heading */}
         <Image style={styles.image} source={registrationImage} />
         <View style={styles.bottomContainer}>
           <Text style={[styles.heading, { color: permanentColors.success }]}>

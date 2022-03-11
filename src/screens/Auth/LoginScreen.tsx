@@ -53,6 +53,7 @@ function LoginScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={[styles.container, { backgroundColor: colors.background }]}
       >
+        {/* Image and heading */}
         <Image style={styles.image} source={loginImage} />
         <View style={styles.bottomContainer}>
           <Text style={[styles.heading, { color: colors.primary }]}>{I18n.t('login')}</Text>
@@ -82,7 +83,7 @@ function LoginScreen() {
 
           {/* Login button */}
           <CustomButton value={I18n.t('login')} enabled={canLogin} onPress={signUserIn} />
-          
+
           {/* Forgot password button */}
           <CustomButton
             value={I18n.t('forgotPassword')}

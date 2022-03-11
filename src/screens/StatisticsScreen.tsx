@@ -61,6 +61,7 @@ function StatisticsScreen() {
         { marginBottom: bottomTabBarHeight + (Platform.OS === 'ios' ? 0 : 25) },
       ]}
     >
+      {/* top bar with week changer */}
       <TopBar
         onLeftPress={() => changeWeek(1)}
         onRightPress={() => changeWeek(-1)}
@@ -73,6 +74,7 @@ function StatisticsScreen() {
           </Text>
         </View>
       </TopBar>
+      {/* chart container */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -83,26 +85,31 @@ function StatisticsScreen() {
           />
         }
       >
+        {/* calorie bar chart */}
         <CustomBarChart
           title={`${I18n.t('calories')} (${I18n.t('calorieAbbreviation')})`}
           labels={weeklyLabels}
           data={calorieWeekData}
         />
+        {/* fat bar chart */}
         <CustomBarChart
           title={`${I18n.t('fat')} (${I18n.t('gramAbbreviation')})`}
           labels={weeklyLabels}
           data={fatWeekData}
         />
+        {/* carbohydrates bar chart */}
         <CustomBarChart
           title={`${I18n.t('carbohydrates')} (${I18n.t('gramAbbreviation')})`}
           labels={weeklyLabels}
           data={carbohydratesWeekData}
         />
+        {/* protein bar chart */}
         <CustomBarChart
           title={`${I18n.t('protein')} (${I18n.t('gramAbbreviation')})`}
           labels={weeklyLabels}
           data={proteinWeekData}
         />
+        {/* weight line chart */}
         <CustomLineChart
           title={`${I18n.t('weight')} (${I18n.t('kilogramAbbreviation')}) - ${I18n.t('monthly')}`}
           labels={yearlyLabels}

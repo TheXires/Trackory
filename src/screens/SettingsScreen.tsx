@@ -189,7 +189,7 @@ function SettingsScreen() {
         </View>
       </ScrollView>
 
-      {/* Dialogs */}
+      {/* calorieTarget Dialogs */}
       <InputDialog
         headerText={I18n.t('dailyCalorieTarget')}
         onClose={() => setShowCalorieTargetDialog(false)}
@@ -199,7 +199,7 @@ function SettingsScreen() {
         text={I18n.t('dailyCalorieTargetQuestion')}
         value={settings?.calorieTarget}
       />
-      {/* TODO hier die richtigen Übersetzungen und Texte einfügen */}
+      {/* weight dialog */}
       <InputDialog
         headerText={I18n.t('currentWeightTitle')}
         onClose={() => setShowWeightDialog(false)}
