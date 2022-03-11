@@ -10,8 +10,6 @@ interface Props {
 }
 
 function HeaderRightButton({ targetScreen }: Props) {
-  // TODO hier eine Lösung für die Typen finden
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const navigation = useNavigation<StackNavigationProp<any, any>>();
   const { colors } = useTheme();
 
