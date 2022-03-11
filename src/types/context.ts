@@ -1,4 +1,4 @@
-import { ConsumedItem, Item, NewItem } from './item';
+import { ConsumedItem, Item } from './item';
 import { Settings } from './settings';
 import { DailyStatistic, WeightHistory } from './statistics';
 
@@ -40,7 +40,7 @@ export interface StatisticsContextType {
 }
 
 /**
- * Context for showing global loading spinner 
+ * Context for showing global loading spinner
  */
 export interface LoadingContextType {
   showLoadingPopup: (isLoading: boolean, title?: string | undefined) => void;

@@ -1,10 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  DAILY_STATISTICS,
-  DAILY_STATISTICS_LAST_UPDATED,
-  ITEMS,
-  ITEMS_LAST_UPDATED,
-} from '../constants';
+import { ITEMS, ITEMS_LAST_UPDATED } from '../constants';
 import { Item } from '../types/item';
 
 /**
@@ -27,26 +22,4 @@ export const getItemsFromStorage = async (): Promise<Item[]> => {
   const itemsString = await AsyncStorage.getItem(ITEMS);
   const items: Item[] = itemsString ? JSON.parse(itemsString) : [];
   return items;
-};
-
-/**
- * get the time of the last daily statistics fetch saved in the asyncStorage of the device
- *
- * @returns time of last update in ms or 0
- */
-export const getDailyStatisticsUpdateTimeFromStorage = async (): Promise<number> => {
-  const lastUpdatedString = await AsyncStorage.getItem(DAILY_STATISTICS_LAST_UPDATED);
-  const lastUpdated: number = lastUpdatedString ? JSON.parse(lastUpdatedString) : 0;
-  return lastUpdated;
-};
-
-/**
- * get daily statistics saved in the asyncStroage of the device
- *
- * @returns
- */
-export const getDailyStatisticsFromStorage = async () => {
-  const dailyStatisticsString = await AsyncStorage.getItem(DAILY_STATISTICS);
-  const dailyStatistics: Item[] = dailyStatisticsString ? JSON.parse(dailyStatisticsString) : [];
-  return dailyStatistics;
 };

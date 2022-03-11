@@ -1,5 +1,9 @@
 import { DarkTheme, DefaultTheme, Theme } from '@react-navigation/native';
 
+
+/**
+ * Custom light theme based on default light theme with changed primary color
+ */
 export const MyLightTheme: Theme = {
   ...DefaultTheme,
   colors: {
@@ -8,6 +12,9 @@ export const MyLightTheme: Theme = {
   },
 };
 
+/**
+ * Custom dark theme based on default dark theme with changed primary color
+ */
 export const MyDarkTheme: Theme = {
   ...DarkTheme,
   colors: {
@@ -16,6 +23,9 @@ export const MyDarkTheme: Theme = {
   },
 };
 
+/**
+ * Theme colors that are permanent and do not change with system theme 
+ */
 export const permanentColors = {
   background: DefaultTheme.colors.background,
   border: DefaultTheme.colors.border,

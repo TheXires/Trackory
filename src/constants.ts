@@ -15,6 +15,3 @@ export const WEIGHT_HISTORY = 'WEIGHT_HISTORY';
 
 // History
 export const HISTORY = 'HISTORY';
-
-// Offline mode
-export const OFFLINE_DATA = 'OFFLINE_DATA';

@@ -49,7 +49,11 @@ export const getWeeklyLabels = (weeksInPast: number) => {
   return labels;
 };
 
-// TODO docs hinzufügen
+/**
+ * get label with month number for last 12 month
+ *
+ * @returns string array with month labels for last 12 month, like: ["04", "05", "06", "07", "08", "09", "10", "11", "12", "01", "02", "03"]
+ */
 export const getMonthlyLabels = () => {
   const startTime = getStartOfDay(0);
   const labels: string[] = [];
@@ -59,14 +63,24 @@ export const getMonthlyLabels = () => {
   return labels;
 };
 
-// TODO doc hinzufügen
+/**
+ * get the start time of the day at least one week in the past
+ * 
+ * @param weeksInPast 
+ * @returns start time in ms
+ */
 export const getFirstDateOfWeek = (weeksInPast: number): number => {
   const day = weeksInPast < 1 ? 6 : 7 * weeksInPast + 6;
   const startTime = getStartOfDay(day);
   return startTime;
 };
 
-// TODO doc hinzufügen
+/**
+ * get the end time of the day at least one week in the past
+ * 
+ * @param weeksInPast 
+ * @returns start time in ms
+ */
 export const getLastDateOfWeek = (weeksInPast: number): number => {
   const day = weeksInPast < 1 ? 0 : 7 * weeksInPast;
   const startTime = getStartOfDay(day);
