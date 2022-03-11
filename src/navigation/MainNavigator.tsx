@@ -26,10 +26,12 @@ function RootStackNavigator() {
   const navigation = useNavigation();
 
   return (
+    // available provider for logged in users 
     <SettingsProvider>
       <ItemProvider>
         <HistoryProvider>
           <StatisticProvider>
+            {/* main stack navigator */}
             <RootStack.Navigator
               initialRouteName="Main"
               screenOptions={{ headerTitleAlign: 'center' }}
