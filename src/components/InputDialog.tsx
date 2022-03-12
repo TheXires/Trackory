@@ -16,15 +16,7 @@ interface Props {
   value: number | undefined;
 }
 
-function InputDialog({
-  headerText,
-  onClose,
-  onSave,
-  placeholder,
-  show,
-  text,
-  value,
-}: Props) {
+function InputDialog({ headerText, onClose, onSave, placeholder, show, text, value }: Props) {
   const [localValue, setLocalValue] = useState<number | undefined>(value);
   const [canSave, setCanSave] = useState<boolean>(false);
 
@@ -35,8 +27,13 @@ function InputDialog({
   return (
     <Dialog show={show} onClose={() => onClose()}>
       <View style={styles.container}>
+        {/* header */}
         <Text style={styles.dialogHeader}>{headerText}</Text>
+
+        {/* body text */}
         <Text>{text}</Text>
+
+        {/* input */}
         <View style={styles.inputContainer}>
           <TextInput
             placeholder={placeholder}
@@ -46,6 +43,7 @@ function InputDialog({
           />
         </View>
         <View style={styles.buttonContainer}>
+          {/* cancel button */}
           <TouchableOpacity
             style={styles.dialogButton}
             activeOpacity={0.8}
@@ -53,6 +51,8 @@ function InputDialog({
           >
             <Text>{I18n.t('cancel')}</Text>
           </TouchableOpacity>
+
+          {/* save button */}
           <TouchableOpacity
             disabled={!canSave}
             style={styles.dialogButton}

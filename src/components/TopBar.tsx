@@ -16,12 +16,17 @@ function TopBar({ children, onLeftPress, onRightPress, rightButtonDisabled }: Pr
 
   return (
     <View style={styles.container}>
+      {/* left button */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={onLeftPress} style={[styles.button, { alignItems: 'center' }]}>
           <Feather name="chevron-left" size={24} color={colors.text} />
         </TouchableOpacity>
       </View>
+
+      {/* center content */}
       <View style={styles.innerContainer}>{children}</View>
+
+      {/* right button */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={onRightPress}

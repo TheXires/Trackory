@@ -30,9 +30,7 @@ function CustomTextInput({
 
   return (
     <>
-      {!hideTitle && (
-        <Text style={[styles.heading, { color: colors.text }]}>{title}</Text>
-      )}
+      {!hideTitle && <Text style={[styles.heading, { color: colors.text }]}>{title}</Text>}
       <InputContainer>
         <TextInput
           autoCompleteType={autoCompleteType}

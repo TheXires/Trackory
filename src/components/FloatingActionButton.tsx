@@ -5,6 +5,7 @@ import { Pressable, StyleSheet } from 'react-native';
 
 interface Props {
   onPress: () => void;
+  // https://github.com/expo/vector-icons/issues/153 - de1ay commented on 30 Dec 2020
   icon: keyof typeof Feather.glyphMap;
 }
 
@@ -12,10 +13,7 @@ function FloatingActionButton({ onPress, icon }: Props) {
   const { colors } = useTheme();
 
   return (
-    <Pressable
-      onPress={onPress}
-      style={[styles.container, { backgroundColor: colors.border }]}
-    >
+    <Pressable onPress={onPress} style={[styles.container, { backgroundColor: colors.border }]}>
       <Feather name={icon} size={24} color={colors.text} onPress={onPress} />
     </Pressable>
   );

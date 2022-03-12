@@ -15,9 +15,11 @@ function SettingsItem({ onPress, left, right = null, color = undefined }: Props)
 
   return (
     <RectButton style={styles.container} onPress={() => onPress()}>
+      {/* left */}
       <View>
         <Text style={{ color: color ?? colors.text }}>{left}</Text>
       </View>
+      {/* right */}
       <View>
         <Text style={{ color: color ?? colors.text, opacity: 0.6 }}>{right}</Text>
       </View>

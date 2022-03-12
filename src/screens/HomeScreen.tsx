@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import FloatingActionButton from '../components/FloatingActionButton';
 import HomeProgress from '../components/HomeProgress';
-import OverviewItem from '../components/OverviewItem';
+import ConsumedItemListElement from '../components/ConsumedItemListElement';
 import Spacer from '../components/Spacer';
 import TopBar from '../components/TopBar';
 import { HistoryContext } from '../contexts/HistoryContext';
@@ -42,7 +42,7 @@ function HomeScreen() {
   };
 
   const renderedItem = (item: ConsumedItem) => (
-    <OverviewItem
+    <ConsumedItemListElement
       consumedItem={item}
       onSave={(quantity: number) => changeQuantity(daysInPast, item, quantity)}
     />

@@ -13,10 +13,15 @@ interface Props {
 function ChangeImageButton({ imgUri, onDelete, onPress }: Props) {
   return (
     <View style={styles.imageContainer}>
+      {/* Image */}
       <ImageBackground style={styles.image} imageStyle={{ borderRadius: 100 }} source={imgUri}>
+        
+        {/* center change button */}
         <Pressable style={styles.imageOverlay} onPress={onPress}>
           <Feather name="edit" size={34} color={permanentColors.textWhite} />
         </Pressable>
+
+        {/* corner delete button */}
         <View style={styles.deleteButtonContainer}>
           <RectButton style={styles.deleteButton} onPress={onDelete} activeOpacity={0.5}>
             <Feather name="trash-2" size={20} color={permanentColors.textWhite} />

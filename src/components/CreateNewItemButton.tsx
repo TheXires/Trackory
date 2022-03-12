@@ -8,7 +8,7 @@ interface Props {
   onPress: () => void;
 }
 
-function AddNewItemCard({ onPress }: Props) {
+function CreateNewItemButton({ onPress }: Props) {
   const { colors } = useTheme();
 
   return (
@@ -17,9 +17,7 @@ function AddNewItemCard({ onPress }: Props) {
         <View style={[styles.box, { borderColor: colors.primary }]}>
           <View style={styles.innerBox}>
             <Feather name="plus" style={[styles.icon, { color: colors.primary }]} />
-            <Text style={[styles.text, { color: colors.primary }]}>
-              {I18n.t('create')}
-            </Text>
+            <Text style={[styles.text, { color: colors.primary }]}>{I18n.t('create')}</Text>
           </View>
         </View>
       </Pressable>
@@ -27,7 +25,7 @@ function AddNewItemCard({ onPress }: Props) {
   );
 }
 
-export default AddNewItemCard;
+export default CreateNewItemButton;
 
 const styles = StyleSheet.create({
   box: {

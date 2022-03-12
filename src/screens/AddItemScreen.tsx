@@ -2,7 +2,7 @@ import { useNavigation, useRoute, useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
-import AddNewItemCard from '../components/AddNewItemCard';
+import CreateNewItemButton from '../components/CreateNewItemButton';
 import ItemCard from '../components/ItemCard';
 import Searchbar from '../components/Searchbar';
 import Spacer from '../components/Spacer';
@@ -53,7 +53,7 @@ function AddItemScreen() {
         numColumns={2}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <ItemCard item={item} onPress={() => onPress(item)} />}
-        ListHeaderComponent={<AddNewItemCard onPress={() => navigation.navigate('CreateItem')} />}
+        ListHeaderComponent={<CreateNewItemButton onPress={() => navigation.navigate('CreateItem')} />}
         ListFooterComponent={<Spacer height={50} />}
         ItemSeparatorComponent={() => Separator()}
         showsVerticalScrollIndicator={false}

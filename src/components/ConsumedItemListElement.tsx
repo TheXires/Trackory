@@ -3,15 +3,15 @@ import I18n from 'i18n-js';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import placeholderImg from '../../assets/itemPlaceholderImage.png';
-import { ConsumedItem } from '../types/item';
 import { permanentColors } from '../theme/colors';
+import { ConsumedItem } from '../types/item';
 
 interface Props {
   consumedItem: ConsumedItem;
   onSave: (quantity: number) => void;
 }
 
-function OverviewItem({ consumedItem, onSave }: Props) {
+function ConsumedItemListElement({ consumedItem, onSave }: Props) {
   const [edit, setEdit] = useState(false);
   const [quantity, setQuantity] = useState(consumedItem.quantity);
 
@@ -36,37 +36,50 @@ function OverviewItem({ consumedItem, onSave }: Props) {
 
   return (
     <View style={[styles.container, { backgroundColor: permanentColors.primary }]}>
+      {/* image */}
       <View style={styles.imageContainer}>
         <Image style={styles.image} source={image} />
       </View>
+
       <View style={styles.informationContainer}>
         <View>
+          {/* name */}
           <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
             {consumedItem.name}
           </Text>
+
+          {/* calories */}
           <Text style={styles.text}>
             {I18n.t('caloriesPerItem', { itemCalories: consumedItem.calories })}
           </Text>
         </View>
-        <View style={styles.bottomBar}>
+
+        {/* bottom bar */}
+        <View style={styles.bottombar}>
           {edit ? (
             <>
               <View style={styles.bottomEditContainer}>
+                {/* minus icon */}
                 <Feather name="minus" size={18} style={styles.icon} onPress={handleDecrease} />
+                {/* current amount */}
                 <Text style={styles.quantity}>
                   <Feather name="x" />
                   {quantity}
                 </Text>
+                {/* plus icon */}
                 <Feather name="plus" size={18} style={styles.icon} onPress={handleIncrease} />
               </View>
+              {/* save icon */}
               <Feather name="check" size={18} style={styles.icon} onPress={saveChanges} />
             </>
           ) : (
             <>
+              {/* current amount */}
               <Text style={styles.quantity}>
                 <Feather name="x" />
                 {consumedItem.quantity}
               </Text>
+              {/* edit icon */}
               <Feather name="edit-2" size={18} style={styles.icon} onPress={() => setEdit(!edit)} />
             </>
           )}
@@ -76,21 +89,21 @@ function OverviewItem({ consumedItem, onSave }: Props) {
   );
 }
 
-export default OverviewItem;
+export default ConsumedItemListElement;
 
 const styles = StyleSheet.create({
-  bottomBar: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingRight: 10,
-    width: '100%',
-  },
   bottomEditContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: 80,
+  },
+  bottombar: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingRight: 10,
+    width: '100%',
   },
   container: {
     backgroundColor: permanentColors.primary,

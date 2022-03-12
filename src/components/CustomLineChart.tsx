@@ -22,7 +22,7 @@ function CustomLineChart({ data, labels, title }: Props) {
           datasets: [{ data }],
           labels,
         }}
-        width={Dimensions.get('window').width - 30} // from react-native
+        width={Dimensions.get('window').width - 30}
         height={200}
         yAxisLabel=""
         yAxisSuffix=""

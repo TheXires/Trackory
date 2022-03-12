@@ -9,11 +9,7 @@ interface Props {
 
 function InputContainer({ children, style }: Props) {
   const { colors } = useTheme();
-  return (
-    <View style={[styles.container, { borderColor: colors.border }, style]}>
-      {children}
-    </View>
-  );
+  return <View style={[styles.container, { borderColor: colors.border }, style]}>{children}</View>;
 }
 
 export default InputContainer;
