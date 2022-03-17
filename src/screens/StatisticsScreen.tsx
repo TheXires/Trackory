@@ -7,6 +7,7 @@ import { Platform, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import CustomBarChart from '../components/CustomBarChart';
 import CustomLineChart from '../components/CustomLineChart';
+import FloatingActionButton from '../components/FloatingActionButton';
 import TopBar from '../components/TopBar';
 import { StatisticContext } from '../contexts/StatisticContext';
 import { StatisticsContextType } from '../types/context';
@@ -55,68 +56,73 @@ function StatisticsScreen() {
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        { marginBottom: bottomTabBarHeight + (Platform.OS === 'ios' ? 0 : 25) },
-      ]}
-    >
-      {/* top bar with week changer */}
-      <TopBar
-        onLeftPress={() => changeWeek(1)}
-        onRightPress={() => changeWeek(-1)}
-        rightButtonDisabled={weeksInPast === 0}
+    <>
+      <View
+        style={[
+          styles.container,
+          { marginBottom: bottomTabBarHeight + (Platform.OS === 'ios' ? 0 : 25) },
+        ]}
       >
-        <View style={styles.topBarContainer}>
-          <Text style={[styles.topBarText, { color: colors.text }]}>
-            {dateFormat(getFirstDateOfWeek(weeksInPast), 'dd.mm.yyyy - ')}
-            {dateFormat(getLastDateOfWeek(weeksInPast), 'dd.mm.yyyy')}
-          </Text>
-        </View>
-      </TopBar>
-      {/* chart container */}
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshingDailyStatistics}
-            onRefresh={refreshDailyStatistics}
-            tintColor={colors.primary}
+        {/* top bar with week changer */}
+        <TopBar
+          onLeftPress={() => changeWeek(1)}
+          onRightPress={() => changeWeek(-1)}
+          rightButtonDisabled={weeksInPast === 0}
+        >
+          <View style={styles.topBarContainer}>
+            <Text style={[styles.topBarText, { color: colors.text }]}>
+              {dateFormat(getFirstDateOfWeek(weeksInPast), 'dd.mm.yyyy - ')}
+              {dateFormat(getLastDateOfWeek(weeksInPast), 'dd.mm.yyyy')}
+            </Text>
+          </View>
+        </TopBar>
+        {/* chart container */}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshingDailyStatistics}
+              onRefresh={refreshDailyStatistics}
+              tintColor={colors.primary}
+            />
+          }
+        >
+          {/* calorie bar chart */}
+          <CustomBarChart
+            title={`${I18n.t('calories')} (${I18n.t('calorieAbbreviation')})`}
+            labels={weeklyLabels}
+            data={calorieWeekData}
           />
-        }
-      >
-        {/* calorie bar chart */}
-        <CustomBarChart
-          title={`${I18n.t('calories')} (${I18n.t('calorieAbbreviation')})`}
-          labels={weeklyLabels}
-          data={calorieWeekData}
-        />
-        {/* fat bar chart */}
-        <CustomBarChart
-          title={`${I18n.t('fat')} (${I18n.t('gramAbbreviation')})`}
-          labels={weeklyLabels}
-          data={fatWeekData}
-        />
-        {/* carbohydrates bar chart */}
-        <CustomBarChart
-          title={`${I18n.t('carbohydrates')} (${I18n.t('gramAbbreviation')})`}
-          labels={weeklyLabels}
-          data={carbohydratesWeekData}
-        />
-        {/* protein bar chart */}
-        <CustomBarChart
-          title={`${I18n.t('protein')} (${I18n.t('gramAbbreviation')})`}
-          labels={weeklyLabels}
-          data={proteinWeekData}
-        />
-        {/* weight line chart */}
-        <CustomLineChart
-          title={`${I18n.t('weight')} (${I18n.t('kilogramAbbreviation')}) - ${I18n.t('monthly')}`}
-          labels={yearlyLabels}
-          data={weightYearData}
-        />
-      </ScrollView>
-    </View>
+          {/* fat bar chart */}
+          <CustomBarChart
+            title={`${I18n.t('fat')} (${I18n.t('gramAbbreviation')})`}
+            labels={weeklyLabels}
+            data={fatWeekData}
+          />
+          {/* carbohydrates bar chart */}
+          <CustomBarChart
+            title={`${I18n.t('carbohydrates')} (${I18n.t('gramAbbreviation')})`}
+            labels={weeklyLabels}
+            data={carbohydratesWeekData}
+          />
+          {/* protein bar chart */}
+          <CustomBarChart
+            title={`${I18n.t('protein')} (${I18n.t('gramAbbreviation')})`}
+            labels={weeklyLabels}
+            data={proteinWeekData}
+          />
+          {/* weight line chart */}
+          <CustomLineChart
+            title={`${I18n.t('weight')} (${I18n.t('kilogramAbbreviation')}) - ${I18n.t('monthly')}`}
+            labels={yearlyLabels}
+            data={weightYearData}
+          />
+        </ScrollView>
+      </View>
+      {Platform.OS === 'android' && (
+        <FloatingActionButton icon="refresh-cw" onPress={refreshDailyStatistics} />
+      )}
+    </>
   );
 }
 
