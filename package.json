@@ -8,6 +8,9 @@
     "android": "eas build -p android --profile preview",
     "ios": "eas build -p ios --profile preview",
     "build": "eas build --profile development --platform all",
+    "app": "eas build --profile preview --platform all",
+    "appios": "eas build --profile preview --platform ios",
+    "appandroid": "eas build --profile preview --platform android",
     "eject": "expo eject",
     "format": "prettier . --write",
     "lint": "eslint ./src/"
@@ -29,7 +32,7 @@
     "@react-navigation/stack": "^6.1.1",
     "dateformat": "^5.0.2",
     "expo": "~44.0.0",
-    "expo-dev-client": "~0.8.4",
+    "expo-dev-client": "^0.8.4",
     "expo-localization": "~12.0.0",
     "expo-network": "~4.1.0",
     "expo-status-bar": "~1.2.0",
