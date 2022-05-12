@@ -62,7 +62,16 @@ function EditItemScreen() {
 
   useEffect(() => {
     if (!route.params?.itemId) return;
-    setItem(items.find((element: Item) => element.id === route.params.itemId));
+    const tmpItem = items.find((element: Item) => element.id === route.params.itemId);
+    setItem(tmpItem);
+    setUpdatedItem({
+      calories: tmpItem?.calories,
+      carbohydrates: tmpItem?.carbohydrates,
+      fat: tmpItem?.fat,
+      imgUrl: undefined,
+      name: tmpItem?.name,
+      protein: tmpItem?.protein,
+    });
   }, [route]);
 
   useEffect(() => {

@@ -13,7 +13,7 @@ export const mergeItems = (item: UpdateItem, fallbackItem: Item): Item => {
     carbohydrates: item.carbohydrates ?? fallbackItem.carbohydrates,
     fat: item.fat ?? fallbackItem.fat,
     id: fallbackItem.id,
-    imgUrl: item.imgUrl ?? fallbackItem.imgUrl,
+    imgUrl: item.imgUrl ?? fallbackItem.imgUrl ?? '',
     name: item.name ?? fallbackItem.name,
     protein: item.protein ?? fallbackItem.protein,
   };
