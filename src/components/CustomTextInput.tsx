@@ -38,6 +38,7 @@ function CustomTextInput({
           keyboardType={keyboardType}
           onChangeText={(text) => onChangeText(text)}
           placeholder={placeholder}
+          placeholderTextColor={colors.border}
           secureTextEntry={secureTextEntry}
           style={{ color: colors.text }}
           value={value}

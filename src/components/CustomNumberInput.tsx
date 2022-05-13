@@ -23,15 +23,14 @@ function CustomNumberInput({
 
   return (
     <>
-      {!hideTitle && (
-        <Text style={[styles.heading, { color: colors.text }]}>{title}</Text>
-      )}
+      {!hideTitle && <Text style={[styles.heading, { color: colors.text }]}>{title}</Text>}
       <InputContainer>
         <TextInput
           autoCorrect={false}
           keyboardType="numeric"
           onChangeText={(text) => onChangeText(convertTextToInteger(text))}
           placeholder={placeholder}
+          placeholderTextColor={colors.border}
           style={{ color: colors.text }}
           value={value?.toString()}
         />

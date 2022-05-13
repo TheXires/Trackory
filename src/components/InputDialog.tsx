@@ -1,3 +1,4 @@
+import { useTheme } from '@react-navigation/native';
 import I18n from 'i18n-js';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -17,6 +18,8 @@ interface Props {
 }
 
 function InputDialog({ headerText, onClose, onSave, placeholder, show, text, value }: Props) {
+  const { colors } = useTheme();
+
   const [localValue, setLocalValue] = useState<number | undefined>(value);
   const [canSave, setCanSave] = useState<boolean>(false);
 
@@ -37,6 +40,7 @@ function InputDialog({ headerText, onClose, onSave, placeholder, show, text, val
         <View style={styles.inputContainer}>
           <TextInput
             placeholder={placeholder}
+            placeholderTextColor={colors.border}
             keyboardType="numeric"
             value={localValue?.toString()}
             onChangeText={(input) => setLocalValue(convertTextToInteger(input))}
