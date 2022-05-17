@@ -1,4 +1,4 @@
-# Kalorienzähler
+# Kalorienzähler[^1]
 
 Der Kalorienzähler erlaubt es den Nutzern, ihre Kalorienzufuhr zu protokollieren und kontrollieren. Ein Fortschrittsbalken auf der Startseite zeigt an, wie viele Kalorien bis zu dem in den Einstellungen festgelegten Kalorienziel aufgenommen werden können. Neben Kalorien können auch Fette, Kohlenhydrate und Proteine erfasst werden. Einmal erstellte Speisen und Getränke, werden gespeichert und können anschließend immer wieder verwendet werden. Außerdem ist es den Nutzern möglich zu diesen ein Bild hinzuzufügen, um sie leichter wiedererkennen zu können. Die erfassten Daten können übersichtlich in einer Statistik angesehen werden, welche ebenfalls die Möglichkeit bietet, das vom Nutzer in den Einstellungen eingetragene Gewicht zu visualisieren und über einen längeren Zeitraum als Graph darzustellen.
 
@@ -32,3 +32,5 @@ Der Kalorienzähler erlaubt es den Nutzern, ihre Kalorienzufuhr zu protokolliere
 Für das Backend wurde auf eine serverless Lösung von Google in Form von Firebase gesetzt. Konkret wurden dabei vier konkrete Firebase Dienste verwendet. Authentication für die Nutzer- und Rechteverwaltung, sodass Nutzer sich registrieren und einloggen können und sichergestellt wird, dass jeder Nutzer nur Zugriff auf die eigenen Daten hat. Für das strukturierte Speichern von Informationen und Daten wurde auf die dokumentenbasierte Datenbank Cloud Firebase gesetzt. Um das Hochladen und Anzeigen von Bildern in der App zu ermöglichen, wird der Cloud Storage genutzt. Um darüber hinaus weitere Funktionalitäten zu ermöglichen, wurden einige Cloud Functions hinzugefügt, die beispielsweise das Erstellen der Statistiken und Löschen von Benutzerkonten ermöglichen.
 
 Der Code für das Backend befindet sich dabei im Repository [eas-calorie-counter-cloud-functions](https://github.com/TheXires/eas-calorie-counter-cloud-functions)
+
+[^1]: Diese Projekt wurde vorher in einem anderen Repository entwickelt und ist dann hierher umgezogen. Das erste Repository ist allerdings nicht öffentlich einsehbar. 
