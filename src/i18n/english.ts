@@ -3,7 +3,8 @@ export default {
   // #General
   save: 'Save',
   cancel: 'Cancel',
-  add: 'add',
+  add: 'Add',
+  addOnce: 'Add Once',
   create: 'Create',
   delete: 'Delete',
   edit: 'Edit',

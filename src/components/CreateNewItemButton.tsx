@@ -13,11 +13,20 @@ function CreateNewItemButton({ onPress }: Props) {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={onPress}>
-        <View style={[styles.box, { borderColor: colors.primary }]}>
+      <Pressable onPress={onPress} style={{ paddingRight: 15, width: '50%' }}>
+        <View style={[styles.button, { borderColor: colors.primary }]}>
           <View style={styles.innerBox}>
             <Feather name="plus" style={[styles.icon, { color: colors.primary }]} />
             <Text style={[styles.text, { color: colors.primary }]}>{I18n.t('create')}</Text>
+          </View>
+        </View>
+      </Pressable>
+      {/* TODO hier Möglichkeit einbauen einmal etwas hinzuzufügen, ohne es richtig erstellen zu müssen */}
+      <Pressable onPress={() => alert('toImplement')} style={{ paddingLeft: 15, width: '50%' }}>
+        <View style={[styles.button, { borderColor: colors.primary }]}>
+          <View style={styles.innerBox}>
+            <Feather name="plus" style={[styles.icon, { color: colors.primary }]} />
+            <Text style={[styles.text, { color: colors.primary }]}>{I18n.t('addOnce')}</Text>
           </View>
         </View>
       </Pressable>
@@ -28,7 +37,7 @@ function CreateNewItemButton({ onPress }: Props) {
 export default CreateNewItemButton;
 
 const styles = StyleSheet.create({
-  box: {
+  button: {
     alignItems: 'center',
     borderRadius: 25,
     borderWidth: 6,
@@ -38,6 +47,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    flexDirection: 'row',
     paddingBottom: 20,
     paddingHorizontal: 15,
     paddingTop: 5,
@@ -53,5 +63,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 });

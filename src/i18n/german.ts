@@ -4,6 +4,7 @@ export default {
   save: 'Speichern',
   cancel: 'Abbrechen',
   add: 'Hinzufügen',
+  addOnce: 'Einmal hinzufügen',
   create: 'Erstellen',
   delete: 'Löschen',
   edit: 'Bearbeiten',
