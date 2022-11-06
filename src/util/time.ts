@@ -5,6 +5,7 @@ import { DAY_IN_MS } from '../constants';
  * get the start time of a day in the past in ms.
  * When daysInPast less than 0, get the start time of today in ms
  *
+ * @deprecated
  * @param daysInPast amount of days in the past.
  * @returns start of day in the past
  */
@@ -21,6 +22,7 @@ export const getStartOfDay = (daysInPast: number): number => {
  * get the end time of a day in the past in ms.
  * When daysInPast less than 0, get the end time of today in ms
  *
+ * @deprecated
  * @param daysInPast amount of days in the past.
  * @returns end of day in the past
  */
@@ -40,8 +42,8 @@ export const getEndOfDay = (daysInPast: number): number => {
  * @returns string array with labels for 7 days
  */
 export const getWeeklyLabels = (weeksInPast: number) => {
-  const startDay = weeksInPast >= 0 ? 7 * weeksInPast : 0;
-  const startTime = getStartOfDay(startDay);
+  const daysInPast = weeksInPast >= 0 ? 7 * weeksInPast : 0;
+  const startTime = Date.now() - daysInPast * DAY_IN_MS;
   const labels: string[] = [];
   for (let i = 6; i >= 0; i -= 1) {
     labels.push(dateformat(startTime - i * DAY_IN_MS, 'dd.mm'));
@@ -55,34 +57,33 @@ export const getWeeklyLabels = (weeksInPast: number) => {
  * @returns string array with month labels for last 12 month, like: ["04", "05", "06", "07", "08", "09", "10", "11", "12", "01", "02", "03"]
  */
 export const getMonthlyLabels = () => {
-  const startTime = getStartOfDay(0);
   const labels: string[] = [];
   for (let i = 11; i >= 0; i -= 1) {
-    labels.push(dateformat(startTime - i * 30 * DAY_IN_MS, 'mm'));
+    labels.push(dateformat(Date.now() - i * 30 * DAY_IN_MS, 'mm'));
   }
   return labels;
 };
 
 /**
  * get the start time of the day at least one week in the past
- * 
- * @param weeksInPast 
+ *
+ * @param weeksInPast
  * @returns start time in ms
  */
 export const getFirstDateOfWeek = (weeksInPast: number): number => {
-  const day = weeksInPast < 1 ? 6 : 7 * weeksInPast + 6;
-  const startTime = getStartOfDay(day);
+  const daysInPast = weeksInPast < 1 ? 6 : 7 * weeksInPast + 6;
+  const startTime = Date.now() - daysInPast * DAY_IN_MS;
   return startTime;
 };
 
 /**
  * get the end time of the day at least one week in the past
- * 
- * @param weeksInPast 
+ *
+ * @param weeksInPast
  * @returns start time in ms
  */
 export const getLastDateOfWeek = (weeksInPast: number): number => {
-  const day = weeksInPast < 1 ? 0 : 7 * weeksInPast;
-  const startTime = getStartOfDay(day);
+  const daysInPast = weeksInPast < 1 ? 0 : 7 * weeksInPast;
+  const startTime = Date.now() - daysInPast * DAY_IN_MS;
   return startTime;
 };

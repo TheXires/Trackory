@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { HISTORY } from '../constants';
+import dateFormat from 'dateformat';
+import { DAY_IN_MS, HISTORY } from '../constants';
 import { ConsumedItem } from '../types/item';
 import { StoredHistory } from '../types/localStorage';
-import { getStartOfDay } from './time';
 
 /**
  * get the items of a specific history day from local storage
@@ -19,7 +19,7 @@ export const getHistoryFromStorage = async (
       ? JSON.parse(historyString)
       : undefined;
     if (!history) return undefined;
-    const date = getStartOfDay(daysInPast);
+    const date = dateFormat(Date.now() - daysInPast * DAY_IN_MS, 'yyyy-mm-dd');
     const result = history.find((element) => element.date === date);
     return result;
   } catch (error) {
@@ -40,7 +40,7 @@ export const saveHistoryToStorage = async (
   consumedItems?: ConsumedItem[],
 ) => {
   try {
-    const date = getStartOfDay(daysInPast);
+    const date = dateFormat(Date.now() - daysInPast * DAY_IN_MS, 'yyyy-mm-dd');
     const historyString = await AsyncStorage.getItem(HISTORY);
     const history: StoredHistory[] | undefined = historyString
       ? JSON.parse(historyString)

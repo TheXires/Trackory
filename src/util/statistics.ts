@@ -1,6 +1,6 @@
+import dateFormat from 'dateformat';
 import { DAY_IN_MS } from '../constants';
 import { DailyStatistic, WeightHistory } from '../types/statistics';
-import { getStartOfDay } from './time';
 
 /**
  * separates the dailyStatistic data into single nutrition, with 0 as default if no other values
@@ -10,8 +10,8 @@ import { getStartOfDay } from './time';
  * @returns one array for each nutrition with values for each day
  */
 export const separateDailyStatisticData = (data: DailyStatistic[], weeksInPast: number) => {
-  const startDay = weeksInPast >= 0 ? 7 * weeksInPast : 0;
-  const startTime = getStartOfDay(startDay);
+  const daysInPast = weeksInPast >= 0 ? 7 * weeksInPast : 0;
+  const startTime = Date.now() - daysInPast * DAY_IN_MS;
 
   const calories: number[] = [];
   const carbohydrates: number[] = [];
@@ -19,7 +19,9 @@ export const separateDailyStatisticData = (data: DailyStatistic[], weeksInPast: 
   const protein: number[] = [];
 
   for (let i = 6; i >= 0; i -= 1) {
-    const res = data.find((element) => element.date === startTime - i * DAY_IN_MS);
+    const res = data.find(
+      (element) => element.date === dateFormat(startTime - i * DAY_IN_MS, 'yyyy-mm-dd'),
+    );
     calories.push(res?.calories ? res.calories : 0);
     carbohydrates.push(res?.carbohydrates ? res.carbohydrates : 0);
     fat.push(res?.fat ? res.fat : 0);
@@ -39,7 +41,7 @@ export const separateWeightStatisticData = (weightHistory: WeightHistory[]) => {
   const yearArray: number[] = Array(365).fill(0);
   let weight = 0;
   yearArray.forEach((_, index) => {
-    const date = getStartOfDay(365 - index);
+    const date = dateFormat(Date.now() - (365 - index) * DAY_IN_MS, 'yyy-mm-dd');
     const foundWeight = weightHistory.find((weightElement) => weightElement.date === date);
     if (foundWeight) weight = foundWeight.weight;
     yearArray[index] = weight;

@@ -4,7 +4,7 @@
 export interface DailyStatistic {
   calories: number;
   carbohydrates: number;
-  date: number;
+  date: string;
   fat: number;
   protein: number;
 }
@@ -13,6 +13,6 @@ export interface DailyStatistic {
  * Weight history of the user
  */
 export interface WeightHistory {
-  date: number;
+  date: string;
   weight: number;
 }

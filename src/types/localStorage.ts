@@ -2,6 +2,6 @@ import { ConsumedItem } from './item';
 
 export interface StoredHistory {
   consumedItems: ConsumedItem[];
-  date: number;
+  date: string;
   lastUpdated: number;
 }

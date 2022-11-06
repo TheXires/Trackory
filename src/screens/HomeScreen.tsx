@@ -7,12 +7,12 @@ import FloatingActionButton from '../components/FloatingActionButton';
 import HomeProgress from '../components/HomeProgress';
 import Spacer from '../components/Spacer';
 import TopBar from '../components/TopBar';
+import { DAY_IN_MS } from '../constants';
 import { HistoryContext } from '../contexts/HistoryContext';
 import { SettingsContext } from '../contexts/SettingsContext';
 import { HistoryContextType } from '../types/context';
 import { ConsumedItem } from '../types/item';
 import { ConsumedNavigationProp } from '../types/navigation';
-import { getStartOfDay } from '../util/time';
 import { i18n } from '../util/translation';
 
 function HomeScreen() {
@@ -65,7 +65,9 @@ function HomeScreen() {
         <HomeProgress
           calorieTarget={settings?.calorieTarget ?? 0}
           title={
-            daysInPast === 0 ? i18n.t('today') : dateformat(getStartOfDay(daysInPast), 'dd.mm')
+            daysInPast === 0
+              ? i18n.t('today')
+              : dateformat(Date.now() - daysInPast * DAY_IN_MS, 'dd.mm')
           }
           todaysCalories={todaysCalories}
         />

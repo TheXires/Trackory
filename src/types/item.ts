@@ -73,6 +73,6 @@ export interface ConsumedItem {
  * Consumption with consumed items and date of consumption
  */
 export interface Consumption {
-  date: number;
+  date: string;
   items: ConsumedItem[];
 }
