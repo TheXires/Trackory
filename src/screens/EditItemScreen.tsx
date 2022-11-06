@@ -1,5 +1,4 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import update from 'immutability-helper';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
@@ -19,6 +18,7 @@ import { Item, UpdateItem, UpdateItemPropertyType } from '../types/item';
 import { EditItemNavigationProp, EditItemRouteProp } from '../types/navigation';
 import { takeImage } from '../util/image';
 import { mergeItems } from '../util/item';
+import { i18n } from '../util/translation';
 
 function EditItemScreen() {
   const navigation = useNavigation<EditItemNavigationProp>();
@@ -32,7 +32,7 @@ function EditItemScreen() {
   const [shownImage, setShownImage] = useState<string>();
 
   const handleUpdate = useCallback(async () => {
-    showLoadingPopup(true, I18n.t('save'));
+    showLoadingPopup(true, i18n.t('save'));
     try {
       if (!item) throw new CustomError('unexpectedError');
       await firebaseUpdateItem(mergeItems(updatedItem, item));
@@ -42,8 +42,8 @@ function EditItemScreen() {
     } catch (error: any) {
       showLoadingPopup(false);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   }, [item, updatedItem]);
@@ -55,7 +55,7 @@ function EditItemScreen() {
       headerRight: () =>
         NavigationHeaderButton({
           onPress: () => handleUpdate(),
-          text: I18n.t('save'),
+          text: i18n.t('save'),
         }),
     });
   }, [navigation, handleUpdate]);
@@ -109,7 +109,7 @@ function EditItemScreen() {
         <CustomTextInput
           onChangeText={(text) => change(text, 'name')}
           placeholder={item.name}
-          title={I18n.t('itemName')}
+          title={i18n.t('itemName')}
           value={updatedItem.name ?? ''}
         />
 
@@ -117,7 +117,7 @@ function EditItemScreen() {
         <CustomNumberInput
           onChangeText={(input) => change(input, 'calories')}
           placeholder={item.calories.toString()}
-          title={I18n.t('calories')}
+          title={i18n.t('calories')}
           value={updatedItem.calories}
         />
 
@@ -125,7 +125,7 @@ function EditItemScreen() {
         <CustomNumberInput
           onChangeText={(input) => change(input, 'fat')}
           placeholder={item.fat.toString()}
-          title={I18n.t('fat')}
+          title={i18n.t('fat')}
           value={updatedItem.fat}
         />
 
@@ -133,7 +133,7 @@ function EditItemScreen() {
         <CustomNumberInput
           onChangeText={(input) => change(input, 'carbohydrates')}
           placeholder={item.carbohydrates.toString()}
-          title={I18n.t('carbohydrates')}
+          title={i18n.t('carbohydrates')}
           value={updatedItem.carbohydrates}
         />
 
@@ -141,7 +141,7 @@ function EditItemScreen() {
         <CustomNumberInput
           onChangeText={(input) => change(input, 'protein')}
           placeholder={item.protein.toString()}
-          title={I18n.t('protein')}
+          title={i18n.t('protein')}
           value={updatedItem.protein}
         />
       </View>

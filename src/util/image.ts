@@ -1,7 +1,7 @@
-import I18n from 'i18n-js';
 import { Alert } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { CustomError } from '../types/error';
+import { i18n } from './translation';
 
 /**
  * opens camera to take a picture
@@ -23,8 +23,8 @@ export const takeImage = async (): Promise<string | undefined> => {
     return res.assets[0].uri;
   } catch (error: any) {
     Alert.alert(
-      I18n.t('errorTitle'),
-      I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      i18n.t('errorTitle'),
+      i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
     );
   }
   return undefined;
@@ -50,8 +50,8 @@ export const selectImage = async (): Promise<string | undefined> => {
     return res.assets[0].uri;
   } catch (error: any) {
     Alert.alert(
-      I18n.t('errorTitle'),
-      I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      i18n.t('errorTitle'),
+      i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
     );
   }
   return undefined;

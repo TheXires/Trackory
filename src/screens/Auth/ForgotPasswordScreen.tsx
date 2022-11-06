@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text } from 'react-native';
 import CustomButton from '../../components/CustomButton';
@@ -8,6 +7,7 @@ import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseRequestPasswordReset } from '../../firebase/auth.firebase';
 import { LoadingContextType } from '../../types/context';
 import { ForgotPasswordNavigationProp } from '../../types/navigation';
+import { i18n } from '../../util/translation';
 
 function ForgotPasswordScreen() {
   const navigation = useNavigation<ForgotPasswordNavigationProp>();
@@ -17,11 +17,11 @@ function ForgotPasswordScreen() {
   const [email, setEmail] = useState<string>('');
 
   const requestPasswordReset = async () => {
-    showLoadingPopup(true, I18n.t('sendingEmail'));
+    showLoadingPopup(true, i18n.t('sendingEmail'));
     try {
       await firebaseRequestPasswordReset(email);
       showLoadingPopup(false);
-      Alert.alert(I18n.t('emailSentTitle'), I18n.t('emailSentMessage'), [
+      Alert.alert(i18n.t('emailSentTitle'), i18n.t('emailSentMessage'), [
         {
           onPress: () => navigation.goBack(),
           text: 'OK',
@@ -30,8 +30,8 @@ function ForgotPasswordScreen() {
     } catch (error: any) {
       showLoadingPopup(false);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };
@@ -43,18 +43,18 @@ function ForgotPasswordScreen() {
         autoCompleteType="email"
         keyboardType="email-address"
         onChangeText={(text) => setEmail(text)}
-        placeholder={I18n.t('email')}
-        title={I18n.t('email')}
+        placeholder={i18n.t('email')}
+        title={i18n.t('email')}
         value={email}
       />
 
       {/* Request button */}
       <CustomButton
-        value={I18n.t('resetPassword')}
+        value={i18n.t('resetPassword')}
         onPress={requestPasswordReset}
         enabled={email !== ''}
       />
-      <Text style={styles.infoText}>{I18n.t('resetPasswordInfoText')}</Text>
+      <Text style={styles.infoText}>{i18n.t('resetPasswordInfoText')}</Text>
     </ScrollView>
   );
 }

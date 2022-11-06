@@ -1,8 +1,8 @@
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { i18n } from '../util/translation';
 
 interface Props {
   onPress: () => void;
@@ -17,7 +17,7 @@ function CreateNewItemButton({ onPress }: Props) {
         <View style={[styles.button, { borderColor: colors.primary }]}>
           <View style={styles.innerBox}>
             <Feather name="plus" style={[styles.icon, { color: colors.primary }]} />
-            <Text style={[styles.text, { color: colors.primary }]}>{I18n.t('create')}</Text>
+            <Text style={[styles.text, { color: colors.primary }]}>{i18n.t('create')}</Text>
           </View>
         </View>
       </Pressable>
@@ -26,7 +26,7 @@ function CreateNewItemButton({ onPress }: Props) {
         <View style={[styles.button, { borderColor: colors.primary }]}>
           <View style={styles.innerBox}>
             <Feather name="plus" style={[styles.icon, { color: colors.primary }]} />
-            <Text style={[styles.text, { color: colors.primary }]}>{I18n.t('addOnce')}</Text>
+            <Text style={[styles.text, { color: colors.primary }]}>{i18n.t('addOnce')}</Text>
           </View>
         </View>
       </Pressable>

@@ -1,4 +1,3 @@
-import I18n from 'i18n-js';
 import { orderBy } from 'lodash';
 import React, { createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
@@ -6,6 +5,7 @@ import { firebaseConsumeItem, firebaseGetConsumptions } from '../firebase/consum
 import { HistoryContextType } from '../types/context';
 import { ConsumedItem, Item } from '../types/item';
 import { getHistoryFromStorage, saveHistoryToStorage } from '../util/history';
+import { i18n } from '../util/translation';
 
 export const HistoryContext = createContext({} as HistoryContextType);
 
@@ -27,8 +27,8 @@ export function HistoryProvider(props: any) {
     } catch (error: any) {
       console.error(`refreshConsumedItems ${error}`);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };
@@ -40,8 +40,8 @@ export function HistoryProvider(props: any) {
     } catch (error: any) {
       console.error(`consumeItem ${error}`);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };

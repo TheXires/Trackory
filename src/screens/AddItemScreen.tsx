@@ -1,5 +1,4 @@
 import { useNavigation, useRoute, useTheme } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import CreateNewItemButton from '../components/CreateNewItemButton';
@@ -12,6 +11,7 @@ import { LoadingContext } from '../contexts/LoadingContext';
 import { HistoryContextType, ItemContextType, LoadingContextType } from '../types/context';
 import { Item } from '../types/item';
 import { AddItemNavigationProp, AddItemRouteProp } from '../types/navigation';
+import { i18n } from '../util/translation';
 
 function Separator() {
   return <View style={{ height: 20 }} />;
@@ -39,7 +39,7 @@ function AddItemScreen() {
   }, [searchTerm, items]);
 
   const onPress = async (item: Item) => {
-    showLoadingPopup(true, I18n.t('add'));
+    showLoadingPopup(true, i18n.t('add'));
     await consumeItem(daysInPast, item, 1);
     showLoadingPopup(false);
     navigation.goBack();
@@ -53,7 +53,9 @@ function AddItemScreen() {
         numColumns={2}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <ItemCard item={item} onPress={() => onPress(item)} />}
-        ListHeaderComponent={<CreateNewItemButton onPress={() => navigation.navigate('CreateItem')} />}
+        ListHeaderComponent={
+          <CreateNewItemButton onPress={() => navigation.navigate('CreateItem')} />
+        }
         ListFooterComponent={<Spacer height={50} />}
         ItemSeparatorComponent={() => Separator()}
         showsVerticalScrollIndicator={false}

@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import I18n from 'i18n-js';
 import { orderBy } from 'lodash';
 import React, { createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
@@ -9,6 +8,7 @@ import { ItemContextType } from '../types/context';
 import { Item } from '../types/item';
 import { deleteItems, mergeItemArrays } from '../util/item';
 import { getItemLastUpdateTimeFromStorage, getItemsFromStorage } from '../util/localStorage';
+import { i18n } from '../util/translation';
 
 export const ItemContext = createContext({} as ItemContextType);
 
@@ -38,8 +38,8 @@ export function ItemProvider(props: any) {
     } catch (error: any) {
       console.error(`refreshItems ${error}`);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };

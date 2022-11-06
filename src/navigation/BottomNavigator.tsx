@@ -1,13 +1,13 @@
 import { Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import React from 'react';
 import HeaderRightButton from '../components/HeaderRightButton';
 import HomeScreen from '../screens/HomeScreen';
 import ItemsScreen from '../screens/ItemsScreen';
 import StatisticsScreen from '../screens/StatisticsScreen';
 import { BottomTabParamList } from '../types/navigation';
+import { i18n } from '../util/translation';
 
 interface IconProps {
   icon: 'home' | 'bar-chart-2' | 'coffee';
@@ -38,7 +38,7 @@ function BottomNavigator() {
         options={{
           tabBarIcon: ({ focused }) =>
             TabBarIcon({ color: focused ? colors.primary : colors.text, icon: 'home' }),
-          title: I18n.t('overviewTitle'),
+          title: i18n.t('overviewTitle'),
         }}
       />
       <MainTab.Screen
@@ -50,7 +50,7 @@ function BottomNavigator() {
               color: focused ? colors.primary : colors.text,
               icon: 'bar-chart-2',
             }),
-          title: I18n.t('statisticTitle'),
+          title: i18n.t('statisticTitle'),
         }}
       />
       <MainTab.Screen
@@ -59,7 +59,7 @@ function BottomNavigator() {
         options={{
           tabBarIcon: ({ focused }) =>
             TabBarIcon({ color: focused ? colors.primary : colors.text, icon: 'coffee' }),
-          title: I18n.t('itemsTitle'),
+          title: i18n.t('itemsTitle'),
         }}
       />
     </MainTab.Navigator>

@@ -1,15 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import I18n from 'i18n-js';
 import React, { createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { DAILY_STATISTICS, WEIGHT_HISTORY } from '../constants';
 import {
   firebaseGetDailyStatistics,
   firebaseGetWeightHistory,
-  firebaseUpdateStatistics
+  firebaseUpdateStatistics,
 } from '../firebase/statistics.firebase';
 import { StatisticsContextType } from '../types/context';
 import { DailyStatistic, WeightHistory } from '../types/statistics';
+import { i18n } from '../util/translation';
 
 export const StatisticContext = createContext({} as StatisticsContextType);
 
@@ -28,8 +28,8 @@ export function StatisticProvider(props: any) {
     } catch (error: any) {
       console.error('getWeightHistory error:', error);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };
@@ -44,8 +44,8 @@ export function StatisticProvider(props: any) {
     } catch (error: any) {
       console.error('getDailyStatistics error:', error);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };
@@ -58,8 +58,8 @@ export function StatisticProvider(props: any) {
     } catch (error: any) {
       console.error(`refreshDailyStatistics ${error}`);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };

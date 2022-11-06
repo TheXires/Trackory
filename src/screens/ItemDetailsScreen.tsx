@@ -1,6 +1,5 @@
 import { useNavigation, useRoute } from '@react-navigation/core';
 import { useTheme } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import { Alert, Image, Platform, StyleSheet, Text, View } from 'react-native';
 import placeholderImage from '../../assets/itemPlaceholderImage.png';
@@ -12,11 +11,12 @@ import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseRemoveItem } from '../firebase/items.firebase';
+import { permanentColors } from '../theme/colors';
 import { ItemContextType, LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
 import { Item } from '../types/item';
 import { ItemDetailsNavigationProp, ItemDetailsRouteProp } from '../types/navigation';
-import { permanentColors } from '../theme/colors';
+import { i18n } from '../util/translation';
 
 function ItemDetailsScreen() {
   const { colors } = useTheme();
@@ -35,13 +35,13 @@ function ItemDetailsScreen() {
       headerRight: () =>
         NavigationHeaderButton({
           onPress: () => navigation.navigate('EditItem', { itemId: route.params.itemId }),
-          text: I18n.t('edit'),
+          text: i18n.t('edit'),
         }),
     });
   }, [route, items, navigation]);
 
   const deleteItem = async () => {
-    showLoadingPopup(true, I18n.t('deleteItem'));
+    showLoadingPopup(true, i18n.t('deleteItem'));
     try {
       if (!item) throw new CustomError('unexpectedError');
       await firebaseRemoveItem(item);
@@ -51,16 +51,16 @@ function ItemDetailsScreen() {
     } catch (error: any) {
       showLoadingPopup(false);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };
 
   const deleteItemPopup = () => {
-    Alert.alert(I18n.t('deleteItemDialogTitle'), I18n.t('deleteItemDialogText'), [
-      { style: 'cancel', text: I18n.t('cancel') },
-      { onPress: () => deleteItem(), style: 'destructive', text: I18n.t('delete') },
+    Alert.alert(i18n.t('deleteItemDialogTitle'), i18n.t('deleteItemDialogText'), [
+      { style: 'cancel', text: i18n.t('cancel') },
+      { onPress: () => deleteItem(), style: 'destructive', text: i18n.t('delete') },
     ]);
   };
 
@@ -87,32 +87,32 @@ function ItemDetailsScreen() {
         <View style={styles.dataContainer}>
           {/* calories */}
           <ItemDetailsRow
-            description={I18n.t('calories')}
-            unit={I18n.t('calorieAbbreviation')}
+            description={i18n.t('calories')}
+            unit={i18n.t('calorieAbbreviation')}
             value={item.calories}
           />
           <HorizontalLine />
 
           {/* fat */}
           <ItemDetailsRow
-            description={I18n.t('fat')}
-            unit={I18n.t('gramAbbreviation')}
+            description={i18n.t('fat')}
+            unit={i18n.t('gramAbbreviation')}
             value={item.fat}
           />
           <HorizontalLine />
 
           {/* carbohydrates */}
           <ItemDetailsRow
-            description={I18n.t('carbohydrates')}
-            unit={I18n.t('gramAbbreviation')}
+            description={i18n.t('carbohydrates')}
+            unit={i18n.t('gramAbbreviation')}
             value={item.carbohydrates}
           />
           <HorizontalLine />
 
           {/* protein */}
           <ItemDetailsRow
-            description={I18n.t('protein')}
-            unit={I18n.t('gramAbbreviation')}
+            description={i18n.t('protein')}
+            unit={i18n.t('gramAbbreviation')}
             value={item.protein}
           />
         </View>
@@ -121,7 +121,7 @@ function ItemDetailsScreen() {
       {/* delete button */}
       <View style={styles.buttonContainer}>
         <CustomButton
-          value={I18n.t('deleteItem')}
+          value={i18n.t('deleteItem')}
           onPress={deleteItemPopup}
           textColor={permanentColors.error}
           buttonColor={colors.background}

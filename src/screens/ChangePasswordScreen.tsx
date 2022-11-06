@@ -1,5 +1,4 @@
 import { useNavigation, useTheme } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text } from 'react-native';
 import CustomButton from '../components/CustomButton';
@@ -8,6 +7,7 @@ import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseChangePassword } from '../firebase/auth.firebase';
 import { LoadingContextType } from '../types/context';
 import { ChangeEmailNavigationProp } from '../types/navigation';
+import { i18n } from '../util/translation';
 
 function ChangePasswordScreen() {
   const { colors } = useTheme();
@@ -20,7 +20,7 @@ function ChangePasswordScreen() {
   const [newRepeatedPassword, setNewRepeatedPassword] = useState<string>('');
 
   const changePassword = async () => {
-    showLoadingPopup(true, I18n.t('changePassword'));
+    showLoadingPopup(true, i18n.t('changePassword'));
     try {
       await firebaseChangePassword(currentPassword, newPassword);
       showLoadingPopup(false);
@@ -28,22 +28,21 @@ function ChangePasswordScreen() {
     } catch (error: any) {
       showLoadingPopup(false);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container} bounces={false}>
-
       {/* current password input */}
       <CustomTextInput
         autoCompleteType="password"
         onChangeText={(text) => setCurrentPassword(text)}
-        placeholder={I18n.t('currentPassword')}
+        placeholder={i18n.t('currentPassword')}
         secureTextEntry
-        title={I18n.t('currentPassword')}
+        title={i18n.t('currentPassword')}
         value={currentPassword}
       />
 
@@ -51,9 +50,9 @@ function ChangePasswordScreen() {
       <CustomTextInput
         autoCompleteType="password"
         onChangeText={(text) => setNewPassword(text)}
-        placeholder={I18n.t('newPassword')}
+        placeholder={i18n.t('newPassword')}
         secureTextEntry
-        title={I18n.t('newPassword')}
+        title={i18n.t('newPassword')}
         value={newPassword}
       />
 
@@ -61,21 +60,21 @@ function ChangePasswordScreen() {
       <CustomTextInput
         autoCompleteType="password"
         onChangeText={(text) => setNewRepeatedPassword(text)}
-        placeholder={I18n.t('repeatNewPassword')}
+        placeholder={i18n.t('repeatNewPassword')}
         secureTextEntry
-        title={I18n.t('repeatNewPassword')}
+        title={i18n.t('repeatNewPassword')}
         value={newRepeatedPassword}
       />
-      
+
       {/* Change password button */}
       <CustomButton
-        value={I18n.t('changePassword')}
+        value={i18n.t('changePassword')}
         onPress={changePassword}
         enabled={
           currentPassword !== '' && newPassword !== '' && newPassword === newRepeatedPassword
         }
       />
-      <Text style={[styles.infoText, { color: colors.text }]}>{I18n.t('securityInfoText')}</Text>
+      <Text style={[styles.infoText, { color: colors.text }]}>{i18n.t('securityInfoText')}</Text>
     </ScrollView>
   );
 }

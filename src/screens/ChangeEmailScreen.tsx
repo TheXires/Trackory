@@ -1,6 +1,5 @@
 import auth from '@react-native-firebase/auth';
 import { useNavigation, useTheme } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text } from 'react-native';
 import CustomButton from '../components/CustomButton';
@@ -9,6 +8,7 @@ import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseChangeEmail } from '../firebase/auth.firebase';
 import { LoadingContextType } from '../types/context';
 import { ChangeEmailNavigationProp } from '../types/navigation';
+import { i18n } from '../util/translation';
 
 function ChangeEmailScreen() {
   const { colors } = useTheme();
@@ -20,7 +20,7 @@ function ChangeEmailScreen() {
   const [newEmail, setNewEmail] = useState<string>('');
 
   const changeEmail = async () => {
-    showLoadingPopup(true, I18n.t('changeEmail'));
+    showLoadingPopup(true, i18n.t('changeEmail'));
     try {
       await firebaseChangeEmail(password, newEmail);
       showLoadingPopup(false);
@@ -28,22 +28,21 @@ function ChangeEmailScreen() {
     } catch (error: any) {
       showLoadingPopup(false);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container} bounces={false}>
-
       {/* Password input */}
       <CustomTextInput
         autoCompleteType="password"
         onChangeText={(text) => setPassword(text)}
-        placeholder={I18n.t('password')}
+        placeholder={i18n.t('password')}
         secureTextEntry
-        title={I18n.t('password')}
+        title={i18n.t('password')}
         value={password}
       />
 
@@ -53,17 +52,17 @@ function ChangeEmailScreen() {
         keyboardType="email-address"
         onChangeText={(text) => setNewEmail(text)}
         placeholder={auth().currentUser?.email ?? ''}
-        title={I18n.t('newEmail')}
+        title={i18n.t('newEmail')}
         value={newEmail}
       />
-      
+
       {/* Change email button  */}
       <CustomButton
-        value={I18n.t('changeEmail')}
+        value={i18n.t('changeEmail')}
         onPress={changeEmail}
         enabled={newEmail !== '' && password !== ''}
       />
-      <Text style={[styles.infoText, { color: colors.text }]}>{I18n.t('securityInfoText')}</Text>
+      <Text style={[styles.infoText, { color: colors.text }]}>{i18n.t('securityInfoText')}</Text>
     </ScrollView>
   );
 }

@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/core';
-import I18n from 'i18n-js';
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import backgroundImage from '../../../assets/splash.jpg';
 import CustomButton from '../../components/CustomButton';
-import { LandingPageNavigationProp } from '../../types/navigation';
 import { permanentColors } from '../../theme/colors';
+import { LandingPageNavigationProp } from '../../types/navigation';
+import { i18n } from '../../util/translation';
 
 function LandingScreen() {
   const navigation = useNavigation<LandingPageNavigationProp>();
@@ -20,15 +20,15 @@ function LandingScreen() {
       <View style={styles.container}>
         <View style={styles.upperContainer}>
           <View style={[styles.headingRow, { marginLeft: '10%' }]}>
-            <Text style={styles.heading}>{I18n.t('count')} </Text>
+            <Text style={styles.heading}>{i18n.t('count')} </Text>
             <Text style={[styles.heading, { color: permanentColors.primary }]}>
-              {I18n.t('calories')}
+              {i18n.t('calories')}
             </Text>
           </View>
           <View style={[styles.headingRow, { marginLeft: 'auto', marginRight: '10%' }]}>
-            <Text style={styles.heading}>{I18n.t('life')} </Text>
+            <Text style={styles.heading}>{i18n.t('life')} </Text>
             <Text style={[styles.heading, { color: permanentColors.success }]}>
-              {I18n.t('healthier')}
+              {i18n.t('healthier')}
             </Text>
           </View>
         </View>
@@ -36,7 +36,7 @@ function LandingScreen() {
       <View style={styles.lowerContainer}>
         {/* registration button */}
         <CustomButton
-          value={I18n.t('register')}
+          value={i18n.t('register')}
           onPress={() => navigation.navigate('Registration')}
           buttonColor={permanentColors.success}
           style={{ marginBottom: 15 }}
@@ -44,7 +44,7 @@ function LandingScreen() {
 
         {/* login button */}
         <CustomButton
-          value={I18n.t('login')}
+          value={i18n.t('login')}
           onPress={() => navigation.navigate('Login')}
           style={{ marginBottom: 15 }}
         />

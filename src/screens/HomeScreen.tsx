@@ -1,11 +1,10 @@
 import { useNavigation, useTheme } from '@react-navigation/native';
 import dateformat from 'dateformat';
-import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import ConsumedItemListElement from '../components/ConsumedItemListElement';
 import FloatingActionButton from '../components/FloatingActionButton';
 import HomeProgress from '../components/HomeProgress';
-import ConsumedItemListElement from '../components/ConsumedItemListElement';
 import Spacer from '../components/Spacer';
 import TopBar from '../components/TopBar';
 import { HistoryContext } from '../contexts/HistoryContext';
@@ -14,6 +13,7 @@ import { HistoryContextType } from '../types/context';
 import { ConsumedItem } from '../types/item';
 import { ConsumedNavigationProp } from '../types/navigation';
 import { getStartOfDay } from '../util/time';
+import { i18n } from '../util/translation';
 
 function HomeScreen() {
   const { colors } = useTheme();
@@ -65,7 +65,7 @@ function HomeScreen() {
         <HomeProgress
           calorieTarget={settings?.calorieTarget ?? 0}
           title={
-            daysInPast === 0 ? I18n.t('today') : dateformat(getStartOfDay(daysInPast), 'dd.mm')
+            daysInPast === 0 ? i18n.t('today') : dateformat(getStartOfDay(daysInPast), 'dd.mm')
           }
           todaysCalories={todaysCalories}
         />

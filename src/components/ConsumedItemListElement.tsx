@@ -1,10 +1,10 @@
 import { Feather } from '@expo/vector-icons';
-import I18n from 'i18n-js';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import placeholderImg from '../../assets/itemPlaceholderImage.png';
 import { permanentColors } from '../theme/colors';
 import { ConsumedItem } from '../types/item';
+import { i18n } from '../util/translation';
 
 interface Props {
   consumedItem: ConsumedItem;
@@ -50,7 +50,7 @@ function ConsumedItemListElement({ consumedItem, onSave }: Props) {
 
           {/* calories */}
           <Text style={styles.text}>
-            {I18n.t('caloriesPerItem', { itemCalories: consumedItem.calories })}
+            {i18n.t('caloriesPerItem', { itemCalories: consumedItem.calories })}
           </Text>
         </View>
 

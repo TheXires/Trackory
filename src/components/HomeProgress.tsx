@@ -1,7 +1,7 @@
 import { useTheme } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { i18n } from '../util/translation';
 import Progressbar from './Progressbar';
 
 interface Props {
@@ -28,11 +28,11 @@ function HomeProgress({ title, todaysCalories, calorieTarget }: Props) {
         <Progressbar progress={percent} />
         {caloriesLeft > 0 ? (
           <Text style={[styles.subtext, { color: colors.text }]}>
-            {I18n.t('caloriesLeft', { caloriesLeft })}
+            {i18n.t('caloriesLeft', { caloriesLeft })}
           </Text>
         ) : (
           <Text style={[styles.subtext, { color: colors.text }]}>
-            {I18n.t('negativeCaloriesLeft', { caloriesLeft: -caloriesLeft })}
+            {i18n.t('negativeCaloriesLeft', { caloriesLeft: -caloriesLeft })}
           </Text>
         )}
       </View>

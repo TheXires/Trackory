@@ -1,6 +1,5 @@
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import update from 'immutability-helper';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
@@ -19,6 +18,7 @@ import { NewItem, NewItemPropertyType } from '../types/item';
 import { CreateItemNavigationProp } from '../types/navigation';
 import { takeImage } from '../util/image';
 import { createNewItem } from '../util/item';
+import { i18n } from '../util/translation';
 
 function CreateItemScreen() {
   const navigation = useNavigation<CreateItemNavigationProp>();
@@ -30,7 +30,7 @@ function CreateItemScreen() {
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const handleCreation = useCallback(async () => {
-    showLoadingPopup(true, I18n.t('create'));
+    showLoadingPopup(true, i18n.t('create'));
     try {
       if (!item.name || item.name === '') throw new CustomError('create/no-name');
       await firebaseAddItem(createNewItem(item));
@@ -40,8 +40,8 @@ function CreateItemScreen() {
     } catch (error: any) {
       showLoadingPopup(false);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   }, [item]);
@@ -51,7 +51,7 @@ function CreateItemScreen() {
       headerRight: () =>
         NavigationHeaderButton({
           onPress: () => handleCreation(),
-          text: I18n.t('create'),
+          text: i18n.t('create'),
         }),
     });
   }, [handleCreation]);
@@ -68,7 +68,7 @@ function CreateItemScreen() {
           <CustomTextInput
             onChangeText={(text) => change(text, 'name')}
             placeholder="Sandwich..."
-            title={I18n.t('itemName')}
+            title={i18n.t('itemName')}
             value={item.name}
           />
 
@@ -76,7 +76,7 @@ function CreateItemScreen() {
           <CustomNumberInput
             onChangeText={(input) => change(input, 'calories')}
             placeholder="123"
-            title={I18n.t('calories')}
+            title={i18n.t('calories')}
             value={item.calories}
           />
           {expanded && (
@@ -85,7 +85,7 @@ function CreateItemScreen() {
               <CustomNumberInput
                 onChangeText={(input) => change(input, 'fat')}
                 placeholder="123"
-                title={I18n.t('fat')}
+                title={i18n.t('fat')}
                 value={item.fat}
               />
 
@@ -93,7 +93,7 @@ function CreateItemScreen() {
               <CustomNumberInput
                 onChangeText={(input) => change(input, 'carbohydrates')}
                 placeholder="123"
-                title={I18n.t('carbohydrates')}
+                title={i18n.t('carbohydrates')}
                 value={item.carbohydrates}
               />
 
@@ -101,7 +101,7 @@ function CreateItemScreen() {
               <CustomNumberInput
                 onChangeText={(input) => change(input, 'protein')}
                 placeholder="123"
-                title={I18n.t('protein')}
+                title={i18n.t('protein')}
                 value={item.protein}
               />
             </>
@@ -112,7 +112,7 @@ function CreateItemScreen() {
         <View style={styles.expandButtonContainer}>
           <Text style={styles.expandButton} onPress={() => setExpanded(!expanded)}>
             <Feather name={expanded ? 'minus' : 'plus'} size={18} />
-            {I18n.t(expanded ? 'less' : 'more')}
+            {i18n.t(expanded ? 'less' : 'more')}
           </Text>
         </View>
 

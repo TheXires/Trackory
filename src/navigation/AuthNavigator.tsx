@@ -1,11 +1,11 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import I18n from 'i18n-js';
 import React from 'react';
 import ForgotPasswordScreen from '../screens/Auth/ForgotPasswordScreen';
 import LandingScreen from '../screens/Auth/LandingScreen';
 import LoginScreen from '../screens/Auth/LoginScreen';
 import RegistrationScreen from '../screens/Auth/RegistrationScreen';
 import { AuthStackParamList } from '../types/navigation';
+import { i18n } from '../util/translation';
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
 
@@ -21,7 +21,7 @@ function AuthNavigator() {
         options={{
           headerShown: true,
           headerTitleAlign: 'center',
-          title: I18n.t('forgotPasswordTitle'),
+          title: i18n.t('forgotPasswordTitle'),
         }}
       />
     </AuthStack.Navigator>

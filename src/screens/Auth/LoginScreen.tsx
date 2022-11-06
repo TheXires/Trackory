@@ -1,5 +1,4 @@
 import { useNavigation, useTheme } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import {
   Alert,
@@ -19,6 +18,7 @@ import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseSignIn } from '../../firebase/auth.firebase';
 import { LoadingContextType } from '../../types/context';
 import { LoginNavigationProp } from '../../types/navigation';
+import { i18n } from '../../util/translation';
 
 function LoginScreen() {
   const { colors } = useTheme();
@@ -35,13 +35,13 @@ function LoginScreen() {
   }, [email, password]);
 
   const signUserIn = async () => {
-    showLoadingPopup(true, I18n.t('login'));
+    showLoadingPopup(true, i18n.t('login'));
     try {
       await firebaseSignIn(email, password);
     } catch (error: any) {
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
     showLoadingPopup(false);
@@ -56,7 +56,7 @@ function LoginScreen() {
         {/* Image and heading */}
         <Image style={styles.image} source={loginImage} />
         <View style={styles.bottomContainer}>
-          <Text style={[styles.heading, { color: colors.primary }]}>{I18n.t('login')}</Text>
+          <Text style={[styles.heading, { color: colors.primary }]}>{i18n.t('login')}</Text>
 
           {/* Email input */}
           <CustomTextInput
@@ -65,7 +65,7 @@ function LoginScreen() {
             hideTitle
             keyboardType="email-address"
             onChangeText={(input: string) => setEmail(input)}
-            placeholder={I18n.t('email')}
+            placeholder={i18n.t('email')}
             value={email}
           />
 
@@ -76,17 +76,17 @@ function LoginScreen() {
             hideTitle
             keyboardType="default"
             onChangeText={(input: string) => setPassword(input)}
-            placeholder={I18n.t('password')}
+            placeholder={i18n.t('password')}
             secureTextEntry
             value={password}
           />
 
           {/* Login button */}
-          <CustomButton value={I18n.t('login')} enabled={canLogin} onPress={signUserIn} />
+          <CustomButton value={i18n.t('login')} enabled={canLogin} onPress={signUserIn} />
 
           {/* Forgot password button */}
           <CustomButton
-            value={I18n.t('forgotPassword')}
+            value={i18n.t('forgotPassword')}
             onPress={() => navigation.navigate('ForgotPassword')}
             buttonColor={colors.background}
             textColor={colors.text}

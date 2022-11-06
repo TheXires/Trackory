@@ -1,5 +1,4 @@
 import { useTheme } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import React, { useContext, useEffect, useState } from 'react';
 import {
   Alert,
@@ -19,6 +18,7 @@ import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseSignUp } from '../../firebase/auth.firebase';
 import { LoadingContextType } from '../../types/context';
 import { permanentColors } from '../../theme/colors';
+import { i18n } from '../../util/translation';
 
 function RegistrationScreen() {
   const { colors } = useTheme();
@@ -33,13 +33,13 @@ function RegistrationScreen() {
   }, [email, password]);
 
   const signUserUp = async () => {
-    showLoadingPopup(true, I18n.t('register'));
+    showLoadingPopup(true, i18n.t('register'));
     try {
       await firebaseSignUp(email, password);
     } catch (error: any) {
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
     showLoadingPopup(false);
@@ -55,7 +55,7 @@ function RegistrationScreen() {
         <Image style={styles.image} source={registrationImage} />
         <View style={styles.bottomContainer}>
           <Text style={[styles.heading, { color: permanentColors.success }]}>
-            {I18n.t('register')}
+            {i18n.t('register')}
           </Text>
 
           {/* Email input */}
@@ -65,7 +65,7 @@ function RegistrationScreen() {
             hideTitle
             keyboardType="email-address"
             onChangeText={(input: string) => setEmail(input)}
-            placeholder={I18n.t('email')}
+            placeholder={i18n.t('email')}
             value={email}
           />
 
@@ -76,14 +76,14 @@ function RegistrationScreen() {
             hideTitle
             keyboardType="default"
             onChangeText={(input: string) => setPassword(input)}
-            placeholder={I18n.t('password')}
+            placeholder={i18n.t('password')}
             secureTextEntry
             value={password}
           />
-          
+
           {/* Registration button */}
           <CustomButton
-            value={I18n.t('register')}
+            value={i18n.t('register')}
             enabled={canRegister}
             onPress={signUserUp}
             buttonColor={permanentColors.success}

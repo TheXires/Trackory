@@ -2,7 +2,6 @@
 // https://docs.expo.dev/versions/latest/sdk/filesystem/#filesystemwriteasstringasyncfileuri-contents-options
 // https://www.farhansayshi.com/post/how-to-save-files-to-a-device-folder-using-expo-and-react-native/
 
-import I18n from 'i18n-js';
 import { Alert, Platform, Share } from 'react-native';
 import RNFS from 'react-native-fs';
 import { firebaseGetAllConsumptions } from '../../../firebase/consumption.firebase';
@@ -10,6 +9,7 @@ import { firebaseGetAllItems } from '../../../firebase/items.firebase';
 import { firebaseGetWeightHistory } from '../../../firebase/statistics.firebase';
 import { ExportAdapter } from '../../../types/adapters';
 import { CustomError } from '../../../types/error';
+import { i18n } from '../../../util/translation';
 
 const exportJsonAdapter: ExportAdapter = {
   async exportData(): Promise<void> {
@@ -32,7 +32,7 @@ const exportJsonAdapter: ExportAdapter = {
       } else {
         const path = `${RNFS.DownloadDirectoryPath}/data-export-${Date.now()}.json`;
         await RNFS.writeFile(path, JSON.stringify(toShare), 'utf8');
-        Alert.alert(I18n.t('exportedData'), I18n.t('androidDataExportSuccess'));
+        Alert.alert(i18n.t('exportedData'), i18n.t('androidDataExportSuccess'));
       }
     } catch (error: any) {
       console.error(`export error: ${error}`);

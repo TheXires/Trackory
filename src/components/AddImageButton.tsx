@@ -1,8 +1,8 @@
 import { Feather } from '@expo/vector-icons';
-import I18n from 'i18n-js';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { permanentColors } from '../theme/colors';
+import { i18n } from '../util/translation';
 import ChangeImageButton from './ChangeImageButton';
 
 interface Props {
@@ -19,7 +19,7 @@ function AddImageButton({ imageUri, onDelete, onPress }: Props) {
       ) : (
         <Pressable style={styles.addPhotoButton} onPress={onPress}>
           <Feather name="plus" size={46} style={styles.addPhotoButtonText} />
-          <Text style={[styles.addPhotoButtonText, { fontSize: 18 }]}>{I18n.t('addPhoto')}</Text>
+          <Text style={[styles.addPhotoButtonText, { fontSize: 18 }]}>{i18n.t('addPhoto')}</Text>
         </Pressable>
       )}
     </View>

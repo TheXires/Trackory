@@ -1,7 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useTheme } from '@react-navigation/native';
-import I18n from 'i18n-js';
 import React, { useContext, useState } from 'react';
 import { Alert, Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
 import exportAdapter from '../adapter/exportAdapter/exportAdapter';
@@ -14,6 +13,7 @@ import { SettingsContext } from '../contexts/SettingsContext';
 import { firebaseDeleteAccount, firebaseSignOut } from '../firebase/auth.firebase';
 import { LoadingContextType, SettingsContextType } from '../types/context';
 import { SettingsNavigationProp } from '../types/navigation';
+import { i18n } from '../util/translation';
 
 function SettingsScreen() {
   const { colors } = useTheme();
@@ -51,14 +51,14 @@ function SettingsScreen() {
       await firebaseSignOut();
     } catch (error: any) {
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };
 
   const deleteUser = async () => {
-    showLoadingPopup(true, I18n.t('deleteAccount'));
+    showLoadingPopup(true, i18n.t('deleteAccount'));
     try {
       await firebaseDeleteAccount();
       await AsyncStorage.clear();
@@ -68,16 +68,16 @@ function SettingsScreen() {
       console.error('deleteUser:', error);
       showLoadingPopup(false);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };
 
   const deleteUserSecurityPopup = () => {
-    Alert.alert(I18n.t('deleteUserDialogTitle'), I18n.t('deleteUserDialogMessage'), [
-      { style: 'cancel', text: I18n.t('cancel') },
-      { onPress: () => deleteUser(), style: 'destructive', text: I18n.t('delete') },
+    Alert.alert(i18n.t('deleteUserDialogTitle'), i18n.t('deleteUserDialogMessage'), [
+      { style: 'cancel', text: i18n.t('cancel') },
+      { onPress: () => deleteUser(), style: 'destructive', text: i18n.t('delete') },
     ]);
   };
 
@@ -90,8 +90,8 @@ function SettingsScreen() {
       console.error(error);
       showLoadingPopup(false);
       Alert.alert(
-        I18n.t('errorTitle'),
-        I18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
   };
@@ -102,7 +102,7 @@ function SettingsScreen() {
         <View>
           {/* calorieTarget */}
           <SettingsItem
-            left={I18n.t('calorieTarget')}
+            left={i18n.t('calorieTarget')}
             right={settings?.calorieTarget ?? '2100'}
             onPress={() => {
               setShowCalorieTargetDialog(true);
@@ -111,14 +111,14 @@ function SettingsScreen() {
 
           {/* calorie requirements calculator */}
           <SettingsItem
-            left={I18n.t('calorieRequirementCalculator')}
+            left={i18n.t('calorieRequirementCalculator')}
             right={<Feather name="chevron-right" size={24} />}
             onPress={() => openLink('http://kalorienbedarf.de')}
           />
 
           {/* wight input */}
           <SettingsItem
-            left={`${I18n.t('weight')} (${I18n.t('kilogramAbbreviation')})`}
+            left={`${i18n.t('weight')} (${i18n.t('kilogramAbbreviation')})`}
             right={settings?.weight ?? '0'}
             onPress={() => setShowWeightDialog(true)}
           />
@@ -126,14 +126,14 @@ function SettingsScreen() {
 
           {/* data export */}
           <SettingsItem
-            left={I18n.t('exportData')}
+            left={i18n.t('exportData')}
             right={<Feather name="upload" size={24} />}
             onPress={exportData}
           />
 
           {/* share */}
           <SettingsItem
-            left={I18n.t('recommendApp')}
+            left={i18n.t('recommendApp')}
             right={<Feather name="share-2" size={24} />}
             onPress={() => Share.share({ message: 'https://xires.de' })}
           />
@@ -141,21 +141,21 @@ function SettingsScreen() {
 
           {/* privacy policy */}
           <SettingsItem
-            left={I18n.t('privacyPolicy')}
+            left={i18n.t('privacyPolicy')}
             right={<Feather name="chevron-right" size={24} />}
             onPress={() => openLink('https://xires.de')}
           />
 
           {/* terms of use */}
           <SettingsItem
-            left={I18n.t('termsOfService')}
+            left={i18n.t('termsOfService')}
             right={<Feather name="chevron-right" size={24} />}
             onPress={() => openLink('https://xires.de')}
           />
 
           {/* imprint */}
           <SettingsItem
-            left={I18n.t('imprint')}
+            left={i18n.t('imprint')}
             right={<Feather name="chevron-right" size={24} />}
             onPress={() => openLink('https://xires.de')}
           />
@@ -163,14 +163,14 @@ function SettingsScreen() {
 
           {/* change email */}
           <SettingsItem
-            left={I18n.t('changeEmail')}
+            left={i18n.t('changeEmail')}
             right={<Feather name="chevron-right" size={24} />}
             onPress={() => navigation.navigate('ChangeEmail')}
           />
 
           {/* change password */}
           <SettingsItem
-            left={I18n.t('changePassword')}
+            left={i18n.t('changePassword')}
             right={<Feather name="chevron-right" size={24} />}
             onPress={() => navigation.navigate('ChangePassword')}
           />
@@ -178,35 +178,35 @@ function SettingsScreen() {
 
           {/* delete account */}
           <SettingsItem
-            left={I18n.t('deleteAccount')}
+            left={i18n.t('deleteAccount')}
             color={colors.notification}
             onPress={() => deleteUserSecurityPopup()}
           />
 
           {/* logout */}
-          <SettingsItem left={I18n.t('logout')} onPress={() => signUserOut()} />
+          <SettingsItem left={i18n.t('logout')} onPress={() => signUserOut()} />
           <Spacer height={20} />
         </View>
       </ScrollView>
 
       {/* calorieTarget Dialogs */}
       <InputDialog
-        headerText={I18n.t('dailyCalorieTarget')}
+        headerText={i18n.t('dailyCalorieTarget')}
         onClose={() => setShowCalorieTargetDialog(false)}
         onSave={(newValue) => saveCalorieTarget(newValue)}
         placeholder="2100"
         show={showCalorieTargetDialog}
-        text={I18n.t('dailyCalorieTargetQuestion')}
+        text={i18n.t('dailyCalorieTargetQuestion')}
         value={settings?.calorieTarget}
       />
       {/* weight dialog */}
       <InputDialog
-        headerText={I18n.t('currentWeightTitle')}
+        headerText={i18n.t('currentWeightTitle')}
         onClose={() => setShowWeightDialog(false)}
         onSave={(newValue) => saveWeight(newValue)}
         placeholder="80"
         show={showWeightDialog}
-        text={`${I18n.t('currentWeightTitleQuestion')} (in ${I18n.t('kilogramAbbreviation')})`}
+        text={`${i18n.t('currentWeightTitleQuestion')} (in ${i18n.t('kilogramAbbreviation')})`}
         value={settings?.weight}
       />
     </>
