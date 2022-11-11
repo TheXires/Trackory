@@ -1,6 +1,7 @@
 import { useTheme } from '@react-navigation/native';
 import React from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { BaseButton } from 'react-native-gesture-handler';
 import placeholderImg from '../../assets/itemPlaceholderImage.png';
 import { Item } from '../types/item';
 
@@ -15,20 +16,14 @@ function ItemCard({ item, onPress }: Props) {
   const image = item.imgUrl ? { uri: item.imgUrl } : placeholderImg;
 
   return (
-    <View style={styles.container}>
-      <Pressable onPress={onPress}>
-        <Image source={image} style={styles.image} />
-        <View style={styles.textContainer}>
-          <Text
-            style={[styles.text, { color: colors.text }]}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {item.name}
-          </Text>
-        </View>
-      </Pressable>
-    </View>
+    <BaseButton style={styles.container} rippleRadius={0} onPress={onPress}>
+      <Image source={image} style={styles.image} />
+      <View style={styles.textContainer}>
+        <Text style={[styles.text, { color: colors.text }]} numberOfLines={1} ellipsizeMode="tail">
+          {item.name}
+        </Text>
+      </View>
+    </BaseButton>
   );
 }
 

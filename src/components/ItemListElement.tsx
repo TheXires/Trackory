@@ -19,7 +19,7 @@ function ItemListElement({ item, onPress }: Props) {
 
   return (
     <>
-      <RectButton style={styles.container} onPress={() => onPress()}>
+      <RectButton style={styles.container} onPress={onPress}>
         <View style={styles.dataContainer}>
           <Image style={styles.image} source={image} />
           <Text
