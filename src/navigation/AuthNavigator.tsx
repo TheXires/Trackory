@@ -1,11 +1,11 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
+import { i18n } from '../i18n/i18n';
 import ForgotPasswordScreen from '../screens/Auth/ForgotPasswordScreen';
 import LandingScreen from '../screens/Auth/LandingScreen';
 import LoginScreen from '../screens/Auth/LoginScreen';
 import RegistrationScreen from '../screens/Auth/RegistrationScreen';
 import { AuthStackParamList } from '../types/navigation';
-import { i18n } from '../util/translation';
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
 

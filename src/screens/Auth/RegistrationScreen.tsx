@@ -16,9 +16,9 @@ import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseSignUp } from '../../firebase/auth.firebase';
-import { LoadingContextType } from '../../types/context';
+import { i18n } from '../../i18n/i18n';
 import { permanentColors } from '../../theme/colors';
-import { i18n } from '../../util/translation';
+import { LoadingContextType } from '../../types/context';
 
 function RegistrationScreen() {
   const { colors } = useTheme();

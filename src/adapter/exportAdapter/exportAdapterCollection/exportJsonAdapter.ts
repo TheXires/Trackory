@@ -7,9 +7,9 @@ import RNFS from 'react-native-fs';
 import { firebaseGetAllConsumptions } from '../../../firebase/consumption.firebase';
 import { firebaseGetAllItems } from '../../../firebase/items.firebase';
 import { firebaseGetWeightHistory } from '../../../firebase/statistics.firebase';
+import { i18n } from '../../../i18n/i18n';
 import { ExportAdapter } from '../../../types/adapters';
 import { CustomError } from '../../../types/error';
-import { i18n } from '../../../util/translation';
 
 const exportJsonAdapter: ExportAdapter = {
   async exportData(): Promise<void> {

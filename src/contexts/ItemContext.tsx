@@ -4,11 +4,11 @@ import React, { createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { ITEMS } from '../constants';
 import { firebaseGetAllItems } from '../firebase/items.firebase';
+import { i18n } from '../i18n/i18n';
 import { ItemContextType } from '../types/context';
 import { Item } from '../types/item';
 import { deleteItems, mergeItemArrays } from '../util/item';
 import { getItemLastUpdateTimeFromStorage, getItemsFromStorage } from '../util/localStorage';
-import { i18n } from '../util/translation';
 
 export const ItemContext = createContext({} as ItemContextType);
 

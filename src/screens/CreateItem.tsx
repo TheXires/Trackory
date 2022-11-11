@@ -11,6 +11,7 @@ import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseAddItem } from '../firebase/items.firebase';
+import { i18n } from '../i18n/i18n';
 import { permanentColors } from '../theme/colors';
 import { ItemContextType, LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
@@ -18,7 +19,6 @@ import { NewItem, NewItemPropertyType } from '../types/item';
 import { CreateItemNavigationProp } from '../types/navigation';
 import { takeImage } from '../util/image';
 import { createNewItem } from '../util/item';
-import { i18n } from '../util/translation';
 
 function CreateItemScreen() {
   const navigation = useNavigation<CreateItemNavigationProp>();

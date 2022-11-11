@@ -1,5 +1,5 @@
 import React from 'react';
-import { i18n } from '../util/translation';
+import { i18n } from '../i18n/i18n';
 import CustomTextInput from './CustomTextInput';
 
 interface Props {

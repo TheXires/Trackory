@@ -6,9 +6,9 @@ import CustomButton from '../components/CustomButton';
 import CustomTextInput from '../components/CustomTextInput';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseChangeEmail } from '../firebase/auth.firebase';
+import { i18n } from '../i18n/i18n';
 import { LoadingContextType } from '../types/context';
 import { ChangeEmailNavigationProp } from '../types/navigation';
-import { i18n } from '../util/translation';
 
 function ChangeEmailScreen() {
   const { colors } = useTheme();

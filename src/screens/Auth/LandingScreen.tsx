@@ -3,9 +3,9 @@ import React from 'react';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import backgroundImage from '../../../assets/splash.jpg';
 import CustomButton from '../../components/CustomButton';
+import { i18n } from '../../i18n/i18n';
 import { permanentColors } from '../../theme/colors';
 import { LandingPageNavigationProp } from '../../types/navigation';
-import { i18n } from '../../util/translation';
 
 function LandingScreen() {
   const navigation = useNavigation<LandingPageNavigationProp>();

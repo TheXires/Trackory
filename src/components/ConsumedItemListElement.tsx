@@ -2,9 +2,9 @@ import { Feather } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import placeholderImg from '../../assets/itemPlaceholderImage.png';
+import { i18n } from '../i18n/i18n';
 import { permanentColors } from '../theme/colors';
 import { ConsumedItem } from '../types/item';
-import { i18n } from '../util/translation';
 
 interface Props {
   consumedItem: ConsumedItem;

@@ -1,8 +1,8 @@
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { i18n } from '../i18n/i18n';
 import { permanentColors } from '../theme/colors';
-import { i18n } from '../util/translation';
 import ChangeImageButton from './ChangeImageButton';
 
 interface Props {

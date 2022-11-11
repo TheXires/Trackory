@@ -9,6 +9,7 @@ import CustomLineChart from '../components/CustomLineChart';
 import FloatingActionButton from '../components/FloatingActionButton';
 import TopBar from '../components/TopBar';
 import { StatisticContext } from '../contexts/StatisticContext';
+import { i18n } from '../i18n/i18n';
 import { StatisticsContextType } from '../types/context';
 import { separateDailyStatisticData, separateWeightStatisticData } from '../util/statistics';
 import {
@@ -17,7 +18,6 @@ import {
   getMonthlyLabels,
   getWeeklyLabels,
 } from '../util/time';
-import { i18n } from '../util/translation';
 
 function StatisticsScreen() {
   const { colors } = useTheme();

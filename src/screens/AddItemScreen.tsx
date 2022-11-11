@@ -8,10 +8,10 @@ import Spacer from '../components/Spacer';
 import { HistoryContext } from '../contexts/HistoryContext';
 import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
+import { i18n } from '../i18n/i18n';
 import { HistoryContextType, ItemContextType, LoadingContextType } from '../types/context';
 import { Item } from '../types/item';
 import { AddItemNavigationProp, AddItemRouteProp } from '../types/navigation';
-import { i18n } from '../util/translation';
 
 function Separator() {
   return <View style={{ height: 20 }} />;

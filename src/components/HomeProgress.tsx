@@ -1,7 +1,7 @@
 import { useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { i18n } from '../util/translation';
+import { i18n } from '../i18n/i18n';
 import Progressbar from './Progressbar';
 
 interface Props {

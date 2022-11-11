@@ -7,9 +7,9 @@ import {
   firebaseGetWeightHistory,
   firebaseUpdateStatistics,
 } from '../firebase/statistics.firebase';
+import { i18n } from '../i18n/i18n';
 import { StatisticsContextType } from '../types/context';
 import { DailyStatistic, WeightHistory } from '../types/statistics';
-import { i18n } from '../util/translation';
 
 export const StatisticContext = createContext({} as StatisticsContextType);
 

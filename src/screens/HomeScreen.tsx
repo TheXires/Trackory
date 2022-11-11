@@ -10,10 +10,10 @@ import TopBar from '../components/TopBar';
 import { DAY_IN_MS } from '../constants';
 import { HistoryContext } from '../contexts/HistoryContext';
 import { SettingsContext } from '../contexts/SettingsContext';
+import { i18n } from '../i18n/i18n';
 import { HistoryContextType } from '../types/context';
 import { ConsumedItem } from '../types/item';
 import { ConsumedNavigationProp } from '../types/navigation';
-import { i18n } from '../util/translation';
 
 function HomeScreen() {
   const { colors } = useTheme();

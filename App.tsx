@@ -3,8 +3,8 @@ import * as Localization from 'expo-localization';
 import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import { LoadingProvider } from './src/contexts/LoadingContext';
+import { i18n } from './src/i18n/i18n';
 import Navigation from './src/navigation';
-import { i18n } from './src/util/translation';
 
 export default function App() {
   const theme = useColorScheme();

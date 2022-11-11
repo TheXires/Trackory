@@ -3,8 +3,8 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import offlineImage from '../../assets/no-connection.png';
 import CustomButton from '../components/CustomButton';
 import Spacer from '../components/Spacer';
+import { i18n } from '../i18n/i18n';
 import { permanentColors } from '../theme/colors';
-import { i18n } from '../util/translation';
 
 interface Props {
   onPress: () => void;
