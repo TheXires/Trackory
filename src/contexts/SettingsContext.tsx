@@ -3,9 +3,9 @@ import React, { createContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { USER_SETTINGS } from '../constants';
 import { firebaseGetUserSettings, firebaseUpdateUserSettings } from '../firebase/settings.firebase';
+import { i18n } from '../i18n/i18n';
 import { SettingsContextType } from '../types/context';
 import { Settings } from '../types/settings';
-import { i18n } from '../util/translation';
 
 export const SettingsContext = createContext({} as SettingsContextType);
 

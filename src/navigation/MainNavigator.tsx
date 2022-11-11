@@ -9,6 +9,7 @@ import { HistoryProvider } from '../contexts/HistoryContext';
 import { ItemProvider } from '../contexts/ItemContext';
 import { SettingsProvider } from '../contexts/SettingsContext';
 import { StatisticProvider } from '../contexts/StatisticContext';
+import { i18n } from '../i18n/i18n';
 import AddItemScreen from '../screens/AddItemScreen';
 import ChangeEmailScreen from '../screens/ChangeEmailScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
@@ -17,7 +18,6 @@ import EditItemScreen from '../screens/EditItemScreen';
 import ItemDetailsScreen from '../screens/ItemDetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import { RootStackParamList } from '../types/navigation';
-import { i18n } from '../util/translation';
 import BottomNavigator from './BottomNavigator';
 
 const RootStack = createStackNavigator<RootStackParamList>();

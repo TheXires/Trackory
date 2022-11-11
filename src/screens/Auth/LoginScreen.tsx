@@ -9,16 +9,16 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import loginImage from '../../../assets/login.png';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import { firebaseSignIn } from '../../firebase/auth.firebase';
+import { i18n } from '../../i18n/i18n';
 import { LoadingContextType } from '../../types/context';
 import { LoginNavigationProp } from '../../types/navigation';
-import { i18n } from '../../util/translation';
 
 function LoginScreen() {
   const { colors } = useTheme();

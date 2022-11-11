@@ -2,9 +2,9 @@ import { useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { i18n } from '../i18n/i18n';
 import { permanentColors } from '../theme/colors';
 import { convertTextToInteger } from '../util/numberconverter';
-import { i18n } from '../util/translation';
 import Dialog from './Dialog';
 
 interface Props {

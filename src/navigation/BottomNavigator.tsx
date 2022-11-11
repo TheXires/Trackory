@@ -3,11 +3,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import HeaderRightButton from '../components/HeaderRightButton';
+import { i18n } from '../i18n/i18n';
 import HomeScreen from '../screens/HomeScreen';
 import ItemsScreen from '../screens/ItemsScreen';
 import StatisticsScreen from '../screens/StatisticsScreen';
 import { BottomTabParamList } from '../types/navigation';
-import { i18n } from '../util/translation';
 
 interface IconProps {
   icon: 'home' | 'bar-chart-2' | 'coffee';

@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { i18n } from '../util/translation';
+import { i18n } from '../i18n/i18n';
 
 interface Props {
   onPress: () => void;

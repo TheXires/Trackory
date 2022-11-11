@@ -11,12 +11,12 @@ import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseRemoveItem } from '../firebase/items.firebase';
+import { i18n } from '../i18n/i18n';
 import { permanentColors } from '../theme/colors';
 import { ItemContextType, LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
 import { Item } from '../types/item';
 import { ItemDetailsNavigationProp, ItemDetailsRouteProp } from '../types/navigation';
-import { i18n } from '../util/translation';
 
 function ItemDetailsScreen() {
   const { colors } = useTheme();
