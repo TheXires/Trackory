@@ -1,6 +1,6 @@
 import { orderBy } from 'lodash';
 import React, { createContext, useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, AppState, AppStateStatus } from 'react-native';
 import { firebaseConsumeItem, firebaseGetConsumptions } from '../firebase/consumption.firebase';
 import { i18n } from '../i18n/i18n';
 import { HistoryContextType } from '../types/context';
@@ -48,6 +48,14 @@ export function HistoryProvider(props: any) {
 
   useEffect(() => {
     refreshConsumedItems(0);
+    const subscription = AppState.addEventListener('change', (nextState: AppStateStatus) => {
+      if (nextState === 'active') {
+        refreshConsumedItems(0);
+      }
+    });
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
   useEffect(() => {
