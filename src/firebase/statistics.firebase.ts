@@ -8,7 +8,6 @@ import { auth, db } from './init.firebase';
  */
 export const firebaseUpdateStatistics = async () => {
   try {
-    // await functions().httpsCallable('createDailyStatistics')();
     alert('funktion "firebaseUpdateStatistics" aktuell nicht verfügbar');
   } catch (error: any) {
     console.error('updateStatistics', error);
@@ -26,12 +25,6 @@ export const firebaseGetDailyStatistics = async (): Promise<DailyStatistic[] | n
   try {
     const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    // const response = await firestore()
-    //   .collection('users')
-    //   .doc(currentUserId)
-    //   .collection('statistics')
-    //   .doc('dailyStatistics')
-    //   .get();
     const response = await getDoc(doc(db, 'users', currentUserId, 'statistics', 'dailyStatistics'));
     if (!response.data()?.data) return null;
     return response.data()?.data;
@@ -51,12 +44,6 @@ export const firebaseGetWeightHistory = async (): Promise<WeightHistory[] | null
   try {
     const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    // const response = await firestore()
-    //   .collection('users')
-    //   .doc(currentUserId)
-    //   .collection('statistics')
-    //   .doc('weightStatistic')
-    //   .get();
     const response = await getDoc(doc(db, 'users', currentUserId, 'statistics', 'weightStatistic'));
     if (!response.data()?.weightHistory) return null;
     return response.data()?.weightHistory;

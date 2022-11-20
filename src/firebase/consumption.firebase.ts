@@ -6,20 +6,12 @@ import {
   getDocs,
   query,
   updateDoc,
-  where
+  where,
 } from 'firebase/firestore';
 import { DAY_IN_MS } from '../constants';
 import { CustomError } from '../types/error';
 import { ConsumedItem, Consumption, Item } from '../types/item';
 import { auth, db } from './init.firebase';
-
-/**
- * gets all consumptions of a specific day
- *
- * @param daysInThePast
- * @error auth/no-valid-user
- * @return
- */
 
 /**
  * gets all consumptions of a specific day if they are modified after last update
@@ -37,17 +29,12 @@ export const firebaseGetConsumptions = async (
   try {
     const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    // const response = await firestore()
-    //   .collection('users')
-    //   .doc(currentUserId)
-    //   .collection('consumptions')
-    //   .where('date', '==', date)
-    //   .where('lastModified', '>=', lastUpdated)
-    //   .get();
-    // TODO lostmodified ergänzen
-    console.log('date:', date);
     const response = await getDocs(
-      query(collection(db, 'users', currentUserId, 'consumptions'), where('date', '==', date)),
+      query(
+        collection(db, 'users', currentUserId, 'consumptions'),
+        where('date', '==', date),
+        where('lastModified', '>=', lastUpdated),
+      ),
     );
     if (response.docs.length < 1) return undefined;
     if (response.docs[0].data().deleted) return [];
@@ -69,11 +56,6 @@ export const firebaseGetAllConsumptions = async (): Promise<Consumption[]> => {
   try {
     const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    // const response = await firestore()
-    //   .collection('users')
-    //   .doc(currentUserId)
-    //   .collection('consumptions')
-    //   .get();
     const response = await getDocs(collection(db, 'users', currentUserId, 'consumptions'));
     if (response.docs.length < 1 || response.docs[0].data().deleted) return [];
     const result: Consumption[] = [];
@@ -110,12 +92,6 @@ export const firebaseConsumeItem = async (
     const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
 
-    // const res = await firestore()
-    //   .collection('users')
-    //   .doc(currentUserId)
-    //   .collection('consumptions')
-    //   .where('date', '==', date)
-    //   .get();
     const res = await getDocs(
       query(collection(db, 'users', currentUserId, 'consumptions'), where('date', '==', date)),
     );
@@ -124,16 +100,6 @@ export const firebaseConsumeItem = async (
     const consumedItems = res.docs[0]?.data().items;
 
     if (!document) {
-      // await firestore()
-      //   .collection('users')
-      //   .doc(currentUserId)
-      //   .collection('consumptions')
-      //   .add({
-      //     date,
-      //     deleted: false,
-      //     items: [{ ...item, quantity: amount }],
-      //     lastModified: Date.now(),
-      //   });
       await addDoc(collection(db, 'users', currentUserId, 'consumptions'), {
         date,
         deleted: false,
@@ -144,11 +110,6 @@ export const firebaseConsumeItem = async (
     }
 
     if (document && document.data().deleted) {
-      // await document.ref.update({
-      //   deleted: false,
-      //   items: [{ ...item, quantity: amount }],
-      //   lastModified: Date.now(),
-      // });
       await updateDoc(document.ref, {
         deleted: false,
         items: [{ ...item, quantity: amount }],
@@ -164,12 +125,6 @@ export const firebaseConsumeItem = async (
       consumedItems[index].quantity += amount;
       if (consumedItems[index].quantity <= 0) consumedItems.splice(index, 1);
       if (consumedItems.length <= 0) {
-        // await document.ref.update({
-        //   date,
-        //   deleted: true,
-        //   items: firestore.FieldValue.delete(),
-        //   lastModified: Date.now(),
-        // });
         await updateDoc(document.ref, {
           date,
           deleted: true,

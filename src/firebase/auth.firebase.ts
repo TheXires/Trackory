@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateEmail,
-  updatePassword,
+  updatePassword
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { CustomError } from '../types/error';
@@ -45,12 +45,8 @@ export const firebaseSignIn = async (email: string, password: string) => {
 export const firebaseSignUp = async (email: string, password: string) => {
   try {
     const response = await createUserWithEmailAndPassword(auth, email, password);
-    // await firestore()
-    //   .collection('users')
-    //   .doc(response.user.uid)
-    //   .set({ settings: { calorieTarget: 2000, wight: 0 } });
     await setDoc(doc(db, 'users', response.user.uid), {
-      settings: { calorieTarget: 2000, wight: 0 },
+      settings: { calorieTarget: 2000, weight: 0 },
     });
   } catch (error: any) {
     console.error('firebase signUp error: ', error);
@@ -166,8 +162,7 @@ export const firebaseRequestPasswordReset = async (email: string) => {
 export const firebaseDeleteAccount = async () => {
   try {
     // TODO richtig implementieren
-    // await functions().httpsCallable('deleteUser')();
-    alert('Funktion "firebaseDeleteAccount" aktuell nicht verfügbar');
+    alert('account deletion is currently not possible');
   } catch (error: any) {
     console.error('firebaseDeleteAccount:', error);
     if (error.code != null) throw new CustomError(error.code, error.message);
