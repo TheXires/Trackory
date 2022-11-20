@@ -1,11 +1,39 @@
+/* eslint-disable no-console */
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import {
+  collection,
+  deleteField,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { ITEMS_LAST_UPDATED } from '../constants';
 import { CustomError } from '../types/error';
 import { ItemUpdates } from '../types/firebase';
 import { Item, NewItem } from '../types/item';
 import { firebaseImageUpload } from './fileupload.firebase';
+import { auth, db } from './init.firebase';
+
+// TODO nach tests entfernen
+export const firebaseGetAllItems = async (lastUpdated: number): Promise<ItemUpdates> => {
+  try {
+    const currentUserId = auth.currentUser?.uid;
+    if (!currentUserId) {
+      console.error('auth/no-valid-user');
+      return { deletedItemIds: [], updatedItems: [] };
+    }
+    const response = await getDocs(collection(db, 'users', currentUserId, 'items'));
+    console.log('Items:');
+    response.docs.forEach((document, index) => {
+      console.log(`Item[${index}]:`, document.data());
+    });
+  } catch (error: any) {
+    console.error('getAllItems error: ', error);
+  }
+  return { deletedItemIds: [], updatedItems: [] };
+};
 
 /**
  * get all items from firestore and updates the asyncStorage ITEM_LAST_UPDATED time
@@ -15,16 +43,20 @@ import { firebaseImageUpload } from './fileupload.firebase';
  * @error unable-to-get-item
  * @returns array of available items
  */
-export const firebaseGetAllItems = async (lastUpdated: number): Promise<ItemUpdates> => {
+// TODO mach tests umbenennen
+export const firebaseGetAllItems2 = async (lastUpdated: number): Promise<ItemUpdates> => {
   try {
-    const currentUserId = auth().currentUser?.uid;
+    const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    const response = await firestore()
-      .collection('users')
-      .doc(currentUserId)
-      .collection('items')
-      .where('lastModified', '>=', lastUpdated)
-      .get();
+    // const response = await firestore()
+    //   .collection('users')
+    //   .doc(currentUserId)
+    //   .collection('items')
+    //   .where('lastModified', '>=', lastUpdated)
+    //   .get();
+    // TODO lostmodified ergänzen
+    const response = await getDocs(collection(db, 'users', currentUserId, 'items'));
+    console.log('Items:', response.docs);
     AsyncStorage.setItem(ITEMS_LAST_UPDATED, Date.now().toString());
     const updatedItems: Item[] = [];
     const deletedItemIds: string[] = [];
@@ -61,14 +93,15 @@ export const firebaseGetAllItems = async (lastUpdated: number): Promise<ItemUpda
  */
 export const firebaseGetItem = async (itemId: string): Promise<Item | null> => {
   try {
-    const currentUserId = auth().currentUser?.uid;
+    const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    const response = await firestore()
-      .collection('users')
-      .doc(currentUserId)
-      .collection('items')
-      .doc(itemId)
-      .get();
+    // const response = await firestore()
+    //   .collection('users')
+    //   .doc(currentUserId)
+    //   .collection('items')
+    //   .doc(itemId)
+    //   .get();
+    const response = await getDoc(doc(db, 'users', currentUserId, 'items', itemId));
     if (!response.data()) return null;
     return {
       id: itemId,
@@ -90,7 +123,7 @@ export const firebaseGetItem = async (itemId: string): Promise<Item | null> => {
 export const firebaseUpdateItem = async (item: Item): Promise<void> => {
   const updatedItem = item;
   try {
-    const currentUserId = auth().currentUser?.uid;
+    const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
     // need to check whether the url of the image starts with 'https://' or not
     // to know if the image is already uploaded and no action is necessary
@@ -100,12 +133,16 @@ export const firebaseUpdateItem = async (item: Item): Promise<void> => {
       if (!downloadUrl) throw 'unable to upload image';
       updatedItem.imgUrl = downloadUrl;
     }
-    await firestore()
-      .collection('users')
-      .doc(currentUserId)
-      .collection('items')
-      .doc(updatedItem.id)
-      .set({ ...updatedItem, lastModified: Date.now() });
+    // await firestore()
+    //   .collection('users')
+    //   .doc(currentUserId)
+    //   .collection('items')
+    //   .doc(updatedItem.id)
+    //   .set({ ...updatedItem, lastModified: Date.now() });
+    await updateDoc(doc(db, 'users', currentUserId, 'items', updatedItem.id), {
+      ...updatedItem,
+      lastModified: Date.now(),
+    });
   } catch (error: any) {
     console.error('updateItem error: ', error);
     if (error.code != null) throw new CustomError(error.code, error.message);
@@ -123,15 +160,20 @@ export const firebaseUpdateItem = async (item: Item): Promise<void> => {
  */
 export const firebaseAddItem = async (newItem: NewItem): Promise<void> => {
   try {
-    const currentUserId = auth().currentUser?.uid;
+    const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
     let downloadUrl = '';
     if (newItem.imgUrl) downloadUrl = await firebaseImageUpload(newItem.imgUrl);
-    await firestore()
-      .collection('users')
-      .doc(currentUserId)
-      .collection('items')
-      .add({ ...newItem, imgUrl: downloadUrl, lastModified: Date.now() });
+    // await firestore()
+    //   .collection('users')
+    //   .doc(currentUserId)
+    //   .collection('items')
+    //   .add({ ...newItem, imgUrl: downloadUrl, lastModified: Date.now() });
+    await setDoc(doc(db, 'users', currentUserId, 'items'), {
+      ...newItem,
+      imgUrl: downloadUrl,
+      lastModified: Date.now(),
+    });
   } catch (error: any) {
     console.error('addNewItem error: ', error);
     if (error.code != null) throw new CustomError(error.code, error.message);
@@ -149,23 +191,33 @@ export const firebaseAddItem = async (newItem: NewItem): Promise<void> => {
  */
 export const firebaseRemoveItem = async (item: Item): Promise<void> => {
   try {
-    const currentUserId = auth().currentUser?.uid;
+    const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    await firestore()
-      .collection('users')
-      .doc(currentUserId)
-      .collection('items')
-      .doc(item.id)
-      .update({
-        calories: firestore.FieldValue.delete(),
-        carbohydrates: firestore.FieldValue.delete(),
-        deleted: true,
-        fat: firestore.FieldValue.delete(),
-        imgUrl: firestore.FieldValue.delete(),
-        lastModified: Date.now(),
-        name: firestore.FieldValue.delete(),
-        protein: firestore.FieldValue.delete(),
-      });
+    // await firestore()
+    //   .collection('users')
+    //   .doc(currentUserId)
+    //   .collection('items')
+    //   .doc(item.id)
+    //   .update({
+    //     calories: firestore.FieldValue.delete(),
+    //     carbohydrates: firestore.FieldValue.delete(),
+    //     deleted: true,
+    //     fat: firestore.FieldValue.delete(),
+    //     imgUrl: firestore.FieldValue.delete(),
+    //     lastModified: Date.now(),
+    //     name: firestore.FieldValue.delete(),
+    //     protein: firestore.FieldValue.delete(),
+    //   });
+    await updateDoc(doc(db, 'users', currentUserId, 'items', item.id), {
+      calories: deleteField(),
+      carbohydrates: deleteField(),
+      deleted: true,
+      fat: deleteField(),
+      imgUrl: deleteField(),
+      lastModified: Date.now(),
+      name: deleteField(),
+      protein: deleteField(),
+    });
   } catch (error: any) {
     console.error('removeItem error: ', error);
     if (error.code != null) throw new CustomError(error.code, error.message);

@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import React, { useContext, useState } from 'react';
 import { Alert, Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
-import exportAdapter from '../adapter/exportAdapter/exportAdapter';
 import HorizontalLine from '../components/HorizontalLine';
 import InputDialog from '../components/InputDialog';
 import SettingsItem from '../components/SettingsItem';
@@ -84,7 +83,8 @@ function SettingsScreen() {
   const exportData = async () => {
     showLoadingPopup(true, 'exportData');
     try {
-      await exportAdapter.exportData();
+      // TODO später einkommentieren
+      // await exportAdapter.exportData();
       showLoadingPopup(false);
     } catch (error: any) {
       console.error(error);
