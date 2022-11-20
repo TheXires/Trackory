@@ -1,9 +1,10 @@
 import NetInfo, { useNetInfo } from '@react-native-community/netinfo';
-import auth from '@react-native-firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
+import { onAuthStateChanged } from 'firebase/auth';
 import React, { useContext, useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import { LoadingContext } from '../contexts/LoadingContext';
+import { auth } from '../firebase/init.firebase';
 import { i18n } from '../i18n/i18n';
 import OfflineScreen from '../screens/OfflineScreen';
 import { MyDarkTheme, MyLightTheme } from '../theme/colors';
@@ -21,7 +22,7 @@ export default function Root() {
   const [offline, setOffline] = useState<boolean>(true);
 
   useEffect(() => {
-    const authListener = auth().onAuthStateChanged((user) => setIsAuthorized(user != null));
+    const authListener = onAuthStateChanged(auth, (user) => setIsAuthorized(user != null));
     return authListener;
   }, []);
 
