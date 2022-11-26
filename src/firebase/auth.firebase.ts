@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateEmail,
-  updatePassword
+  updatePassword,
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { CustomError } from '../types/error';
@@ -161,8 +161,8 @@ export const firebaseRequestPasswordReset = async (email: string) => {
  */
 export const firebaseDeleteAccount = async () => {
   try {
-    // TODO richtig implementieren
-    alert('account deletion is currently not possible');
+    // TODO to be fixed
+    throw new CustomError('functionCurrentlyDisabled');
   } catch (error: any) {
     console.error('firebaseDeleteAccount:', error);
     if (error.code != null) throw new CustomError(error.code, error.message);

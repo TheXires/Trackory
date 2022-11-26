@@ -21,6 +21,7 @@ export default {
   errorTitle: 'Error',
   exportError: 'Unable to export Data.',
   unexpectedError: 'An unexpected error occurred',
+  functionCurrentlyDisabled: 'This function is currently disabled',
 
   // Camera
   camera_unavailable: 'Camera not available',

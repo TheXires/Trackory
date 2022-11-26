@@ -8,7 +8,8 @@ import { auth, db } from './init.firebase';
  */
 export const firebaseUpdateStatistics = async () => {
   try {
-    alert('funktion "firebaseUpdateStatistics" aktuell nicht verfügbar');
+    // TODO to be fixed
+    throw new CustomError('functionCurrentlyDisabled');
   } catch (error: any) {
     console.error('updateStatistics', error);
     if (error.code != null) throw new CustomError(error.code, error.message);
