@@ -7,8 +7,9 @@ import {
   updatePassword,
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+import { httpsCallable } from 'firebase/functions';
 import { CustomError } from '../types/error';
-import { auth, db } from './init.firebase';
+import { auth, db, functions } from './init.firebase';
 
 /**
  * logs the the user in
@@ -161,8 +162,7 @@ export const firebaseRequestPasswordReset = async (email: string) => {
  */
 export const firebaseDeleteAccount = async () => {
   try {
-    // TODO to be fixed
-    throw new CustomError('functionCurrentlyDisabled');
+    await httpsCallable(functions, 'deleteUser')();
   } catch (error: any) {
     console.error('firebaseDeleteAccount:', error);
     if (error.code != null) throw new CustomError(error.code, error.message);

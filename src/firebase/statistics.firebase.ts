@@ -1,15 +1,15 @@
 import { doc, getDoc } from 'firebase/firestore';
+import { httpsCallable } from 'firebase/functions';
 import { CustomError } from '../types/error';
 import { DailyStatistic, WeightHistory } from '../types/statistics';
-import { auth, db } from './init.firebase';
+import { auth, db, functions } from './init.firebase';
 
 /**
  * calling cloudfunction to create and update daily statistics
  */
 export const firebaseUpdateStatistics = async () => {
   try {
-    // TODO to be fixed
-    throw new CustomError('functionCurrentlyDisabled');
+    await httpsCallable(functions, 'createDailyStatistics')();
   } catch (error: any) {
     console.error('updateStatistics', error);
     if (error.code != null) throw new CustomError(error.code, error.message);
