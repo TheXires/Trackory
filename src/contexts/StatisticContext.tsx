@@ -5,7 +5,7 @@ import { DAILY_STATISTICS, WEIGHT_HISTORY } from '../constants';
 import {
   firebaseGetDailyStatistics,
   firebaseGetWeightHistory,
-  firebaseUpdateStatistics,
+  firebaseUpdateStatistics
 } from '../firebase/statistics.firebase';
 import { i18n } from '../i18n/i18n';
 import { StatisticsContextType } from '../types/context';
@@ -56,6 +56,7 @@ export function StatisticProvider(props: any) {
       await firebaseUpdateStatistics();
       await getDailyStatistics();
     } catch (error: any) {
+      setRefreshingDailyStatistics(false);
       console.error(`refreshDailyStatistics ${error}`);
       Alert.alert(
         i18n.t('errorTitle'),

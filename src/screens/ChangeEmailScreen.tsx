@@ -1,4 +1,3 @@
-import auth from '@react-native-firebase/auth';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import React, { useContext, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text } from 'react-native';
@@ -6,6 +5,7 @@ import CustomButton from '../components/CustomButton';
 import CustomTextInput from '../components/CustomTextInput';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { firebaseChangeEmail } from '../firebase/auth.firebase';
+import { auth } from '../firebase/init.firebase';
 import { i18n } from '../i18n/i18n';
 import { LoadingContextType } from '../types/context';
 import { ChangeEmailNavigationProp } from '../types/navigation';
@@ -51,7 +51,7 @@ function ChangeEmailScreen() {
         autoCompleteType="email"
         keyboardType="email-address"
         onChangeText={(text) => setNewEmail(text)}
-        placeholder={auth().currentUser?.email ?? ''}
+        placeholder={auth.currentUser?.email ?? ''}
         title={i18n.t('newEmail')}
         value={newEmail}
       />
