@@ -84,8 +84,6 @@ function SettingsScreen() {
   const exportData = async () => {
     showLoadingPopup(true, 'exportData');
     try {
-      // TODO später einkommentieren
-      // await exportAdapter.exportData();
       await exportUserData();
       showLoadingPopup(false);
     } catch (error: any) {
