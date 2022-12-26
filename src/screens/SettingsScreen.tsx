@@ -13,6 +13,7 @@ import { firebaseDeleteAccount, firebaseSignOut } from '../firebase/auth.firebas
 import { i18n } from '../i18n/i18n';
 import { LoadingContextType, SettingsContextType } from '../types/context';
 import { SettingsNavigationProp } from '../types/navigation';
+import { exportUserData } from '../util/data';
 
 function SettingsScreen() {
   const { colors } = useTheme();
@@ -85,6 +86,7 @@ function SettingsScreen() {
     try {
       // TODO später einkommentieren
       // await exportAdapter.exportData();
+      await exportUserData();
       showLoadingPopup(false);
     } catch (error: any) {
       console.error(error);
