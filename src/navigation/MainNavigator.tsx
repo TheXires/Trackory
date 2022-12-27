@@ -11,6 +11,7 @@ import { SettingsProvider } from '../contexts/SettingsContext';
 import { StatisticProvider } from '../contexts/StatisticContext';
 import { i18n } from '../i18n/i18n';
 import AddItemScreen from '../screens/AddItemScreen';
+import CameraScreen from '../screens/CameraScreen';
 import ChangeEmailScreen from '../screens/ChangeEmailScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import CreateItemScreen from '../screens/CreateItem';
@@ -60,6 +61,11 @@ function RootStackNavigator() {
                     }),
                   title: i18n.t('createItemTitle'),
                 }}
+              />
+              <RootStack.Screen
+                name="Camera"
+                component={CameraScreen}
+                options={{ headerShown: false }}
               />
               <RootStack.Screen
                 name="Settings"
