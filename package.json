@@ -50,7 +50,8 @@
     "react-native-svg": "12.3.0",
     "react-native-web": "^0.18.9",
     "expo-image-picker": "~13.3.1",
-    "expo-camera": "~12.4.0"
+    "expo-camera": "~12.4.0",
+    "expo-image-manipulator": "~10.4.0"
   },
   "private": true,
   "devDependencies": {
