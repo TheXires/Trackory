@@ -17,7 +17,7 @@ import { ItemContextType, LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
 import { Item, UpdateItem, UpdateItemPropertyType } from '../types/item';
 import { EditItemNavigationProp, EditItemRouteProp } from '../types/navigation';
-import { takeImage } from '../util/image';
+import { takeImageOld } from '../util/imageOld';
 import { mergeItems } from '../util/item';
 
 function EditItemScreen() {
@@ -102,7 +102,7 @@ function EditItemScreen() {
         <ChangeImageButton
           imgUri={shownImage ? { uri: shownImage } : placeholderImage}
           onDelete={deleteImage}
-          onPress={async () => change((await takeImage()) ?? '', 'imgUrl')}
+          onPress={async () => change((await takeImageOld()) ?? '', 'imgUrl')}
         />
 
         {/* Name input */}
