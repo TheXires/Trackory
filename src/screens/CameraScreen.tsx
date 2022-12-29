@@ -1,60 +1,89 @@
+import { Feather } from '@expo/vector-icons';
 import { Camera, CameraType } from 'expo-camera';
 import React, { useEffect, useState } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { calculateAspectRatio, getBestAspectRatio, selectImage, takeImage } from '../util/image';
 
 function CameraScreen() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [selectedAspectRatio, setSelectedAspectRatio] = useState<string>('4:3');
-
+  const [mainCamera, setMainCamera] = useState<boolean>(true);
   const [camera, setCamera] = useState<Camera | null>(null);
+  const [cameraAspectRatio, setCameraAspectRatio] = useState<number>(1);
+  const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
-    const setUpCamera = async () => {
-      if (Platform.OS === 'android') {
-        const availableRatios = await camera?.getSupportedRatiosAsync();
-        ['4:3', '1:1', '3:2', '5:3', '16:9'].every((ratio) => {
-          if (availableRatios?.includes(ratio)) {
-            setSelectedAspectRatio(ratio);
-            return false;
-          }
-          return true;
-        });
-      }
-    };
-    setUpCamera();
+    (async () => {
+      if (Platform.OS === 'android') setSelectedAspectRatio(await getBestAspectRatio(camera));
+    })();
   }, []);
 
+  useEffect(() => {
+    setCameraAspectRatio(calculateAspectRatio(selectedAspectRatio));
+  }, [selectedAspectRatio]);
+
   if (!permission) requestPermission();
+  // TODO add error message
   if (!permission?.granted) return <Text>Permission not granted</Text>;
 
-  const calculateAspectRatio = (ratio: string) => {
-    const [width, height] = ratio.split(':').map(Number);
-    return height / width;
-  };
-
-  const takePicture = () => {
-    // TODO to be implemented
-  };
-
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.cameraContainer}>
         <Camera
           ref={(ref) => setCamera(ref)}
-          style={{ aspectRatio: calculateAspectRatio(selectedAspectRatio) }}
-          type={CameraType.back}
+          style={{
+            alignItems: 'center',
+            aspectRatio: cameraAspectRatio,
+            justifyContent: 'center',
+          }}
+          type={mainCamera ? CameraType.back : CameraType.front}
           ratio={selectedAspectRatio}
-        />
+        >
+          <View style={styles.cameraBar} />
+          <View style={styles.cameraCenter} />
+          <View style={styles.cameraBar} />
+        </Camera>
       </View>
-      {/* TODO figure out a good position for the buttons (ios is currently looking weird) */}
       <View style={styles.buttonContainer}>
-        <View>{/* TODO add button to select image from gallery */}</View>
-        <View style={styles.shutterRing}>
-          <TouchableOpacity onPress={takePicture} style={styles.shutter} />
+        <View>
+          <Feather
+            name="image"
+            size={35}
+            color="white"
+            onPress={async () => setImage(await selectImage())}
+          />
         </View>
-        <View>{/* TODO add button to flip camera */}</View>
+        <View style={styles.shutterRing}>
+          <TouchableOpacity
+            onPress={async () => setImage(await takeImage(camera))}
+            style={styles.shutter}
+          />
+        </View>
+        <View>
+          <Feather
+            name="refresh-cw"
+            size={35}
+            color="white"
+            onPress={() => setMainCamera(!mainCamera)}
+          />
+        </View>
       </View>
-    </View>
+      {image && (
+        <Image
+          source={{ uri: image }}
+          resizeMode="contain"
+          style={{ height: 200, left: 0, position: 'absolute', top: 0, width: 200 }}
+        />
+      )}
+    </SafeAreaView>
   );
 }
 
@@ -62,9 +91,21 @@ export default CameraScreen;
 
 const styles = StyleSheet.create({
   buttonContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     marginBottom: 30,
+    marginHorizontal: 50,
+  },
+  cameraBar: {
+    backgroundColor: 'black',
+    flex: 1,
+    opacity: 0.7,
+    width: '100%',
+  },
+  cameraCenter: {
+    aspectRatio: 1,
+    width: '100%',
   },
   cameraContainer: {
     flex: 1,
@@ -79,16 +120,16 @@ const styles = StyleSheet.create({
   shutter: {
     backgroundColor: 'white',
     borderRadius: 50,
-    height: 60,
-    width: 60,
+    height: 55,
+    width: 55,
   },
   shutterRing: {
     alignItems: 'center',
     borderColor: 'white',
     borderRadius: 50,
     borderWidth: 3,
-    height: 78,
+    height: 73,
     justifyContent: 'center',
-    width: 78,
+    width: 73,
   },
 });
