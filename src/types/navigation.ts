@@ -28,7 +28,6 @@ export type RootStackParamList = {
   Main: NavigatorScreenParams<BottomTabParamList>;
   AddItem: { daysInPast: number };
   CreateItem: undefined;
-  Camera: undefined;
   Settings: undefined;
   ItemDetails: { itemId: string };
   EditItem: { itemId: string };
@@ -60,7 +59,6 @@ export type ItemsNavigationProp = CompositeNavigationProp<
 export type MainNavigationProp = StackNavigationProp<RootStackParamList, 'Main'>;
 export type AddItemNavigationProp = StackNavigationProp<RootStackParamList, 'AddItem'>;
 export type CreateItemNavigationProp = StackNavigationProp<RootStackParamList, 'CreateItem'>;
-export type CameraNavigationProp = StackNavigationProp<RootStackParamList, 'Camera'>;
 export type SettingsNavigationProp = StackNavigationProp<RootStackParamList, 'Settings'>;
 export type ItemDetailsNavigationProp = StackNavigationProp<RootStackParamList, 'ItemDetails'>;
 export type EditItemNavigationProp = StackNavigationProp<RootStackParamList, 'EditItem'>;
