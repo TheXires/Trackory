@@ -16,7 +16,7 @@ export const firebaseImageUpload = async (imageUri: string): Promise<string> => 
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
 
     // https://github.com/expo/expo/issues/2402#issuecomment-443726662
-    const blob: Blob = await new Promise((resolve, reject) => {
+    const blob: Blob = await new Promise((resolve) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = () => {
         resolve(xhr.response);
