@@ -17,7 +17,7 @@ import { ItemContextType, LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
 import { NewItem, NewItemPropertyType } from '../types/item';
 import { CreateItemNavigationProp } from '../types/navigation';
-import { takeImage } from '../util/image';
+import { selectImage } from '../util/image';
 import { createNewItem } from '../util/item';
 
 function CreateItemScreen() {
@@ -120,7 +120,7 @@ function CreateItemScreen() {
         <AddImageButton
           imageUri={item.imgUrl}
           onDelete={() => change(undefined, 'imgUrl')}
-          onPress={async () => change(await takeImage(), 'imgUrl')}
+          onPress={async () => change(await selectImage(), 'imgUrl')}
         />
       </View>
     </KeyboardAwareScrollView>

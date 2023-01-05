@@ -1,3 +1,4 @@
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { CustomError } from '../types/error';
 import { auth } from './init.firebase';
 
@@ -13,12 +14,27 @@ export const firebaseImageUpload = async (imageUri: string): Promise<string> => 
   try {
     const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    // TODO muss richtig implementiert werden
-    // const ref = storage().ref(`${currentUserId}/images/${Date.now()}.jpg`);
-    // await ref.putFile(imageUri);
-    // const downloadUrl = await ref.getDownloadURL();
-    // return downloadUrl;
-    return '';
+
+    // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+    const blob: Blob = await new Promise((resolve) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = () => {
+        resolve(xhr.response);
+      };
+      xhr.onerror = (error) => {
+        console.error(error);
+        throw new CustomError('unable-to-upload-image');
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', imageUri, true);
+      xhr.send(null);
+    });
+
+    const fileRef = ref(getStorage(), `${currentUserId}/images/${Date.now()}.jpg`);
+    await uploadBytes(fileRef, blob);
+
+    const downloadUrl = await getDownloadURL(fileRef);
+    return downloadUrl;
   } catch (error: any) {
     console.error(error);
     if (error.code != null) throw new CustomError(error.code, error.message);
