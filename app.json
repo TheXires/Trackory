@@ -37,8 +37,13 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "@react-native-firebase/app",
-      "expo-build-properties"
+      "expo-build-properties",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos"
+        }
+      ]
     ],
     "extra": {
       "eas": {

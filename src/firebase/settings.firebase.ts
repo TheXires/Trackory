@@ -1,7 +1,7 @@
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { CustomError } from '../types/error';
 import { Settings } from '../types/settings';
+import { auth, db } from './init.firebase';
 
 /**
  * get the settings for the current user
@@ -12,11 +12,12 @@ import { Settings } from '../types/settings';
  */
 export const firebaseGetUserSettings = async (): Promise<Settings> => {
   try {
-    const userId = auth().currentUser?.uid;
+    const userId = auth.currentUser?.uid;
     if (!userId) throw new CustomError('auth/no-valid-user');
-    const userDoc = await firestore().collection('users').doc(userId).get();
+    const userDoc = await getDoc(doc(db, 'users', userId));
     const userData = userDoc.data();
-    if (!userData?.settings) throw new CustomError('unable-to-get-settings', 'no data for current user found');
+    if (!userData?.settings)
+      throw new CustomError('unable-to-get-settings', 'no data for current user found');
     return userData.settings;
   } catch (error: any) {
     console.error(error);
@@ -35,9 +36,9 @@ export const firebaseGetUserSettings = async (): Promise<Settings> => {
  */
 export const firebaseUpdateUserSettings = async (settings: Settings): Promise<void> => {
   try {
-    const userId = auth().currentUser?.uid;
+    const userId = auth.currentUser?.uid;
     if (!userId) throw new CustomError('auth/no-valid-user');
-    await firestore().collection('users').doc(userId).update({ settings });
+    await updateDoc(doc(db, 'users', userId), { settings });
   } catch (error: any) {
     console.error(error);
     if (error.code != null) throw new CustomError(error.code, error.message);

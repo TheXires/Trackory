@@ -1,17 +1,17 @@
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import dateFormat from 'dateformat';
+import {
+  addDoc,
+  collection,
+  deleteField,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
 import { DAY_IN_MS } from '../constants';
 import { CustomError } from '../types/error';
 import { ConsumedItem, Consumption, Item } from '../types/item';
-
-/**
- * gets all consumptions of a specific day
- *
- * @param daysInThePast
- * @error auth/no-valid-user
- * @return
- */
+import { auth, db } from './init.firebase';
 
 /**
  * gets all consumptions of a specific day if they are modified after last update
@@ -27,15 +27,15 @@ export const firebaseGetConsumptions = async (
 ): Promise<ConsumedItem[] | undefined> => {
   const date = dateFormat(Date.now() - daysInThePast * DAY_IN_MS, 'yyyy-mm-dd');
   try {
-    const currentUserId = auth().currentUser?.uid;
+    const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    const response = await firestore()
-      .collection('users')
-      .doc(currentUserId)
-      .collection('consumptions')
-      .where('date', '==', date)
-      .where('lastModified', '>=', lastUpdated)
-      .get();
+    const response = await getDocs(
+      query(
+        collection(db, 'users', currentUserId, 'consumptions'),
+        where('date', '==', date),
+        where('lastModified', '>=', lastUpdated),
+      ),
+    );
     if (response.docs.length < 1) return undefined;
     if (response.docs[0].data().deleted) return [];
     return response.docs[0].data().items;
@@ -54,13 +54,9 @@ export const firebaseGetConsumptions = async (
  */
 export const firebaseGetAllConsumptions = async (): Promise<Consumption[]> => {
   try {
-    const currentUserId = auth().currentUser?.uid;
+    const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    const response = await firestore()
-      .collection('users')
-      .doc(currentUserId)
-      .collection('consumptions')
-      .get();
+    const response = await getDocs(collection(db, 'users', currentUserId, 'consumptions'));
     if (response.docs.length < 1 || response.docs[0].data().deleted) return [];
     const result: Consumption[] = [];
     response.docs.forEach((doc) => {
@@ -93,35 +89,28 @@ export const firebaseConsumeItem = async (
 ): Promise<void> => {
   const date = dateFormat(Date.now() - daysInThePast * DAY_IN_MS, 'yyyy-mm-dd');
   try {
-    const currentUserId = auth().currentUser?.uid;
+    const currentUserId = auth.currentUser?.uid;
     if (!currentUserId) throw new CustomError('auth/no-valid-user');
 
-    const res = await firestore()
-      .collection('users')
-      .doc(currentUserId)
-      .collection('consumptions')
-      .where('date', '==', date)
-      .get();
+    const res = await getDocs(
+      query(collection(db, 'users', currentUserId, 'consumptions'), where('date', '==', date)),
+    );
 
     const document = res.docs[0];
     const consumedItems = res.docs[0]?.data().items;
 
     if (!document) {
-      await firestore()
-        .collection('users')
-        .doc(currentUserId)
-        .collection('consumptions')
-        .add({
-          date,
-          deleted: false,
-          items: [{ ...item, quantity: amount }],
-          lastModified: Date.now(),
-        });
+      await addDoc(collection(db, 'users', currentUserId, 'consumptions'), {
+        date,
+        deleted: false,
+        items: [{ ...item, quantity: amount }],
+        lastModified: Date.now(),
+      });
       return;
     }
 
     if (document && document.data().deleted) {
-      await document.ref.update({
+      await updateDoc(document.ref, {
         deleted: false,
         items: [{ ...item, quantity: amount }],
         lastModified: Date.now(),
@@ -136,17 +125,17 @@ export const firebaseConsumeItem = async (
       consumedItems[index].quantity += amount;
       if (consumedItems[index].quantity <= 0) consumedItems.splice(index, 1);
       if (consumedItems.length <= 0) {
-        await document.ref.update({
+        await updateDoc(document.ref, {
           date,
           deleted: true,
-          items: firestore.FieldValue.delete(),
+          items: deleteField(),
           lastModified: Date.now(),
         });
         return;
       }
     }
 
-    await document.ref.update({ items: consumedItems, lastModified: Date.now() });
+    await updateDoc(document.ref, { items: consumedItems, lastModified: Date.now() });
     return;
   } catch (error: any) {
     console.error(`consumeItem error: ${error}`);

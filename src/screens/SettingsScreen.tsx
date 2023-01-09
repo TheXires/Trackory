@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useTheme } from '@react-navigation/native';
 import React, { useContext, useState } from 'react';
 import { Alert, Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
-import exportAdapter from '../adapter/exportAdapter/exportAdapter';
 import HorizontalLine from '../components/HorizontalLine';
 import InputDialog from '../components/InputDialog';
 import SettingsItem from '../components/SettingsItem';
@@ -14,6 +13,7 @@ import { firebaseDeleteAccount, firebaseSignOut } from '../firebase/auth.firebas
 import { i18n } from '../i18n/i18n';
 import { LoadingContextType, SettingsContextType } from '../types/context';
 import { SettingsNavigationProp } from '../types/navigation';
+import { exportUserData } from '../util/data';
 
 function SettingsScreen() {
   const { colors } = useTheme();
@@ -84,7 +84,7 @@ function SettingsScreen() {
   const exportData = async () => {
     showLoadingPopup(true, 'exportData');
     try {
-      await exportAdapter.exportData();
+      await exportUserData();
       showLoadingPopup(false);
     } catch (error: any) {
       console.error(error);

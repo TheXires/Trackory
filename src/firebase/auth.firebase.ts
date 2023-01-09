@@ -1,7 +1,15 @@
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-import functions from '@react-native-firebase/functions';
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
+  updateEmail,
+  updatePassword,
+} from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { httpsCallable } from 'firebase/functions';
 import { CustomError } from '../types/error';
+import { auth, db, functions } from './init.firebase';
 
 /**
  * logs the the user in
@@ -16,7 +24,7 @@ import { CustomError } from '../types/error';
  */
 export const firebaseSignIn = async (email: string, password: string) => {
   try {
-    await auth().signInWithEmailAndPassword(email, password);
+    await signInWithEmailAndPassword(auth, email, password);
   } catch (error: any) {
     console.error(error);
     if (error.code != null) throw new CustomError(error.code, error.message);
@@ -37,11 +45,10 @@ export const firebaseSignIn = async (email: string, password: string) => {
  */
 export const firebaseSignUp = async (email: string, password: string) => {
   try {
-    const response = await auth().createUserWithEmailAndPassword(email, password);
-    await firestore()
-      .collection('users')
-      .doc(response.user.uid)
-      .set({ settings: { calorieTarget: 2000, wight: 0 } });
+    const response = await createUserWithEmailAndPassword(auth, email, password);
+    await setDoc(doc(db, 'users', response.user.uid), {
+      settings: { calorieTarget: 2000, weight: 0 },
+    });
   } catch (error: any) {
     console.error('firebase signUp error: ', error);
     if (error.code != null) throw new CustomError(error.code, error.message);
@@ -57,7 +64,7 @@ export const firebaseSignUp = async (email: string, password: string) => {
  */
 export const firebaseSignOut = async () => {
   try {
-    await auth().signOut();
+    await signOut(auth);
   } catch (error: any) {
     console.error('firebaseSignOut error: ', error);
     if (error.code != null) throw new CustomError(error.code, error.message);
@@ -81,10 +88,15 @@ export const firebaseSignOut = async () => {
  */
 export const firebaseChangeEmail = async (currentPassword: string, newEmail: string) => {
   try {
-    const currentUserEmail = auth().currentUser?.email;
-    if (!currentUserEmail) throw new CustomError('auth/no-valid-user');
-    const currentUser = await auth().signInWithEmailAndPassword(currentUserEmail, currentPassword);
-    await currentUser.user.updateEmail(newEmail);
+    const user = auth.currentUser;
+    if (!user) throw new CustomError('auth/no-valid-user');
+    const currentUserEmail = user.email;
+    const currentUser = await signInWithEmailAndPassword(
+      auth,
+      currentUserEmail ?? '',
+      currentPassword,
+    );
+    await updateEmail(currentUser.user, newEmail);
   } catch (error: any) {
     console.error(error);
     if (error.code != null) throw new CustomError(error.code, error.message);
@@ -108,10 +120,15 @@ export const firebaseChangeEmail = async (currentPassword: string, newEmail: str
  */
 export const firebaseChangePassword = async (currentPassword: string, newPassword: string) => {
   try {
-    const currentUserEmail = auth().currentUser?.email;
-    if (!currentUserEmail) throw new CustomError('auth/no-valid-user');
-    const currentUser = await auth().signInWithEmailAndPassword(currentUserEmail, currentPassword);
-    await currentUser.user.updatePassword(newPassword);
+    const user = auth.currentUser;
+    if (!user) throw new CustomError('auth/no-valid-user');
+    const currentUserEmail = user.email;
+    const currentUser = await signInWithEmailAndPassword(
+      auth,
+      currentUserEmail ?? '',
+      currentPassword,
+    );
+    await updatePassword(currentUser.user, newPassword);
   } catch (error: any) {
     console.error(error);
     if (error.code != null) throw new CustomError(error.code, error.message);
@@ -130,8 +147,7 @@ export const firebaseChangePassword = async (currentPassword: string, newPasswor
  */
 export const firebaseRequestPasswordReset = async (email: string) => {
   try {
-    await auth().sendPasswordResetEmail(email);
-    throw new CustomError('invalid value');
+    await sendPasswordResetEmail(auth, email);
   } catch (error: any) {
     console.error(error);
     if (error.code != null) throw new CustomError(error.code, error.message);
@@ -146,7 +162,7 @@ export const firebaseRequestPasswordReset = async (email: string) => {
  */
 export const firebaseDeleteAccount = async () => {
   try {
-    await functions().httpsCallable('deleteUser')();
+    await httpsCallable(functions, 'deleteUser')();
   } catch (error: any) {
     console.error('firebaseDeleteAccount:', error);
     if (error.code != null) throw new CustomError(error.code, error.message);
