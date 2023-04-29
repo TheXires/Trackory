@@ -31,6 +31,7 @@ function CustomNumberInput({
           onChangeText={(text) => onChangeText(convertTextToInteger(text))}
           placeholder={placeholder}
           placeholderTextColor={colors.border}
+          returnKeyType="done"
           style={{ color: colors.text }}
           value={value?.toString()}
         />

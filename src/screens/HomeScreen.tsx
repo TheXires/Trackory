@@ -1,7 +1,7 @@
 import { useNavigation, useTheme } from '@react-navigation/native';
 import dateformat from 'dateformat';
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import { Button, FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import ConsumedItemListElement from '../components/ConsumedItemListElement';
 import FloatingActionButton from '../components/FloatingActionButton';
 import HomeProgress from '../components/HomeProgress';
@@ -10,6 +10,7 @@ import TopBar from '../components/TopBar';
 import { DAY_IN_MS } from '../constants';
 import { HistoryContext } from '../contexts/HistoryContext';
 import { SettingsContext } from '../contexts/SettingsContext';
+import { doMigration } from '../firebase/migration';
 import { i18n } from '../i18n/i18n';
 import { HistoryContextType } from '../types/context';
 import { ConsumedItem } from '../types/item';
@@ -72,6 +73,7 @@ function HomeScreen() {
           todaysCalories={todaysCalories}
         />
       </TopBar>
+      <Button title="Migration" onPress={doMigration} />
       <FlatList
         data={consumedItems}
         keyExtractor={(item: ConsumedItem) => item.id}

@@ -17,7 +17,7 @@ interface Props {
 
 function CustomTextInput({
   autoCompleteType = undefined,
-  autoCorrect = false,
+  autoCorrect = true,
   hideTitle = false,
   keyboardType = 'default',
   onChangeText,
@@ -39,6 +39,7 @@ function CustomTextInput({
           onChangeText={(text) => onChangeText(text)}
           placeholder={placeholder}
           placeholderTextColor={colors.border}
+          returnKeyType="done"
           secureTextEntry={secureTextEntry}
           style={{ color: colors.text }}
           value={value}
