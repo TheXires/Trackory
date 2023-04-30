@@ -34,6 +34,7 @@ function InnerComponent() {
       items.forEach((item) => {
         const t: any = { ...item, _id: new Realm.BSON.ObjectId() };
         delete t.id;
+        console.log(t);
         realm.create('Item', t);
       });
     });
@@ -56,7 +57,9 @@ function InnerComponent() {
         <FlatList
           data={realmItems}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => <ItemListElement item={item} onPress={() => null} />}
+          renderItem={({ item }) => (
+            <ItemListElement item={item} onPress={() => console.log(item._id)} />
+          )}
           ListFooterComponent={<Spacer height={100} />}
         />
       </View>

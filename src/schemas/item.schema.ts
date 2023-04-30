@@ -8,7 +8,7 @@ export class ItemSchema extends Realm.Object<ItemSchema> {
 
   fat: number = 0;
 
-  id!: Realm.BSON.ObjectId;
+  _id!: Realm.BSON.ObjectId;
 
   imgUrl?: string;
 
@@ -19,7 +19,7 @@ export class ItemSchema extends Realm.Object<ItemSchema> {
   static schema: Realm.ObjectSchema = {
     name: 'Item',
     properties: {
-      _id: { type: 'objectId', mapTo: 'id' },
+      _id: { type: 'objectId' },
       calories: 'double',
       carbohydrates: 'double',
       fat: 'double',
@@ -27,6 +27,6 @@ export class ItemSchema extends Realm.Object<ItemSchema> {
       name: 'string',
       protein: 'double',
     },
-    primaryKey: 'id',
+    primaryKey: '_id',
   };
 }

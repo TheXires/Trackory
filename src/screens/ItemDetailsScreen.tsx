@@ -17,6 +17,9 @@ import { ItemContextType, LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
 import { Item } from '../types/item';
 import { ItemDetailsNavigationProp, ItemDetailsRouteProp } from '../types/navigation';
+import { RealmContext } from '../realm/RealmContext';
+
+const { useQuery, useRealm, useObject } = RealmContext;
 
 function ItemDetailsScreen() {
   const { colors } = useTheme();
@@ -26,14 +29,14 @@ function ItemDetailsScreen() {
   const { items, refreshItems } = useContext<ItemContextType>(ItemContext);
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
-  const [item, setItem] = useState<Item | undefined>(undefined);
+  const item = useObject<Item>('Item', route.params.itemId);
 
   useEffect(() => {
     if (!route.params.itemId) return;
-    setItem(items.find((element: Item) => element.id === route.params.itemId));
     navigation.setOptions({
       headerRight: () =>
         NavigationHeaderButton({
+          // TODO ab hier weiter machen
           onPress: () => navigation.navigate('EditItem', { itemId: route.params.itemId }),
           text: i18n.t('edit'),
         }),

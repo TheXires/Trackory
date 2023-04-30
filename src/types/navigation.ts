@@ -30,8 +30,8 @@ export type RootStackParamList = {
   AddItem: { daysInPast: number };
   CreateItem: undefined;
   Settings: undefined;
-  ItemDetails: { itemId: string };
-  EditItem: { itemId: string };
+  ItemDetails: { itemId: Realm.BSON.ObjectId };
+  EditItem: { itemId: Realm.BSON.ObjectId };
   ChangeEmail: undefined;
   ChangePassword: undefined;
 };

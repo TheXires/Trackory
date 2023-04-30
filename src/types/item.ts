@@ -5,7 +5,7 @@ export interface Item {
   calories: number;
   carbohydrates: number;
   fat: number;
-  id: string;
+  _id: Realm.BSON.ObjectId;
   imgUrl: string | undefined;
   name: string;
   protein: number;
@@ -33,9 +33,9 @@ export type NewItemPropertyType =
   | 'name'
   | 'protein';
 
-  /**
-   * Special form of Item where all values are optional to update an item
-   */
+/**
+ * Special form of Item where all values are optional to update an item
+ */
 export interface UpdateItem {
   calories: number | undefined;
   carbohydrates: number | undefined;
