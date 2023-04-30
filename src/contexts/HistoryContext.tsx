@@ -34,8 +34,10 @@ export function HistoryProvider(props: any) {
   };
 
   const consumeItem = async (daysInPast: number, item: Item | ConsumedItem, quantity: number) => {
+    console.log('called consumeItem with', daysInPast, item, quantity);
     try {
       await firebaseConsumeItem(daysInPast, item, quantity);
+      console.log('called firebaseConsumeItem')
       refreshConsumedItems(daysInPast, true);
     } catch (error: any) {
       console.error(`consumeItem ${error}`);

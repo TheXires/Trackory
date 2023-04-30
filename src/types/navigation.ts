@@ -19,6 +19,7 @@ export type BottomTabParamList = {
   HomeScreen: undefined;
   Statistics: undefined;
   Items: undefined;
+  Realm: undefined;
 };
 
 /**
@@ -39,7 +40,10 @@ export type RootStackParamList = {
 export type LandingPageNavigationProp = StackNavigationProp<AuthStackParamList, 'LandingPage'>;
 export type LoginNavigationProp = StackNavigationProp<AuthStackParamList, 'Login'>;
 export type RegistrationNavigationProp = StackNavigationProp<AuthStackParamList, 'Registration'>;
-export type ForgotPasswordNavigationProp = StackNavigationProp<AuthStackParamList, 'ForgotPassword'>;
+export type ForgotPasswordNavigationProp = StackNavigationProp<
+  AuthStackParamList,
+  'ForgotPassword'
+>;
 
 // BottomTabNavigator
 export type ConsumedNavigationProp = CompositeNavigationProp<
@@ -63,7 +67,10 @@ export type SettingsNavigationProp = StackNavigationProp<RootStackParamList, 'Se
 export type ItemDetailsNavigationProp = StackNavigationProp<RootStackParamList, 'ItemDetails'>;
 export type EditItemNavigationProp = StackNavigationProp<RootStackParamList, 'EditItem'>;
 export type ChangeEmailNavigationProp = StackNavigationProp<RootStackParamList, 'ChangeEmail'>;
-export type ChangePasswordNavigationProp = StackNavigationProp<RootStackParamList, 'ChangePassword'>;
+export type ChangePasswordNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'ChangePassword'
+>;
 
 // routeParams
 export type ItemDetailsRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;
