@@ -8,7 +8,7 @@ export class ItemSchema extends Realm.Object<ItemSchema> {
 
   fat: number = 0;
 
-  id!: string;
+  id!: Realm.BSON.ObjectId;
 
   imgUrl?: string;
 
@@ -19,11 +19,10 @@ export class ItemSchema extends Realm.Object<ItemSchema> {
   static schema: Realm.ObjectSchema = {
     name: 'Item',
     properties: {
+      _id: { type: 'objectId', mapTo: 'id' },
       calories: 'double',
       carbohydrates: 'double',
       fat: 'double',
-      // TODO muss id bestimmter datentyp sein?
-      id: 'string',
       imgUrl: 'string?',
       name: 'string',
       protein: 'double',
@@ -31,17 +30,3 @@ export class ItemSchema extends Realm.Object<ItemSchema> {
     primaryKey: 'id',
   };
 }
-
-export const ItemSchema2 = {
-  name: 'Item',
-  properties: {
-    calories: 'double',
-    carbohydrates: 'double',
-    fat: 'double',
-    id: 'string',
-    imgUrl: { type: 'string', optional: true },
-    name: 'string',
-    protein: 'double',
-  },
-  primaryKey: 'id',
-};

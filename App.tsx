@@ -3,15 +3,23 @@ import 'react-native-get-random-values';
 import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 import * as Localization from 'expo-localization';
 import React from 'react';
+import Realm from 'realm';
 import { registerRootComponent } from 'expo';
 import { StatusBar, useColorScheme } from 'react-native';
 import { LoadingProvider } from './src/contexts/LoadingContext';
 import { i18n } from './src/i18n/i18n';
 import Navigation from './src/navigation';
 import './src/firebase/init.firebase';
+import { RealmContext } from './src/realm/RealmContext';
+import { ItemSchema } from './src/schemas/item.schema';
+import { consumedItemSchema } from './src/schemas/consumedItem.schema';
+import { ConsumptionSchema } from './src/schemas/consumption.schema';
 
 export default function App() {
   const theme = useColorScheme();
+
+  const { RealmProvider } = RealmContext;
+  // Realm.deleteFile({ schema: [ItemSchema, consumedItemSchema, ConsumptionSchema] });
 
   i18n.enableFallback = true;
   i18n.defaultLocale = 'en';
@@ -24,7 +32,9 @@ export default function App() {
     <>
       <StatusBar barStyle={barStyle} backgroundColor={backgroundColor} />
       <LoadingProvider>
-        <Navigation />
+        <RealmProvider>
+          <Navigation />
+        </RealmProvider>
       </LoadingProvider>
     </>
   );

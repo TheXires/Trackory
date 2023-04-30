@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import Realm from 'realm';
+import ItemListElement from '../components/ItemListElement';
+import Spacer from '../components/Spacer';
 import { firebaseGetAllItems } from '../firebase/items.firebase';
 import { Item } from '../types/item';
 import { RealmContext } from './RealmContext';
-import { ItemSchema } from './item';
 
 const { useQuery, useRealm } = RealmContext;
 
@@ -28,9 +30,11 @@ function InnerComponent() {
   };
 
   const writeRealmItems = async () => {
-    items.forEach((item) => {
-      realm.write(() => {
-        realm.create('Item', item);
+    realm.write(() => {
+      items.forEach((item) => {
+        const t: any = { ...item, _id: new Realm.BSON.ObjectId() };
+        delete t.id;
+        realm.create('Item', t);
       });
     });
   };
@@ -48,10 +52,20 @@ function InnerComponent() {
       />
       <Text>Spacer</Text>
       <Button title="Write RealmItems" onPress={writeRealmItems} />
+      <View style={styles.container}>
+        <FlatList
+          data={realmItems}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => <ItemListElement item={item} onPress={() => null} />}
+          ListFooterComponent={<Spacer height={100} />}
+        />
+      </View>
     </View>
   );
 }
 
 export default InnerComponent;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {},
+});
