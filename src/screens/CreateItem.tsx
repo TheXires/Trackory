@@ -8,33 +8,43 @@ import AddImageButton from '../components/AddImageButton';
 import CustomNumberInput from '../components/CustomNumberInput';
 import CustomTextInput from '../components/CustomTextInput';
 import NavigationHeaderButton from '../components/NavigationHeaderButton';
-import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { firebaseAddItem } from '../firebase/items.firebase';
 import { i18n } from '../i18n/i18n';
+import { RealmContext } from '../realm/RealmContext';
 import { permanentColors } from '../theme/colors';
-import { ItemContextType, LoadingContextType } from '../types/context';
+import { LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
-import { NewItem, NewItemPropertyType } from '../types/item';
+import { Item, ItemPropertyType } from '../types/item';
 import { CreateItemNavigationProp } from '../types/navigation';
 import { selectImage } from '../util/image';
-import { createNewItem } from '../util/item';
+
+const { useRealm } = RealmContext;
 
 function CreateItemScreen() {
   const navigation = useNavigation<CreateItemNavigationProp>();
+  const realm = useRealm();
 
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
-  const { refreshItems } = useContext<ItemContextType>(ItemContext);
 
-  const [item, setItem] = useState<NewItem>({} as NewItem);
+  const [item, setItem] = useState<Item>({
+    _id: new Realm.BSON.ObjectId(),
+    calories: 0,
+    carbohydrates: 0,
+    fat: 0,
+    image: undefined,
+    imgUrl: '',
+    name: '',
+    protein: 0,
+  });
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const handleCreation = useCallback(async () => {
     showLoadingPopup(true, i18n.t('create'));
     try {
       if (!item.name || item.name === '') throw new CustomError('create/no-name');
-      await firebaseAddItem(createNewItem(item));
-      await refreshItems();
+      realm.write(() => {
+        realm.create('Item', item);
+      });
       showLoadingPopup(false);
       navigation.goBack();
     } catch (error: any) {
@@ -56,7 +66,7 @@ function CreateItemScreen() {
     });
   }, [handleCreation]);
 
-  const change = (input: string | number | undefined, field: NewItemPropertyType) => {
+  const change = (input: string | number | undefined | ArrayBuffer, field: ItemPropertyType) => {
     setItem(update(item, { [field]: { $set: input } }));
   };
 
@@ -120,7 +130,8 @@ function CreateItemScreen() {
         <AddImageButton
           imageUri={item.imgUrl}
           onDelete={() => change(undefined, 'imgUrl')}
-          onPress={async () => change(await selectImage(), 'imgUrl')}
+          // onPress={async () => change(await selectImage(), 'imgUrl')}
+          onPress={async () => change(await selectImage(), 'image')}
         />
       </View>
     </KeyboardAwareScrollView>

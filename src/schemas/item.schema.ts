@@ -2,13 +2,15 @@
 /* eslint-disable sort-keys */
 
 export class ItemSchema extends Realm.Object<ItemSchema> {
+  _id!: Realm.BSON.ObjectId;
+
   calories!: number;
 
   carbohydrates: number = 0;
 
   fat: number = 0;
 
-  _id!: Realm.BSON.ObjectId;
+  image?: ArrayBuffer;
 
   imgUrl?: string;
 
@@ -23,6 +25,7 @@ export class ItemSchema extends Realm.Object<ItemSchema> {
       calories: 'double',
       carbohydrates: 'double',
       fat: 'double',
+      image: 'data?',
       imgUrl: 'string?',
       name: 'string',
       protein: 'double',

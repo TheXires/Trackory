@@ -4,19 +4,22 @@
 import { ConsumedItem } from '../types/item';
 
 export class ConsumptionSchema extends Realm.Object<ConsumptionSchema> {
-  id!: Realm.BSON.ObjectId;
+  _id!: Realm.BSON.ObjectId;
 
   date!: string;
 
-  items!: ConsumedItem[];
+  items!: Realm.List<ConsumedItem>;
 
   static schema: Realm.ObjectSchema = {
     name: 'Consumption',
     properties: {
-      _id: { type: 'objectId', mapTo: 'id' },
+      _id: 'objectId',
       date: 'string',
-      items: 'ConsumedItem[]',
+      items: {
+        type: 'list',
+        objectType: 'ConsumedItem',
+      },
     },
-    primaryKey: 'id',
+    primaryKey: '_id',
   };
 }

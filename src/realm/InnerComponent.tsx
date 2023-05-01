@@ -13,16 +13,7 @@ function InnerComponent() {
   const realm = useRealm();
 
   const [items, setItems] = useState<Item[]>([]);
-  const realmItems = useQuery<Item>('Item');
-  // const realmItems: Item[] = [];
-
-  useEffect(() => {
-    console.log('items:', items);
-  }, [items]);
-
-  useEffect(() => {
-    console.log('realmItems:', realmItems.sorted('name', true));
-  }, [realmItems]);
+  const realmItems = useQuery<Item>('Item').sorted('name');
 
   const loadItems = async () => {
     const itemUpdates = await firebaseGetAllItems(0);
@@ -58,7 +49,7 @@ function InnerComponent() {
           data={realmItems}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
-            <ItemListElement item={item} onPress={() => console.log(item._id)} />
+            <ItemListElement item={item} onPress={() => console.log(item)} />
           )}
           ListFooterComponent={<Spacer height={100} />}
         />

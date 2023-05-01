@@ -1,4 +1,4 @@
-import { Item, NewItem, UpdateItem } from '../types/item';
+import { Item, UpdateItem } from '../types/item';
 
 /**
  * completes the item with values of the fallbackItem if value is undefined
@@ -9,33 +9,15 @@ import { Item, NewItem, UpdateItem } from '../types/item';
  */
 export const mergeItems = (item: UpdateItem, fallbackItem: Item): Item => {
   const mergedItem: Item = {
+    _id: fallbackItem._id,
     calories: item.calories ?? fallbackItem.calories,
     carbohydrates: item.carbohydrates ?? fallbackItem.carbohydrates,
     fat: item.fat ?? fallbackItem.fat,
-    id: fallbackItem.id,
     imgUrl: item.imgUrl ?? fallbackItem.imgUrl ?? '',
     name: item.name ?? fallbackItem.name,
     protein: item.protein ?? fallbackItem.protein,
   };
   return mergedItem;
-};
-
-/**
- * completes the item with default values to save it to firebase
- *
- * @param item the item possibly not completed for saving to firebase
- * @returns the completed item
- */
-export const createNewItem = (item: NewItem) => {
-  const newItem: NewItem = {
-    calories: item.calories ?? 0,
-    carbohydrates: item.carbohydrates ?? 0,
-    fat: item.fat ?? 0,
-    imgUrl: item.imgUrl ?? undefined,
-    name: item.name,
-    protein: item.protein ?? 0,
-  };
-  return newItem;
 };
 
 /**
@@ -64,7 +46,7 @@ export const mergeItemArrays = (baseItems: Item[], updatedItems: Item[]): Item[]
   const result: Item[] = [...baseItems];
 
   updatedItems.forEach((updatedItem) => {
-    const index = result.findIndex((baseItem) => updatedItem.id === baseItem.id);
+    const index = result.findIndex((baseItem) => updatedItem._id === baseItem._id);
     if (index === -1) {
       result.push(updatedItem);
     } else {

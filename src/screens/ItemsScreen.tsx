@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/core';
-import { useTheme } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -14,7 +13,6 @@ import { ItemsNavigationProp } from '../types/navigation';
 const { useQuery } = RealmContext;
 
 function ItemsScreen() {
-  const { colors } = useTheme();
   const navigation = useNavigation<ItemsNavigationProp>();
 
   const [searchTerm, setSearchTerm] = useState<string>('');
