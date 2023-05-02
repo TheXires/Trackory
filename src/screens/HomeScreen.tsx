@@ -12,8 +12,11 @@ import { HistoryContext } from '../contexts/HistoryContext';
 import { SettingsContext } from '../contexts/SettingsContext';
 import { i18n } from '../i18n/i18n';
 import { HistoryContextType } from '../types/context';
-import { ConsumedItem } from '../types/item';
+import { ConsumedItem, Consumption } from '../types/item';
 import { ConsumedNavigationProp } from '../types/navigation';
+import { RealmContext } from '../realm/RealmContext';
+
+const { useRealm, useQuery } = RealmContext;
 
 function HomeScreen() {
   const { colors } = useTheme();
@@ -26,8 +29,12 @@ function HomeScreen() {
   const [todaysCalories, setTodaysCalories] = useState<number>(0);
   const [daysInPast, setDaysInPast] = useState<number>(0);
 
+  const consumptions = useQuery<Consumption>('Consumption').filtered(
+    `date = "${dateformat(Date.now(), 'yyyy-mm-dd')}"`,
+  )[0];
+
   useEffect(() => {
-    const caloriesSum = consumedItems.reduce((sum, item) => sum + item.calories * item.quantity, 0);
+    const caloriesSum = consumptions.items.reduce((sum, item) => sum + item.calories * item.quantity, 0);
     setTodaysCalories(caloriesSum);
   }, [consumedItems]);
 
@@ -73,8 +80,8 @@ function HomeScreen() {
         />
       </TopBar>
       <FlatList
-        data={consumedItems}
-        keyExtractor={(item: ConsumedItem) => item.id}
+        data={consumptions.items}
+        keyExtractor={(item: ConsumedItem) => item._id.toHexString()}
         renderItem={({ item }) => renderedItem(item)}
         ListHeaderComponent={<Spacer height={15} />}
         ListFooterComponent={<Spacer height={100} />}
