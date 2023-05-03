@@ -58,6 +58,7 @@ export interface ConsumedItem extends Item {
  * Consumption with consumed items and date of consumption
  */
 export interface Consumption {
+  _id: Realm.BSON.ObjectId;
   date: string;
   items: ConsumedItem[];
 }
