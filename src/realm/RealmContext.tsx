@@ -8,5 +8,5 @@ import { ItemSchema } from '../schemas/item.schema';
  */
 export const RealmContext = createRealmContext({
   schema: [ItemSchema, consumedItemSchema, ConsumptionSchema],
-  schemaVersion: 1,
+  schemaVersion: 2,
 });
