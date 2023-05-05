@@ -31,8 +31,7 @@ function HomeScreen() {
   )[0];
 
   useEffect(() => {
-    console.log('consumption:', consumption);
-    if (!consumption) return;
+    if (!consumption) return setTodaysCalories(0);
     const caloriesSum = consumption.items.reduce(
       (sum, item) => sum + item.calories * item.quantity,
       0,

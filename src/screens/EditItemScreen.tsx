@@ -62,7 +62,7 @@ function EditItemScreen() {
 
   useEffect(() => {
     if (!route.params?.itemId) return;
-    const tmpItem = items.find((element: Item) => element.id === route.params.itemId);
+    const tmpItem = items.find((element: Item) => element._id === route.params.itemId);
     setItem(tmpItem);
     setUpdatedItem({
       calories: tmpItem?.calories,

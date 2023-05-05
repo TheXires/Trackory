@@ -37,11 +37,6 @@ function AddItemScreen() {
 
   const onPress = async (item: Item) => {
     showLoadingPopup(true, i18n.t('add'));
-    console.log('consumption:', consumption);
-    if (consumption) {
-      console.log('items');
-      consumption.items.forEach((i) => console.log('i:', i));
-    }
     try {
       if (!consumption) {
         const newConsumption: ConsumedItem = {
@@ -85,8 +80,6 @@ function AddItemScreen() {
           });
         }
       }
-      // console.log('\n\n', consumption.date);
-      consumption.items.forEach((i) => console.log(i.name, i.quantity));
     } catch (error) {
       console.error(error);
     }

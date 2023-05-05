@@ -18,6 +18,7 @@ export class ConsumptionSchema extends Realm.Object<ConsumptionSchema> {
       items: {
         type: 'list',
         objectType: 'ConsumedItem',
+        default: [],
       },
     },
     primaryKey: '_id',

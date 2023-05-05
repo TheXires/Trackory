@@ -130,8 +130,8 @@ function CreateItemScreen() {
         <AddImageButton
           imageUri={item.imgUrl}
           onDelete={() => change(undefined, 'imgUrl')}
-          // onPress={async () => change(await selectImage(), 'imgUrl')}
-          onPress={async () => change(await selectImage(), 'image')}
+          onPress={async () => change(await selectImage(), 'imgUrl')}
+          // onPress={async () => change(await selectImage(), 'image')}
         />
       </View>
     </KeyboardAwareScrollView>

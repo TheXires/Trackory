@@ -33,6 +33,5 @@ export class consumedItemSchema extends Realm.Object<consumedItemSchema> {
       protein: 'double',
       quantity: 'int',
     },
-    primaryKey: '_id',
   };
 }
