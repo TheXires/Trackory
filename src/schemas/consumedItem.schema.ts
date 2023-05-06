@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable sort-keys */
 
-export class consumedItemSchema extends Realm.Object<consumedItemSchema> {
+export class ConsumedItemSchema extends Realm.Object<ConsumedItemSchema> {
   _id!: Realm.BSON.ObjectId;
 
   calories!: number;

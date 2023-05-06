@@ -30,8 +30,6 @@ export default {
   // create Item
   'create/no-name': 'A name is required to create the item',
 
-  // update Item
-
   // Firebase Auth
   loginErrorTitle: 'Login error',
   registrationErrorTitle: 'Registration error',
@@ -44,6 +42,11 @@ export default {
   'auth/user-not-found': 'User does not exist',
   'auth/wrong-password': 'Wrong password',
   'auth/requires-recent-login': 'New login necessary',
+
+  // data export
+  noDataToExport: 'There are no data to export',
+  unableToOpenFile: 'File could not be opened',
+  unableToImportData: 'Data could not be imported',
 
   // #Abbreviations
   calorieAbbreviation: 'cal',
@@ -100,7 +103,9 @@ export default {
   calorieTarget: 'Daily calorie target',
   calorieRequirementCalculator: 'Calorie Requirement Calculator',
   weight: 'Weight',
-  exportData: 'Export Data',
+  dataExport: 'Data export (JSON)',
+  dataImport: 'Data import (JSON)',
+  realmExport: 'Realm export',
   exportedData: 'Exported Data',
   recommendApp: 'Recommend app',
   privacyPolicy: 'Privacy Policy',

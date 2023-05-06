@@ -8,12 +8,12 @@ import {
   getDocs,
   query,
   updateDoc,
-  where
+  where,
 } from 'firebase/firestore';
 import { ITEMS_LAST_UPDATED } from '../constants';
 import { CustomError } from '../types/error';
 import { ItemUpdates } from '../types/firebase';
-import { Item, NewItem } from '../types/item';
+import { Item } from '../types/item';
 import { firebaseImageUpload } from './fileupload.firebase';
 import { auth, db } from './init.firebase';
 
@@ -111,32 +111,6 @@ export const firebaseUpdateItem = async (item: Item): Promise<void> => {
     });
   } catch (error: any) {
     console.error('updateItem error: ', error);
-    if (error.code != null) throw new CustomError(error.code, error.message);
-    throw new CustomError('unable-to-add-item', error);
-  }
-};
-
-/**
- * adds an item to firestore and returns the document id
- *
- * @param newItem item to add to firestore
- * @error auth/no-valid-user
- * @error unable-to-add-item
- * @returns document id on success, otherwise null
- */
-export const firebaseAddItem = async (newItem: NewItem): Promise<void> => {
-  try {
-    const currentUserId = auth.currentUser?.uid;
-    if (!currentUserId) throw new CustomError('auth/no-valid-user');
-    let downloadUrl = '';
-    if (newItem.imgUrl) downloadUrl = await firebaseImageUpload(newItem.imgUrl);
-    await addDoc(collection(db, 'users', currentUserId, 'items'), {
-      ...newItem,
-      imgUrl: downloadUrl,
-      lastModified: Date.now(),
-    });
-  } catch (error: any) {
-    console.error('addNewItem error: ', error);
     if (error.code != null) throw new CustomError(error.code, error.message);
     throw new CustomError('unable-to-add-item', error);
   }

@@ -30,8 +30,6 @@ export default {
   // create Item
   'create/no-name': 'Zum erstellem des Items ist ein Name erforderlich',
 
-  // update Item
-
   // Firebase Auth
   loginErrorTitle: 'Login Fehler',
   registrationErrorTitle: 'Registrierungsfehler',
@@ -49,6 +47,11 @@ export default {
   'auth/missing-ios-bundle-id': 'Es ist ein unerwarteter Fehler aufgetreten',
   'auth/invalid-continue-uri': 'Es ist ein unerwarteter Fehler aufgetreten',
   'auth/unauthorized-continue-uri': 'Es ist ein unerwarteter Fehler aufgetreten',
+
+  // data
+  noDataToExport: 'Es sind keine Daten zum exportieren vorhanden',
+  unableToOpenFile: 'Datei konnte nicht geöffnet werden',
+  unableToImportData: 'Daten konnten nicht importiert werden',
 
   // #Abbreviations
   calorieAbbreviation: 'kcal',
@@ -106,7 +109,9 @@ export default {
   calorieTarget: 'Tägliches Kalorienziel',
   calorieRequirementCalculator: 'Kalorienbedarfsrechner',
   weight: 'Gewicht',
-  exportData: 'Daten exportieren',
+  dataExport: 'Datenexport (JSON)',
+  dataImport: 'Datenimport (JSON)',
+  realmExport: 'Realm-Export',
   exportedData: 'Daten exportiert',
   recommendApp: 'App weiter empfehlen',
   privacyPolicy: 'Datenschutz',

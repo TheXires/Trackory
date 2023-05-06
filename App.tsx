@@ -12,13 +12,13 @@ import Navigation from './src/navigation';
 import './src/firebase/init.firebase';
 import { RealmContext } from './src/realm/RealmContext';
 import { ItemSchema } from './src/schemas/item.schema';
-import { consumedItemSchema } from './src/schemas/consumedItem.schema';
+import { ConsumedItemSchema } from './src/schemas/consumedItem.schema';
 import { ConsumptionSchema } from './src/schemas/consumption.schema';
 
 export default function App() {
   const theme = useColorScheme();
-
   const { RealmProvider } = RealmContext;
+
   // Realm.deleteFile({ schema: [ItemSchema, consumedItemSchema, ConsumptionSchema] });
 
   i18n.enableFallback = true;
