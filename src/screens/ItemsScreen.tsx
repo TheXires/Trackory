@@ -31,7 +31,7 @@ function ItemsScreen() {
           renderItem={({ item }) => (
             <ItemListElement
               item={item}
-              onPress={() => navigation.navigate('ItemDetails', { itemId: item._id })}
+              onPress={() => navigation.navigate('ItemDetails', { itemId: item._id.toHexString() })}
             />
           )}
           ListFooterComponent={<Spacer height={100} />}

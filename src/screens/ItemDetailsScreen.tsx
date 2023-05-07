@@ -19,7 +19,7 @@ import { Item } from '../types/item';
 import { ItemDetailsNavigationProp, ItemDetailsRouteProp } from '../types/navigation';
 import { RealmContext } from '../realm/RealmContext';
 
-const { useQuery, useRealm, useObject } = RealmContext;
+const { useObject } = RealmContext;
 
 function ItemDetailsScreen() {
   const { colors } = useTheme();
@@ -29,7 +29,7 @@ function ItemDetailsScreen() {
   const { items, refreshItems } = useContext<ItemContextType>(ItemContext);
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
-  const item = useObject<Item>('Item', route.params.itemId);
+  const item = useObject<Item>('Item', new Realm.BSON.ObjectId(route.params.itemId));
 
   useEffect(() => {
     if (!route.params.itemId) return;
