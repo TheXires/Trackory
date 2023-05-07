@@ -19,7 +19,7 @@ export default function App() {
   const theme = useColorScheme();
   const { RealmProvider } = RealmContext;
 
-  // Realm.deleteFile({ schema: [ItemSchema, consumedItemSchema, ConsumptionSchema] });
+  // Realm.deleteFile({ schema: [ItemSchema, ConsumedItemSchema, ConsumptionSchema] });
 
   i18n.enableFallback = true;
   i18n.defaultLocale = 'en';

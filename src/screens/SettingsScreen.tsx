@@ -11,9 +11,11 @@ import { SettingsContext } from '../contexts/SettingsContext';
 import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
 import { LoadingContextType, SettingsContextType } from '../types/context';
-import { Consumption, Item } from '../types/item';
+import { CustomError } from '../types/error';
+import { ConsumedItem, Consumption, Item } from '../types/item';
 import { SettingsNavigationProp } from '../types/navigation';
-import { exportData, importData } from '../util/data';
+import { exportData, readAndValidate } from '../util/data';
+import { findDuplicateConsumptions, findDuplicateItems } from '../util/duplications';
 
 const { useRealm, useQuery } = RealmContext;
 
@@ -68,9 +70,64 @@ function SettingsScreen() {
   };
 
   const dataImport = async () => {
-    showLoadingPopup(true, 'exportData');
+    showLoadingPopup(true, 'importData');
     try {
-      await importData();
+      const { consumptions: importedConsumptions, items: importedItems } = await readAndValidate();
+
+      // check for duplicates
+      if (findDuplicateItems(importedItems, items)) {
+        throw new CustomError('duplicateItems');
+      }
+
+      console.log('no duplicate items');
+
+      realm.write(() => {
+        importedItems.forEach((item) => {
+          const newItem: Item = {
+            _id: new Realm.BSON.ObjectId(item._id),
+            calories: item.calories,
+            carbohydrates: item.carbohydrates,
+            fat: item.fat,
+            image: item.image,
+            imgUrl: item.imgUrl,
+            name: item.name,
+            protein: item.protein,
+          };
+          realm.create('Item', newItem);
+        });
+      });
+
+      if (findDuplicateConsumptions(importedConsumptions, consumptions)) {
+        throw new CustomError('duplicateItems');
+      }
+
+      realm.write(() => {
+        importedConsumptions.forEach((consumption) => {
+          const newConsumption: Consumption = {
+            _id: new Realm.BSON.ObjectId(consumption._id),
+            date: consumption.date,
+            items: [],
+          };
+          consumption.items.forEach((item) => {
+            const newItem: ConsumedItem = {
+              _id: new Realm.BSON.ObjectId(item._id),
+              calories: item.calories,
+              carbohydrates: item.carbohydrates,
+              fat: item.fat,
+              image: item.image,
+              imgUrl: item.imgUrl,
+              name: item.name,
+              protein: item.protein,
+              quantity: item.quantity,
+            };
+            newConsumption.items.push(newItem);
+          });
+          realm.create('Consumption', newConsumption);
+        });
+      });
+
+      console.log('no duplicate consumptions');
+
       showLoadingPopup(false);
     } catch (error: any) {
       console.error(error);
@@ -83,7 +140,7 @@ function SettingsScreen() {
   };
 
   const realmExport = async () => {
-    showLoadingPopup(true, 'exportData');
+    showLoadingPopup(true, 'exportRealm');
     try {
       await Sharing.shareAsync(`file://${realm.path}`);
       showLoadingPopup(false);

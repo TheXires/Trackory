@@ -6,6 +6,7 @@ import { firebaseGetAllItems } from '../firebase/items.firebase';
 import { firebaseGetWeightHistory } from '../firebase/statistics.firebase';
 import { CustomError } from '../types/error';
 import { Consumption, Item } from '../types/item';
+import { validateJsonData } from './validation';
 
 /**
  * Exports all data of a user to a file
@@ -57,8 +58,12 @@ export const exportData = async (
 };
 
 // TODO dokumentation hinzufügen
-export const importData = async (): Promise<void> => {
+export const readAndValidate = async (): Promise<{
+  consumptions: Consumption[];
+  items: Item[];
+}> => {
   try {
+    // file selection
     const result = await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: true,
       type: 'application/json',
@@ -68,13 +73,17 @@ export const importData = async (): Promise<void> => {
       throw new CustomError('unableToOpenFile');
     }
 
+    // data import
     const content = await FileSystem.readAsStringAsync(result.uri);
     const jsonData = JSON.parse(content);
 
-    console.log(jsonData);
-    // TODO daten weiterverarbeiten
-    // - Datenvalidierung mit zod (oder realm, falls möglich)
-  } catch (error) {
-    throw new CustomError('unableToImportData');
+    // data validation
+    if (!validateJsonData(jsonData)) {
+      throw new CustomError('invalidData');
+    }
+
+    return { consumptions: jsonData.consumptions, items: jsonData.items };
+  } catch (error: any) {
+    throw new CustomError(error.code);
   }
 };
