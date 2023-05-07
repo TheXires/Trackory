@@ -13,7 +13,6 @@ import { RealmContext } from '../realm/RealmContext';
 import { LoadingContextType, SettingsContextType } from '../types/context';
 import { CustomError } from '../types/error';
 import { ConsumedItem, Consumption, Item } from '../types/item';
-import { SettingsNavigationProp } from '../types/navigation';
 import { exportData, readAndValidate } from '../util/data';
 import { findDuplicateConsumptions, findDuplicateItems } from '../util/duplications';
 
@@ -21,7 +20,6 @@ const { useRealm, useQuery } = RealmContext;
 
 function SettingsScreen() {
   const { colors } = useTheme();
-  const navigation = useNavigation<SettingsNavigationProp>();
   const realm = useRealm();
 
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);

@@ -11,9 +11,9 @@ import { i18n } from './src/i18n/i18n';
 import Navigation from './src/navigation';
 import './src/firebase/init.firebase';
 import { RealmContext } from './src/realm/RealmContext';
-import { ItemSchema } from './src/schemas/item.schema';
-import { ConsumedItemSchema } from './src/schemas/consumedItem.schema';
-import { ConsumptionSchema } from './src/schemas/consumption.schema';
+import { ItemSchema } from './src/realm/schemas/item.schema';
+import { ConsumedItemSchema } from './src/realm/schemas/consumedItem.schema';
+import { ConsumptionSchema } from './src/realm/schemas/consumption.schema';
 
 export default function App() {
   const theme = useColorScheme();

@@ -8,7 +8,6 @@ import HomeScreen from '../screens/HomeScreen';
 import ItemsScreen from '../screens/ItemsScreen';
 import StatisticsScreen from '../screens/StatisticsScreen';
 import { BottomTabParamList } from '../types/navigation';
-import RealmScreen from '../realm/RealmScreen';
 
 interface IconProps {
   icon: 'home' | 'bar-chart-2' | 'coffee';
@@ -61,15 +60,6 @@ function BottomNavigator() {
           tabBarIcon: ({ focused }) =>
             TabBarIcon({ color: focused ? colors.primary : colors.text, icon: 'coffee' }),
           title: i18n.t('itemsTitle'),
-        }}
-      />
-      <MainTab.Screen
-        name="Realm"
-        component={RealmScreen}
-        options={{
-          tabBarIcon: ({ focused }) =>
-            TabBarIcon({ color: focused ? colors.primary : colors.text, icon: 'home' }),
-          title: 'Realm',
         }}
       />
     </MainTab.Navigator>

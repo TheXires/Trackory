@@ -19,7 +19,6 @@ export type BottomTabParamList = {
   HomeScreen: undefined;
   Statistics: undefined;
   Items: undefined;
-  Realm: undefined;
 };
 
 /**
@@ -63,7 +62,6 @@ export type ItemsNavigationProp = CompositeNavigationProp<
 export type MainNavigationProp = StackNavigationProp<RootStackParamList, 'Main'>;
 export type AddItemNavigationProp = StackNavigationProp<RootStackParamList, 'AddItem'>;
 export type CreateItemNavigationProp = StackNavigationProp<RootStackParamList, 'CreateItem'>;
-export type SettingsNavigationProp = StackNavigationProp<RootStackParamList, 'Settings'>;
 export type ItemDetailsNavigationProp = StackNavigationProp<RootStackParamList, 'ItemDetails'>;
 export type EditItemNavigationProp = StackNavigationProp<RootStackParamList, 'EditItem'>;
 export type ChangeEmailNavigationProp = StackNavigationProp<RootStackParamList, 'ChangeEmail'>;
