@@ -79,20 +79,9 @@ function SettingsScreen() {
         throw new CustomError('duplicateItems');
       }
 
-      console.log('no duplicate items');
-
       realm.write(() => {
         importedItems.forEach((item) => {
-          const newItem: Item = {
-            _id: new Realm.BSON.ObjectId(item._id),
-            calories: item.calories,
-            carbohydrates: item.carbohydrates,
-            fat: item.fat,
-            image: item.image,
-            imgUrl: item.imgUrl,
-            name: item.name,
-            protein: item.protein,
-          };
+          const newItem: Item = { ...item, _id: new Realm.BSON.ObjectId() };
           realm.create('Item', newItem);
         });
       });
@@ -109,24 +98,12 @@ function SettingsScreen() {
             items: [],
           };
           consumption.items.forEach((item) => {
-            const newItem: ConsumedItem = {
-              _id: new Realm.BSON.ObjectId(item._id),
-              calories: item.calories,
-              carbohydrates: item.carbohydrates,
-              fat: item.fat,
-              image: item.image,
-              imgUrl: item.imgUrl,
-              name: item.name,
-              protein: item.protein,
-              quantity: item.quantity,
-            };
+            const newItem: ConsumedItem = { ...item, _id: new Realm.BSON.ObjectId() };
             newConsumption.items.push(newItem);
           });
           realm.create('Consumption', newConsumption);
         });
       });
-
-      console.log('no duplicate consumptions');
 
       showLoadingPopup(false);
     } catch (error: any) {
