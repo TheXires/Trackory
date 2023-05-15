@@ -9,44 +9,61 @@ import CustomActivityIndicator from '../components/CustomActivityIndicator';
 import CustomNumberInput from '../components/CustomNumberInput';
 import CustomTextInput from '../components/CustomTextInput';
 import NavigationHeaderButton from '../components/NavigationHeaderButton';
-import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { firebaseUpdateItem } from '../firebase/items.firebase';
 import { i18n } from '../i18n/i18n';
-import { ItemContextType, LoadingContextType } from '../types/context';
+import { RealmContext } from '../realm/RealmContext';
+import { LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
-import { Item, UpdateItem, UpdateItemPropertyType } from '../types/item';
+import { Item, ItemPropertyType } from '../types/item';
 import { EditItemNavigationProp, EditItemRouteProp } from '../types/navigation';
 import { selectImage } from '../util/image';
-import { mergeItems } from '../util/item';
+
+const { useRealm, useObject } = RealmContext;
 
 function EditItemScreen() {
   const navigation = useNavigation<EditItemNavigationProp>();
   const route = useRoute<EditItemRouteProp>();
+  const realm = useRealm();
 
-  const { items, refreshItems } = useContext<ItemContextType>(ItemContext);
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
-  const [updatedItem, setUpdatedItem] = useState<UpdateItem>({} as UpdateItem);
-  const [item, setItem] = useState<Item | undefined>(undefined);
+  const [updatedItem, setUpdatedItem] = useState<Item | undefined>(undefined);
+  const [imageUrl, setImageUrl] = useState<string>('');
   const [shownImage, setShownImage] = useState<string>();
+  const realmItem = useObject<Item>('Item', new Realm.BSON.ObjectId(route.params.itemId));
 
   const handleUpdate = useCallback(async () => {
     showLoadingPopup(true, i18n.t('save'));
     try {
-      if (!item) throw new CustomError('unexpectedError');
-      await firebaseUpdateItem(mergeItems(updatedItem, item));
-      await refreshItems();
+      if (!updatedItem) throw new CustomError('unexpectedError');
+      realm.write(() => {
+        realm.create('Item', updatedItem, Realm.UpdateMode.Modified);
+      });
       showLoadingPopup(false);
       navigation.goBack();
     } catch (error: any) {
+      console.error(error);
       showLoadingPopup(false);
       Alert.alert(
         i18n.t('errorTitle'),
         i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
       );
     }
-  }, [item, updatedItem]);
+  }, [updatedItem]);
+
+  useEffect(() => {
+    if (!realmItem || updatedItem != null) return;
+    setUpdatedItem({
+      _id: realmItem._id,
+      calories: realmItem.calories,
+      carbohydrates: realmItem.carbohydrates,
+      fat: realmItem.fat,
+      image: realmItem.image,
+      imgUrl: realmItem.imgUrl,
+      name: realmItem.name,
+      protein: realmItem.protein,
+    });
+  }, [realmItem]);
 
   useEffect(() => {
     // need to add save button here, because its not possible to add it in navigator
@@ -61,39 +78,25 @@ function EditItemScreen() {
   }, [navigation, handleUpdate]);
 
   useEffect(() => {
-    if (!route.params?.itemId) return;
-    const tmpItem = items.find((element: Item) => element._id === route.params.itemId);
-    setItem(tmpItem);
-    setUpdatedItem({
-      calories: tmpItem?.calories,
-      carbohydrates: tmpItem?.carbohydrates,
-      fat: tmpItem?.fat,
-      imgUrl: undefined,
-      name: tmpItem?.name,
-      protein: tmpItem?.protein,
-    });
-  }, [route]);
-
-  useEffect(() => {
-    if (updatedItem.imgUrl || updatedItem.imgUrl === '') {
+    if (updatedItem && (updatedItem.imgUrl || updatedItem.imgUrl === '')) {
       setShownImage(updatedItem.imgUrl);
-    } else if (item?.imgUrl) {
-      setShownImage(item?.imgUrl);
+    } else if (imageUrl !== '') {
+      setShownImage(imageUrl);
     } else {
       setShownImage(undefined);
     }
-  }, [item, updatedItem]);
+  }, [imageUrl, updatedItem]);
 
-  const change = (input: string | number | undefined, field: UpdateItemPropertyType) => {
+  const change = (input: string | number | undefined, field: ItemPropertyType) => {
     setUpdatedItem(update(updatedItem, { [field]: { $set: input } }));
   };
 
   const deleteImage = () => {
-    setItem(update(item, { imgUrl: { $set: '' } }));
     setUpdatedItem(update(updatedItem, { imgUrl: { $set: '' } }));
+    setImageUrl('');
   };
 
-  if (!item) return <CustomActivityIndicator />;
+  if (!realmItem || !updatedItem) return <CustomActivityIndicator />;
 
   return (
     <KeyboardAwareScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -107,16 +110,16 @@ function EditItemScreen() {
 
         {/* Name input */}
         <CustomTextInput
-          onChangeText={(text) => change(text, 'name')}
-          placeholder={item.name}
+          onChangeText={(input) => change(input, 'name')}
+          placeholder={realmItem.name}
           title={i18n.t('itemName')}
-          value={updatedItem.name ?? ''}
+          value={updatedItem.name}
         />
 
         {/* Calorie input */}
         <CustomNumberInput
           onChangeText={(input) => change(input, 'calories')}
-          placeholder={item.calories.toString()}
+          placeholder={realmItem.calories.toString()}
           title={i18n.t('calories')}
           value={updatedItem.calories}
         />
@@ -124,7 +127,7 @@ function EditItemScreen() {
         {/* Fat input */}
         <CustomNumberInput
           onChangeText={(input) => change(input, 'fat')}
-          placeholder={item.fat.toString()}
+          placeholder={realmItem.fat.toString()}
           title={i18n.t('fat')}
           value={updatedItem.fat}
         />
@@ -132,7 +135,7 @@ function EditItemScreen() {
         {/* Carbohydrates input */}
         <CustomNumberInput
           onChangeText={(input) => change(input, 'carbohydrates')}
-          placeholder={item.carbohydrates.toString()}
+          placeholder={realmItem.carbohydrates.toString()}
           title={i18n.t('carbohydrates')}
           value={updatedItem.carbohydrates}
         />
@@ -140,7 +143,7 @@ function EditItemScreen() {
         {/* Protein input */}
         <CustomNumberInput
           onChangeText={(input) => change(input, 'protein')}
-          placeholder={item.protein.toString()}
+          placeholder={realmItem.protein.toString()}
           title={i18n.t('protein')}
           value={updatedItem.protein}
         />
