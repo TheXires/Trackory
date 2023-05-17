@@ -30,28 +30,9 @@ export default {
   // create Item
   'create/no-name': 'Zum erstellem des Items ist ein Name erforderlich',
 
-  // Firebase Auth
-  loginErrorTitle: 'Login Fehler',
-  registrationErrorTitle: 'Registrierungsfehler',
-  'auth/no-valid-user': 'Bitte versuche dich erneut anzumelden',
-  'auth/email-already-in-use': 'Email wird bereits verwendet',
-  'auth/invalid-email': 'Ungültige Email',
-  'auth/operation-not-allowed': 'Login-Server Fehler',
-  'auth/weak-password': 'Passwort zu unsicher',
-  'auth/user-disabled': 'Nutzerkonto ist gesperrt',
-  'auth/user-not-found': 'Dieser Nutzer existiert nicht',
-  'auth/wrong-password': 'Falsches Passwort',
-  'auth/requires-recent-login': 'Erneuter Login nötig',
-  'auth/missing-android-pkg-name': 'Es ist ein unerwarteter Fehler aufgetreten',
-  'auth/missing-continue-uri': 'Es ist ein unerwarteter Fehler aufgetreten',
-  'auth/missing-ios-bundle-id': 'Es ist ein unerwarteter Fehler aufgetreten',
-  'auth/invalid-continue-uri': 'Es ist ein unerwarteter Fehler aufgetreten',
-  'auth/unauthorized-continue-uri': 'Es ist ein unerwarteter Fehler aufgetreten',
-
   // data
   noDataToExport: 'Es sind keine Daten zum exportieren vorhanden',
   unableToOpenFile: 'Datei konnte nicht geöffnet werden',
-  unableToImportData: 'Daten konnten nicht importiert werden',
 
   // #Abbreviations
   calorieAbbreviation: 'kcal',
@@ -60,42 +41,15 @@ export default {
 
   // #Navigation
   overviewTitle: 'Übersicht',
-  loginTitle: 'Login',
-  registrationTitle: 'Registrierung',
-  forgotPasswordTitle: 'Passwort vergessen',
   createItemTitle: 'Item erstellen',
   addItemTitle: 'Item hinzufügen',
   settingsTitle: 'Einstellungen',
-  cameraTitle: 'Kamera',
   statisticTitle: 'Statistik',
   itemsTitle: 'Items',
   itemDetailsTitle: 'Item',
   EditItemTitle: 'Bearbeiten',
-  changeEmailTitle: 'Email',
-  changePasswordTitle: 'Passwort',
 
   // #Pages
-  // Startpage
-  count: 'Zähle',
-  life: 'Lebe',
-  healthier: 'Gesünder',
-
-  // Auth
-  register: 'Registrieren',
-  login: 'Einloggen',
-  logout: 'Ausloggen',
-  deleteAccount: 'Konto Löschen',
-  email: 'Email',
-  password: ' Passwort',
-  forgotPassword: 'Passwort vergessen',
-  resetPassword: 'Passwort zurücksetzen',
-  resetPasswordInfoText:
-    'Ein Link zum zurücksetzen des Passwortes wird an die eingegebene Email gesendet.',
-  sendingEmail: 'Email wird versendet',
-  emailSentTitle: 'Email versendet',
-  emailSentMessage:
-    'Der Link wurde erfolgreich versendet. Wenn du keine Email erhalten hast, warte noch wenige Minuten und überprüfe deinen Spam-Ordner.',
-
   // Item
   itemName: 'Name',
   calories: 'Kalorien',
@@ -112,39 +66,17 @@ export default {
   dataExport: 'Datenexport (JSON)',
   dataImport: 'Datenimport (JSON)',
   realmExport: 'Realm-Export',
-  exportedData: 'Daten exportiert',
   recommendApp: 'App weiter empfehlen',
   privacyPolicy: 'Datenschutz',
   termsOfService: 'AGB',
   imprint: 'Impressum',
-  changePassword: 'Password ändern',
-  changeEmail: 'Email ändern',
-  deleteUserDialogTitle: 'Konto löschen?',
-  deleteUserDialogMessage:
-    'Möchtest du wirklich deinen Account löschen? Diese Aktion kann nicht rückgängig gemacht werden.',
-  androidDataExportSuccess: 'Daten erfolgreich in den Downloads Ordner exportiert',
-
-  // Change Email
-  newEmail: 'Neue Email',
-
-  // ChangePassword
-  currentPassword: 'Aktuelles Passwort',
-  newPassword: 'Neues Passwort',
-  repeatNewPassword: 'Neues Passwort wiederholen',
 
   // CreateItem
   addPhoto: 'Foto hinzufügen',
-  cameraNotAvailable: 'Kamera nicht verfügbar',
 
   // ItemDetails
   deleteItemDialogTitle: 'Item löschen',
   deleteItemDialogText: 'Möchtest du das Item wirklich löschen?',
-
-  // Offline
-  clientOffline: 'Du bist momentan offline.',
-  reconnectMessage: 'Stelle eine Verbindung zum Internet her und versuche es erneut.',
-  retry: 'Neu laden',
-  reconnect: 'Stelle Verbindung her...',
 
   // #Components
   // CalorieTargetDialog
@@ -157,10 +89,6 @@ export default {
   today: 'Heute',
   caloriesLeft: 'noch %{caloriesLeft} kcal bis zum Ziel',
   negativeCaloriesLeft: '%{caloriesLeft} kcal über Ziel',
-
-  // LoginErrorDialog
-  loginError: 'Fehler beim Login',
-  genericLoginErrorMessage: 'Login fehlgeschlagen, bitte versuche es später erneut.',
 
   // OverviewItem
   caloriesPerItem: 'je %{itemCalories} kcal',

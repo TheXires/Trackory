@@ -1,5 +1,5 @@
 import { Feather } from '@expo/vector-icons';
-import { useNavigation, useTheme } from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 import * as Sharing from 'expo-sharing';
 import React, { useContext, useState } from 'react';
 import { Alert, Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
@@ -7,12 +7,12 @@ import HorizontalLine from '../components/HorizontalLine';
 import InputDialog from '../components/InputDialog';
 import SettingsItem from '../components/SettingsItem';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { SettingsContext } from '../contexts/SettingsContext';
 import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
-import { LoadingContextType, SettingsContextType } from '../types/context';
+import { LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
 import { ConsumedItem, Consumption, Item } from '../types/item';
+import { Settings } from '../types/settings';
 import { exportData, readAndValidate } from '../util/data';
 import { findDuplicateConsumptions, findDuplicateItems } from '../util/duplications';
 
@@ -24,7 +24,11 @@ function SettingsScreen() {
 
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
-  const { settings, updateSettings } = useContext<SettingsContextType>(SettingsContext);
+  // TODO replace with reals settings
+  const [settings, setSettings] = useState<Settings>({
+    calorieTarget: 2000,
+    weight: 84,
+  });
   const [showCalorieTargetDialog, setShowCalorieTargetDialog] = useState<boolean>(false);
   const [showWeightDialog, setShowWeightDialog] = useState<boolean>(false);
 
@@ -32,14 +36,14 @@ function SettingsScreen() {
   const consumptions = useQuery<Consumption>('Consumption');
 
   const saveCalorieTarget = (newCalorieTarget: number | undefined) => {
-    if (!settings || !newCalorieTarget || newCalorieTarget === settings?.calorieTarget) return;
-    updateSettings({ ...settings, calorieTarget: newCalorieTarget });
+    if (!settings || !newCalorieTarget || newCalorieTarget === settings.calorieTarget) return;
+    setSettings({ ...settings, calorieTarget: newCalorieTarget });
     setShowCalorieTargetDialog(false);
   };
 
   const saveWeight = (newWeight: number | undefined) => {
-    if (!settings || !newWeight || newWeight === settings?.weight) return;
-    updateSettings({ ...settings, weight: newWeight });
+    if (!settings || !newWeight || newWeight === settings.weight) return;
+    setSettings({ ...settings, weight: newWeight });
     setShowWeightDialog(false);
   };
 

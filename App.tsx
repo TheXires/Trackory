@@ -1,19 +1,15 @@
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { registerRootComponent } from 'expo';
 import 'expo-dev-client';
-import 'react-native-get-random-values';
-import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 import * as Localization from 'expo-localization';
 import React from 'react';
-import Realm from 'realm';
-import { registerRootComponent } from 'expo';
 import { StatusBar, useColorScheme } from 'react-native';
+import 'react-native-get-random-values';
 import { LoadingProvider } from './src/contexts/LoadingContext';
 import { i18n } from './src/i18n/i18n';
-import Navigation from './src/navigation';
-import './src/firebase/init.firebase';
+import RootStackNavigator from './src/navigation/MainNavigator';
 import { RealmContext } from './src/realm/RealmContext';
-import { ItemSchema } from './src/realm/schemas/item.schema';
-import { ConsumedItemSchema } from './src/realm/schemas/consumedItem.schema';
-import { ConsumptionSchema } from './src/realm/schemas/consumption.schema';
+import { MyDarkTheme, MyLightTheme } from './src/theme/colors';
 
 export default function App() {
   const theme = useColorScheme();
@@ -33,7 +29,9 @@ export default function App() {
       <StatusBar barStyle={barStyle} backgroundColor={backgroundColor} />
       <LoadingProvider>
         <RealmProvider>
-          <Navigation />
+          <NavigationContainer theme={theme === 'dark' ? MyDarkTheme : MyLightTheme}>
+            <RootStackNavigator />
+          </NavigationContainer>
         </RealmProvider>
       </LoadingProvider>
     </>

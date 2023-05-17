@@ -1,6 +1,6 @@
 import { useNavigation, useTheme } from '@react-navigation/native';
 import dateFormat from 'dateformat';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import ConsumedItemListElement from '../components/ConsumedItemListElement';
 import FloatingActionButton from '../components/FloatingActionButton';
@@ -8,11 +8,11 @@ import HomeProgress from '../components/HomeProgress';
 import Spacer from '../components/Spacer';
 import TopBar from '../components/TopBar';
 import { DAY_IN_MS } from '../constants';
-import { SettingsContext } from '../contexts/SettingsContext';
 import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
 import { ConsumedItem, Consumption } from '../types/item';
 import { ConsumedNavigationProp } from '../types/navigation';
+import { Settings } from '../types/settings';
 
 const { useRealm, useQuery } = RealmContext;
 
@@ -21,8 +21,11 @@ function HomeScreen() {
   const navigation = useNavigation<ConsumedNavigationProp>();
   const realm = useRealm();
 
-  const { settings } = useContext(SettingsContext);
-
+  // TODO add real settings
+  const [settings, setSettings] = useState<Settings>({
+    calorieTarget: 2000,
+    weight: 84,
+  });
   const [todaysCalories, setTodaysCalories] = useState<number>(0);
   const [daysInPast, setDaysInPast] = useState<number>(0);
 

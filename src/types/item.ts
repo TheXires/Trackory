@@ -26,28 +26,6 @@ export type ItemPropertyType =
   | 'protein';
 
 /**
- * Special form of Item where all values are optional to update an item
- */
-export interface UpdateItem {
-  calories?: number;
-  carbohydrates?: number;
-  fat?: number;
-  imgUrl?: string;
-  name?: string;
-  protein?: number;
-}
-/**
- * All properties of UpdateItem as Type
- */
-export type UpdateItemPropertyType =
-  | 'calories'
-  | 'carbohydrates'
-  | 'fat'
-  | 'imgUrl'
-  | 'name'
-  | 'protein';
-
-/**
  * Special form of Item with quantity as number of consumptions
  */
 export interface ConsumedItem extends Item {

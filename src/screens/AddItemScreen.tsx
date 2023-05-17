@@ -1,17 +1,16 @@
 import { useNavigation, useRoute, useTheme } from '@react-navigation/native';
 import dateFormat from 'dateformat';
 import React, { useContext, useState } from 'react';
-import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import CreateNewItemButton from '../components/CreateNewItemButton';
 import ItemCard from '../components/ItemCard';
 import Searchbar from '../components/Searchbar';
 import Spacer from '../components/Spacer';
 import { DAY_IN_MS } from '../constants';
-import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
-import { ItemContextType, LoadingContextType } from '../types/context';
+import { LoadingContextType } from '../types/context';
 import { ConsumedItem, Consumption, Item } from '../types/item';
 import { AddItemNavigationProp, AddItemRouteProp } from '../types/navigation';
 
@@ -24,9 +23,6 @@ function AddItemScreen() {
 
   const { daysInPast } = useRoute<AddItemRouteProp>().params;
 
-  // const { items, refreshItems, refreshingItems } = useContext<ItemContextType>(ItemContext);
-  const { refreshItems, refreshingItems } = useContext<ItemContextType>(ItemContext);
-  // const { consumeItem } = useContext<HistoryContextType>(HistoryContext);
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -101,13 +97,6 @@ function AddItemScreen() {
         ListFooterComponent={<Spacer height={50} />}
         ItemSeparatorComponent={() => Spacer({ height: 20 })}
         showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshingItems}
-            onRefresh={refreshItems}
-            tintColor={colors.primary}
-          />
-        }
       />
     </View>
   );

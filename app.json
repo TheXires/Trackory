@@ -19,7 +19,6 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.xires.eascaloriecounter",
-      "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "NSCameraUsageDescription": "Grant access to camera to take pictures of your Food",
         "NSPhotoLibraryUsageDescription": "Grant access to gallery to select pictures of your Food"
@@ -31,7 +30,6 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.xires.eascaloriecounter",
-      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -3,16 +3,6 @@ import { CompositeNavigationProp, NavigatorScreenParams, RouteProp } from '@reac
 import { StackNavigationProp } from '@react-navigation/stack';
 
 /**
- * Type containing all screens for authStack
- */
-export type AuthStackParamList = {
-  LandingPage: undefined;
-  Login: undefined;
-  Registration: undefined;
-  ForgotPassword: undefined;
-};
-
-/**
  * Type containing all screens for bottomTab
  */
 export type BottomTabParamList = {
@@ -31,18 +21,7 @@ export type RootStackParamList = {
   Settings: undefined;
   ItemDetails: { itemId: string };
   EditItem: { itemId: string };
-  ChangeEmail: undefined;
-  ChangePassword: undefined;
 };
-
-// AuthStackNavigator
-export type LandingPageNavigationProp = StackNavigationProp<AuthStackParamList, 'LandingPage'>;
-export type LoginNavigationProp = StackNavigationProp<AuthStackParamList, 'Login'>;
-export type RegistrationNavigationProp = StackNavigationProp<AuthStackParamList, 'Registration'>;
-export type ForgotPasswordNavigationProp = StackNavigationProp<
-  AuthStackParamList,
-  'ForgotPassword'
->;
 
 // BottomTabNavigator
 export type ConsumedNavigationProp = CompositeNavigationProp<
@@ -64,11 +43,6 @@ export type AddItemNavigationProp = StackNavigationProp<RootStackParamList, 'Add
 export type CreateItemNavigationProp = StackNavigationProp<RootStackParamList, 'CreateItem'>;
 export type ItemDetailsNavigationProp = StackNavigationProp<RootStackParamList, 'ItemDetails'>;
 export type EditItemNavigationProp = StackNavigationProp<RootStackParamList, 'EditItem'>;
-export type ChangeEmailNavigationProp = StackNavigationProp<RootStackParamList, 'ChangeEmail'>;
-export type ChangePasswordNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'ChangePassword'
->;
 
 // routeParams
 export type ItemDetailsRouteProp = RouteProp<RootStackParamList, 'ItemDetails'>;
