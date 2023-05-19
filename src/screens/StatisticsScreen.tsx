@@ -10,7 +10,8 @@ import TopBar from '../components/TopBar';
 import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
 import { Consumption } from '../types/item';
-import { getFirstDateOfWeek, getLastDateOfWeek } from '../util/time';
+import { separateDailyStatisticData } from '../util/statistics';
+import { getFirstDateOfWeek, getLastDateOfWeek, getWeeklyLabels } from '../util/time';
 
 const { useQuery } = RealmContext;
 
@@ -18,9 +19,7 @@ function StatisticsScreen() {
   const { colors } = useTheme();
   const bottomTabBarHeight = useBottomTabBarHeight();
 
-  const consumptionHistory = useQuery<Consumption[]>('Consumption');
-
-  const [weeklyLabels, setWeeklyLabels] = useState<string[]>([]);
+  const [weeklyLabels, setWeeklyLabels] = useState<string[]>(getWeeklyLabels(0, 'yyyy-mm-dd'));
   const [yearlyLabels, setYearlyLabels] = useState<string[]>([]);
   const [weightYearData, setWeightYearData] = useState<number[]>([]);
   const [weeksInPast, setWeeksInPast] = useState<number>(0);
@@ -29,15 +28,22 @@ function StatisticsScreen() {
   const [fatWeekData, setFatWeekData] = useState<number[]>([]);
   const [proteinWeekData, setProteinWeekData] = useState<number[]>([]);
 
+  const consumptionHistory = useQuery<Consumption>('Consumption').filtered(
+    `date >= "${dateFormat(
+      getFirstDateOfWeek(weeksInPast),
+      'yyyy-mm-dd',
+    )}" && date <= "${dateFormat(getLastDateOfWeek(weeksInPast), 'yyyy-mm-dd')}"`,
+  );
+
   useEffect(() => {
-    // const res = separateDailyStatisticData(dailyStatistics, weeksInPast);
-    // setCalorieWeekData(res.calories);
-    // setCarbohydratesWeekData(res.carbohydrates);
-    // setFatWeekData(res.fat);
-    // setProteinWeekData(res.protein);
-    // setWeeklyLabels(getWeeklyLabels(weeksInPast));
-    // console.log(consumptionHistory);
-  }, [consumptionHistory]);
+    if (!consumptionHistory) return;
+    const res = separateDailyStatisticData(consumptionHistory, weeksInPast);
+    setCalorieWeekData(res.calories);
+    setCarbohydratesWeekData(res.carbohydrates);
+    setFatWeekData(res.fat);
+    setProteinWeekData(res.protein);
+    setWeeklyLabels(getWeeklyLabels(weeksInPast, 'dd.mm.'));
+  }, [weeksInPast]);
 
   const changeWeek = (direction: number) => {
     const newWeeksInPast = weeksInPast + direction;

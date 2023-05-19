@@ -1,6 +1,8 @@
 import dateFormat from 'dateformat';
 import { DAY_IN_MS } from '../constants';
-import { DailyStatistic, WeightHistory } from '../types/statistics';
+import { ConsumedItem, Consumption } from '../types/item';
+import { WeightHistory } from '../types/statistics';
+import { getWeeklyLabels } from './time';
 
 /**
  * separates the dailyStatistic data into single nutrition, with 0 as default if no other values
@@ -9,24 +11,34 @@ import { DailyStatistic, WeightHistory } from '../types/statistics';
  * @param weeksInPast
  * @returns one array for each nutrition with values for each day
  */
-export const separateDailyStatisticData = (data: DailyStatistic[], weeksInPast: number) => {
-  const daysInPast = weeksInPast >= 0 ? 7 * weeksInPast : 0;
-  const startTime = Date.now() - daysInPast * DAY_IN_MS;
-
+export const separateDailyStatisticData = (
+  consumptionHistory: Realm.Results<Consumption & Realm.Object<unknown, never>>,
+  weeksInPast: number,
+) => {
   const calories: number[] = [];
   const carbohydrates: number[] = [];
   const fat: number[] = [];
   const protein: number[] = [];
 
-  for (let i = 6; i >= 0; i -= 1) {
-    const res = data.find(
-      (element) => element.date === dateFormat(startTime - i * DAY_IN_MS, 'yyyy-mm-dd'),
+  getWeeklyLabels(weeksInPast, 'yyyy-mm-dd').forEach((label) => {
+    let sumCalories = 0;
+    let sumCarbohydrates = 0;
+    let sumFat = 0;
+    let sumProtein = 0;
+    const consumptionsOfSelectedDay = consumptionHistory.find(
+      (consumption) => consumption?.date === label,
     );
-    calories.push(res?.calories ? res.calories : 0);
-    carbohydrates.push(res?.carbohydrates ? res.carbohydrates : 0);
-    fat.push(res?.fat ? res.fat : 0);
-    protein.push(res?.protein ? res.protein : 0);
-  }
+    consumptionsOfSelectedDay?.items.forEach((item: ConsumedItem) => {
+      sumCalories += item.calories * item.quantity;
+      sumCarbohydrates += item.carbohydrates * item.quantity;
+      sumFat += item.fat * item.quantity;
+      sumProtein += item.protein * item.quantity;
+    });
+    calories.push(sumCalories);
+    carbohydrates.push(sumCarbohydrates);
+    fat.push(sumFat);
+    protein.push(sumProtein);
+  });
 
   return { calories, carbohydrates, fat, protein };
 };
