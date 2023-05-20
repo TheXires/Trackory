@@ -21,6 +21,8 @@ function HomeScreen() {
   const navigation = useNavigation<ConsumedNavigationProp>();
   const realm = useRealm();
 
+  const calorieTarget = useQuery<string>('Setting').filtered("key == 'calorieTarget'")[0];
+
   // TODO add real settings
   const [settings, setSettings] = useState<Settings>({
     calorieTarget: 2000,
@@ -70,7 +72,7 @@ function HomeScreen() {
         rightButtonDisabled={daysInPast === 0}
       >
         <HomeProgress
-          calorieTarget={settings?.calorieTarget ?? 0}
+          calorieTarget={calorieTarget.value ?? 0}
           title={
             daysInPast === 0
               ? i18n.t('today')

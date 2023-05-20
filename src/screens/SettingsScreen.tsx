@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from '@react-navigation/native';
+import { Realm } from '@realm/react';
 import * as Sharing from 'expo-sharing';
 import React, { useContext, useState } from 'react';
 import { Alert, Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
@@ -24,6 +25,8 @@ function SettingsScreen() {
 
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
+  const calorieTarget = useQuery<string>('Setting').filtered("key == 'calorieTarget'")[0];
+
   // TODO replace with reals settings
   const [settings, setSettings] = useState<Settings>({
     calorieTarget: 2000,
@@ -36,8 +39,14 @@ function SettingsScreen() {
   const consumptions = useQuery<Consumption>('Consumption');
 
   const saveCalorieTarget = (newCalorieTarget: number | undefined) => {
-    if (!settings || !newCalorieTarget || newCalorieTarget === settings.calorieTarget) return;
-    setSettings({ ...settings, calorieTarget: newCalorieTarget });
+    if (!newCalorieTarget || newCalorieTarget === calorieTarget) return;
+    try {
+      realm.write(() => {
+        calorieTarget.value = newCalorieTarget.toString();
+      });
+    } catch (error) {
+      console.error(error);
+    }
     setShowCalorieTargetDialog(false);
   };
 
@@ -140,7 +149,7 @@ function SettingsScreen() {
           {/* calorieTarget */}
           <SettingsItem
             left={i18n.t('calorieTarget')}
-            right={settings?.calorieTarget ?? '2100'}
+            right={calorieTarget.value}
             onPress={() => {
               setShowCalorieTargetDialog(true);
             }}
@@ -219,7 +228,7 @@ function SettingsScreen() {
         placeholder="2100"
         show={showCalorieTargetDialog}
         text={i18n.t('dailyCalorieTargetQuestion')}
-        value={settings?.calorieTarget}
+        value={calorieTarget.value}
       />
       {/* weight dialog */}
       <InputDialog
