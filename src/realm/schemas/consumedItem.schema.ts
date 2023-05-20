@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable sort-keys */
 
+import { Realm } from "@realm/react";
+
 export class ConsumedItemSchema extends Realm.Object<ConsumedItemSchema> {
   _id!: Realm.BSON.ObjectId;
 

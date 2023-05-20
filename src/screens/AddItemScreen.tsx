@@ -1,4 +1,5 @@
 import { useNavigation, useRoute, useTheme } from '@react-navigation/native';
+import { Realm } from '@realm/react';
 import dateFormat from 'dateformat';
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
@@ -27,7 +28,7 @@ function AddItemScreen() {
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const items = useQuery<Item>('Item').filtered(`name CONTAINS[c] "${searchTerm}"`).sorted('name');
-  const consumption = useQuery<Consumption>('Consumption').filtered(
+  const consumption: Consumption = useQuery<Consumption>('Consumption').filtered(
     `date = "${dateFormat(Date.now() - daysInPast * DAY_IN_MS, 'yyyy-mm-dd')}"`,
   )[0];
 

@@ -29,7 +29,7 @@ function HomeScreen() {
   const [todaysCalories, setTodaysCalories] = useState<number>(0);
   const [daysInPast, setDaysInPast] = useState<number>(0);
 
-  const consumption = useQuery<Consumption>('Consumption').filtered(
+  const consumption: Consumption = useQuery<Consumption>('Consumption').filtered(
     `date = "${dateFormat(Date.now() - daysInPast * DAY_IN_MS, 'yyyy-mm-dd')}"`,
   )[0];
 

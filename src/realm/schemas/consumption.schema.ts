@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable sort-keys */
 
+import { Realm } from '@realm/react';
 import { ConsumedItem } from '../../types/item';
 
 export class ConsumptionSchema extends Realm.Object<ConsumptionSchema> {

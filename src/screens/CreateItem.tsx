@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { Realm } from '@realm/react';
 import update from 'immutability-helper';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';

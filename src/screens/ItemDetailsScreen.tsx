@@ -1,5 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/core';
 import { useTheme } from '@react-navigation/native';
+import { Realm } from '@realm/react';
 import React, { useContext, useEffect } from 'react';
 import { Alert, Image, Platform, StyleSheet, Text, View } from 'react-native';
 import placeholderImage from '../../assets/itemPlaceholderImage.png';
