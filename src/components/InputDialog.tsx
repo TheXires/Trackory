@@ -10,17 +10,17 @@ import Dialog from './Dialog';
 interface Props {
   headerText: string;
   onClose: () => void;
-  onSave: (newValue: number | undefined) => void;
+  onSave: (newValue: string | undefined) => void;
   placeholder: string;
   show: boolean;
   text: string;
-  value: number | undefined;
+  value: string | undefined;
 }
 
 function InputDialog({ headerText, onClose, onSave, placeholder, show, text, value }: Props) {
   const { colors } = useTheme();
 
-  const [localValue, setLocalValue] = useState<number | undefined>(value);
+  const [localValue, setLocalValue] = useState<string | undefined>(value);
   const [canSave, setCanSave] = useState<boolean>(false);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ function InputDialog({ headerText, onClose, onSave, placeholder, show, text, val
             placeholderTextColor={colors.border}
             keyboardType="numeric"
             value={localValue?.toString()}
-            onChangeText={(input) => setLocalValue(convertTextToInteger(input))}
+            onChangeText={(input) => setLocalValue(convertTextToInteger(input)?.toString())}
           />
         </View>
         <View style={styles.buttonContainer}>

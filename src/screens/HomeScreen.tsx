@@ -12,7 +12,8 @@ import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
 import { ConsumedItem, Consumption } from '../types/item';
 import { ConsumedNavigationProp } from '../types/navigation';
-import { Settings } from '../types/settings';
+import { Setting } from '../types/settings';
+import { convertTextToInteger } from '../util/numberconverter';
 
 const { useRealm, useQuery } = RealmContext;
 
@@ -21,13 +22,8 @@ function HomeScreen() {
   const navigation = useNavigation<ConsumedNavigationProp>();
   const realm = useRealm();
 
-  const calorieTarget = useQuery<string>('Setting').filtered("key == 'calorieTarget'")[0];
+  const calorieTarget = useQuery<Setting>('Setting').filtered("key == 'calorieTarget'")[0];
 
-  // TODO add real settings
-  const [settings, setSettings] = useState<Settings>({
-    calorieTarget: 2000,
-    weight: 84,
-  });
   const [todaysCalories, setTodaysCalories] = useState<number>(0);
   const [daysInPast, setDaysInPast] = useState<number>(0);
 
@@ -72,7 +68,7 @@ function HomeScreen() {
         rightButtonDisabled={daysInPast === 0}
       >
         <HomeProgress
-          calorieTarget={calorieTarget.value ?? 0}
+          calorieTarget={convertTextToInteger(calorieTarget.value) ?? 0}
           title={
             daysInPast === 0
               ? i18n.t('today')

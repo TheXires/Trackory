@@ -67,8 +67,6 @@ export default {
   dataImport: 'Datenimport (JSON)',
   realmExport: 'Realm-Export',
   recommendApp: 'App weiter empfehlen',
-  privacyPolicy: 'Datenschutz',
-  termsOfService: 'AGB',
   imprint: 'Impressum',
 
   // CreateItem

@@ -3,7 +3,7 @@ import { useTheme } from '@react-navigation/native';
 import { Realm } from '@realm/react';
 import * as Sharing from 'expo-sharing';
 import React, { useContext, useState } from 'react';
-import { Alert, Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
+import { Alert, Linking, ScrollView, StyleSheet, View } from 'react-native';
 import HorizontalLine from '../components/HorizontalLine';
 import InputDialog from '../components/InputDialog';
 import SettingsItem from '../components/SettingsItem';
@@ -13,7 +13,7 @@ import { RealmContext } from '../realm/RealmContext';
 import { LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
 import { ConsumedItem, Consumption, Item } from '../types/item';
-import { Settings } from '../types/settings';
+import { Setting } from '../types/settings';
 import { exportData, readAndValidate } from '../util/data';
 import { findDuplicateConsumptions, findDuplicateItems } from '../util/duplications';
 
@@ -25,21 +25,16 @@ function SettingsScreen() {
 
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
-  const calorieTarget = useQuery<string>('Setting').filtered("key == 'calorieTarget'")[0];
+  const calorieTarget = useQuery<Setting>('Setting').filtered("key == 'calorieTarget'")[0];
 
-  // TODO replace with reals settings
-  const [settings, setSettings] = useState<Settings>({
-    calorieTarget: 2000,
-    weight: 84,
-  });
   const [showCalorieTargetDialog, setShowCalorieTargetDialog] = useState<boolean>(false);
   const [showWeightDialog, setShowWeightDialog] = useState<boolean>(false);
 
   const items = useQuery<Item>('Item').sorted('name');
   const consumptions = useQuery<Consumption>('Consumption');
 
-  const saveCalorieTarget = (newCalorieTarget: number | undefined) => {
-    if (!newCalorieTarget || newCalorieTarget === calorieTarget) return;
+  const saveCalorieTarget = (newCalorieTarget: string | undefined) => {
+    if (!newCalorieTarget || newCalorieTarget === calorieTarget.value) return;
     try {
       realm.write(() => {
         calorieTarget.value = newCalorieTarget.toString();
@@ -50,10 +45,10 @@ function SettingsScreen() {
     setShowCalorieTargetDialog(false);
   };
 
-  const saveWeight = (newWeight: number | undefined) => {
-    if (!settings || !newWeight || newWeight === settings.weight) return;
-    setSettings({ ...settings, weight: newWeight });
-    setShowWeightDialog(false);
+  const saveWeight = (newWeight: string | undefined) => {
+    // if (!settings || !newWeight || newWeight === settings.weight) return;
+    // setSettings({ ...settings, weight: newWeight });
+    // setShowWeightDialog(false);
   };
 
   const openLink = (link: string) => {
@@ -163,11 +158,12 @@ function SettingsScreen() {
           />
 
           {/* wight input */}
-          <SettingsItem
+          {/* <SettingsItem
             left={`${i18n.t('weight')} (${i18n.t('kilogramAbbreviation')})`}
             right={settings?.weight ?? '0'}
             onPress={() => setShowWeightDialog(true)}
-          />
+          /> */}
+
           <HorizontalLine />
 
           {/* data export */}
@@ -190,33 +186,20 @@ function SettingsScreen() {
           />
 
           {/* share */}
-          <SettingsItem
+          {/* <SettingsItem
             left={i18n.t('recommendApp')}
             right={<Feather name="share-2" size={24} />}
             onPress={() => Share.share({ message: 'https://xires.de' })}
           />
-          <HorizontalLine />
-
-          {/* privacy policy */}
-          <SettingsItem
-            left={i18n.t('privacyPolicy')}
-            right={<Feather name="chevron-right" size={24} />}
-            onPress={() => openLink('https://xires.de')}
-          />
-
-          {/* terms of use */}
-          <SettingsItem
-            left={i18n.t('termsOfService')}
-            right={<Feather name="chevron-right" size={24} />}
-            onPress={() => openLink('https://xires.de')}
-          />
+          
+          <HorizontalLine /> */}
 
           {/* imprint */}
-          <SettingsItem
+          {/* <SettingsItem
             left={i18n.t('imprint')}
             right={<Feather name="chevron-right" size={24} />}
             onPress={() => openLink('https://xires.de')}
-          />
+          /> */}
         </View>
       </ScrollView>
 
@@ -231,7 +214,7 @@ function SettingsScreen() {
         value={calorieTarget.value}
       />
       {/* weight dialog */}
-      <InputDialog
+      {/* <InputDialog
         headerText={i18n.t('currentWeightTitle')}
         onClose={() => setShowWeightDialog(false)}
         onSave={(newValue) => saveWeight(newValue)}
@@ -239,7 +222,7 @@ function SettingsScreen() {
         show={showWeightDialog}
         text={`${i18n.t('currentWeightTitleQuestion')} (in ${i18n.t('kilogramAbbreviation')})`}
         value={settings?.weight}
-      />
+      /> */}
     </>
   );
 }

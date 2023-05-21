@@ -63,8 +63,6 @@ export default {
   dataImport: 'Data import (JSON)',
   realmExport: 'Realm export',
   recommendApp: 'Recommend app',
-  privacyPolicy: 'Privacy Policy',
-  termsOfService: 'Terms of Service',
   imprint: 'Imprint',
   changePassword: 'Change Password',
 
