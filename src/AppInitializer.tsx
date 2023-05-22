@@ -31,25 +31,25 @@ export default function AppInitializer() {
       realm.write(() => {
         if (!initialStart)
           realm.create('Setting', {
-            _id: Realm.BSON.ObjectId(),
+            _id: new Realm.BSON.ObjectId(),
             key: 'initialStart',
             value: 'false',
           });
         if (!theme)
           realm.create('Setting', {
-            _id: Realm.BSON.ObjectId(),
+            _id: new Realm.BSON.ObjectId(),
             key: 'theme',
             value: 'system',
           });
         if (!language)
           realm.create('Setting', {
-            _id: Realm.BSON.ObjectId(),
+            _id: new Realm.BSON.ObjectId(),
             key: 'language',
             value: 'system',
           });
         if (!calorieTarget)
           realm.create('Setting', {
-            _id: Realm.BSON.ObjectId(),
+            _id: new Realm.BSON.ObjectId(),
             key: 'calorieTarget',
             value: '2000',
           });
