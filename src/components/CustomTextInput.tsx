@@ -4,7 +4,6 @@ import { StyleSheet, Text, TextInput } from 'react-native';
 import InputContainer from './InputContainer';
 
 interface Props {
-  autoCompleteType?: 'password' | 'email' | 'name' | 'username' | undefined;
   autoCorrect?: boolean;
   hideTitle?: boolean;
   keyboardType?: 'default' | 'numeric' | 'email-address' | undefined;
@@ -16,7 +15,6 @@ interface Props {
 }
 
 function CustomTextInput({
-  autoCompleteType = undefined,
   autoCorrect = true,
   hideTitle = false,
   keyboardType = 'default',
@@ -33,7 +31,6 @@ function CustomTextInput({
       {!hideTitle && <Text style={[styles.heading, { color: colors.text }]}>{title}</Text>}
       <InputContainer>
         <TextInput
-          autoCompleteType={autoCompleteType}
           autoCorrect={autoCorrect}
           keyboardType={keyboardType}
           onChangeText={(text) => onChangeText(text)}

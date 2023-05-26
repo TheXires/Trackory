@@ -2,7 +2,6 @@ import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
 import { Alert } from 'react-native';
 import { i18n } from '../i18n/i18n';
-import { getArrayBuffer } from './files';
 
 /**
  * takes a picture

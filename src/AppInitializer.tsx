@@ -10,6 +10,7 @@ import { i18n } from './i18n/i18n';
 import RootStackNavigator from './navigation/MainNavigator';
 import { RealmContext } from './realm/RealmContext';
 import { MyDarkTheme, MyLightTheme } from './theme/colors';
+import { Setting } from './types/settings';
 
 const { useQuery, useRealm } = RealmContext;
 
@@ -17,10 +18,10 @@ export default function AppInitializer() {
   const systemScheme = useColorScheme();
   const realm = useRealm();
 
-  const initialStart = useQuery<string>('Setting').filtered("key == 'initialStart'")[0]?.value;
-  const language = useQuery<string>('Setting').filtered("key == 'language'")[0]?.value;
-  const theme = useQuery<string>('Setting').filtered("key == 'theme'")[0]?.value;
-  const calorieTarget = useQuery<string>('Setting').filtered("key == 'calorieTarget'")[0]?.value;
+  const initialStart = useQuery<Setting>('Setting').filtered("key == 'initialStart'")[0]?.value;
+  const language = useQuery<Setting>('Setting').filtered("key == 'language'")[0]?.value;
+  const theme = useQuery<Setting>('Setting').filtered("key == 'theme'")[0]?.value;
+  const calorieTarget = useQuery<Setting>('Setting').filtered("key == 'calorieTarget'")[0]?.value;
 
   const [colorTheme, setColorTheme] = useState<string>(
     theme === 'system' ? systemScheme ?? 'light' : theme,
