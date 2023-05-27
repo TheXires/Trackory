@@ -72,7 +72,7 @@ export default function AppInitializer() {
 
   i18n.enableFallback = true;
   i18n.defaultLocale = 'en-US';
-  i18n.locale = language === 'system' ? Localization.locale : language;
+  i18n.locale = !language || language === 'system' ? Localization.locale : language;
 
   const barStyle = colorTheme === 'dark' ? 'light-content' : 'dark-content';
   const backgroundColor = colorTheme === 'dark' ? DarkTheme.colors.card : DefaultTheme.colors.card;

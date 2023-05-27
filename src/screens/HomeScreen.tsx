@@ -22,12 +22,11 @@ function HomeScreen() {
   const navigation = useNavigation<ConsumedNavigationProp>();
   const realm = useRealm();
 
-  const calorieTarget = useQuery<Setting>('Setting').filtered("key == 'calorieTarget'")[0];
-
   const [todaysCalories, setTodaysCalories] = useState<number>(0);
   const [daysInPast, setDaysInPast] = useState<number>(0);
 
-  const consumption: Consumption = useQuery<Consumption>('Consumption').filtered(
+  const calorieTarget = useQuery<Setting>('Setting').filtered("key == 'calorieTarget'")[0];
+  const consumption = useQuery<Consumption>('Consumption').filtered(
     `date = "${dateFormat(Date.now() - daysInPast * DAY_IN_MS, 'yyyy-mm-dd')}"`,
   )[0];
 
@@ -59,6 +58,8 @@ function HomeScreen() {
     const newDaysInPast = daysInPast + direction;
     setDaysInPast(newDaysInPast < 0 ? 0 : newDaysInPast);
   };
+
+  if (!calorieTarget) return null;
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
