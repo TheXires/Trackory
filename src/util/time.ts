@@ -41,12 +41,12 @@ export const getEndOfDay = (daysInPast: number): number => {
  * @param weeksInPast 0 for current week or number of weeks in the past
  * @returns string array with labels for 7 days
  */
-export const getWeeklyLabels = (weeksInPast: number) => {
+export const getWeeklyLabels = (weeksInPast: number, format: string) => {
   const daysInPast = weeksInPast >= 0 ? 7 * weeksInPast : 0;
   const startTime = Date.now() - daysInPast * DAY_IN_MS;
   const labels: string[] = [];
   for (let i = 6; i >= 0; i -= 1) {
-    labels.push(dateformat(startTime - i * DAY_IN_MS, 'dd.mm'));
+    labels.push(dateformat(startTime - i * DAY_IN_MS, format));
   }
   return labels;
 };

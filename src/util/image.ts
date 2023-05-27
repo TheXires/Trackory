@@ -16,9 +16,9 @@ export const takeImage = async (): Promise<string | null> => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 0.5,
     });
-    if (capturedImage.cancelled) return null;
+    if (capturedImage.canceled) return null;
     const optimizedImage = await ImageManipulator.manipulateAsync(
-      capturedImage.uri,
+      capturedImage.assets[0].uri,
       [{ resize: { width: 400 } }],
       {
         compress: 0.5,
@@ -48,21 +48,24 @@ export const selectImage = async (): Promise<string | undefined> => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 0.5,
     });
-    if (selectedImage.cancelled) return undefined;
+    if (selectedImage.canceled) return undefined;
     const optimizedImage = await ImageManipulator.manipulateAsync(
-      selectedImage.uri,
+      selectedImage.assets[0].uri,
       [{ resize: { width: 400 } }],
       {
         compress: 0.5,
         format: ImageManipulator.SaveFormat.JPEG,
       },
     );
+    // const image = await getArrayBuffer(optimizedImage.uri);
+    // return image;
     return optimizedImage.uri;
   } catch (error: any) {
     Alert.alert(
       i18n.t('errorTitle'),
       i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
     );
+    console.error(error);
   }
   return undefined;
 };

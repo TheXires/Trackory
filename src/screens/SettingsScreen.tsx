@@ -1,40 +1,54 @@
 import { Feather } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation, useTheme } from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
+import { Realm } from '@realm/react';
+import * as Sharing from 'expo-sharing';
 import React, { useContext, useState } from 'react';
-import { Alert, Linking, ScrollView, Share, StyleSheet, View } from 'react-native';
+import { Alert, Linking, ScrollView, StyleSheet, View } from 'react-native';
 import HorizontalLine from '../components/HorizontalLine';
 import InputDialog from '../components/InputDialog';
 import SettingsItem from '../components/SettingsItem';
-import Spacer from '../components/Spacer';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { SettingsContext } from '../contexts/SettingsContext';
-import { firebaseDeleteAccount, firebaseSignOut } from '../firebase/auth.firebase';
 import { i18n } from '../i18n/i18n';
-import { LoadingContextType, SettingsContextType } from '../types/context';
-import { SettingsNavigationProp } from '../types/navigation';
-import { exportUserData } from '../util/data';
+import { RealmContext } from '../realm/RealmContext';
+import { LoadingContextType } from '../types/context';
+import { CustomError } from '../types/error';
+import { ConsumedItem, Consumption, Item } from '../types/item';
+import { Setting } from '../types/settings';
+import { exportData, readAndValidate } from '../util/data';
+import { findDuplicateConsumptions, findDuplicateItems } from '../util/duplications';
+
+const { useRealm, useQuery } = RealmContext;
 
 function SettingsScreen() {
   const { colors } = useTheme();
-  const navigation = useNavigation<SettingsNavigationProp>();
+  const realm = useRealm();
 
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
-  const { settings, updateSettings } = useContext<SettingsContextType>(SettingsContext);
+  const calorieTarget = useQuery<Setting>('Setting').filtered("key == 'calorieTarget'")[0];
+
   const [showCalorieTargetDialog, setShowCalorieTargetDialog] = useState<boolean>(false);
   const [showWeightDialog, setShowWeightDialog] = useState<boolean>(false);
 
-  const saveCalorieTarget = (newCalorieTarget: number | undefined) => {
-    if (!settings || !newCalorieTarget || newCalorieTarget === settings?.calorieTarget) return;
-    updateSettings({ ...settings, calorieTarget: newCalorieTarget });
+  const items = useQuery<Item>('Item').sorted('name');
+  const consumptions = useQuery<Consumption>('Consumption');
+
+  const saveCalorieTarget = (newCalorieTarget: string | undefined) => {
+    if (!newCalorieTarget || newCalorieTarget === calorieTarget.value) return;
+    try {
+      realm.write(() => {
+        calorieTarget.value = newCalorieTarget.toString();
+      });
+    } catch (error) {
+      console.error(error);
+    }
     setShowCalorieTargetDialog(false);
   };
 
-  const saveWeight = (newWeight: number | undefined) => {
-    if (!settings || !newWeight || newWeight === settings?.weight) return;
-    updateSettings({ ...settings, weight: newWeight });
-    setShowWeightDialog(false);
+  const saveWeight = (newWeight: string | undefined) => {
+    // if (!settings || !newWeight || newWeight === settings.weight) return;
+    // setSettings({ ...settings, weight: newWeight });
+    // setShowWeightDialog(false);
   };
 
   const openLink = (link: string) => {
@@ -45,46 +59,73 @@ function SettingsScreen() {
     }
   };
 
-  const signUserOut = async () => {
-    try {
-      await AsyncStorage.clear();
-      await firebaseSignOut();
-    } catch (error: any) {
-      Alert.alert(
-        i18n.t('errorTitle'),
-        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
-      );
-    }
-  };
-
-  const deleteUser = async () => {
-    showLoadingPopup(true, i18n.t('deleteAccount'));
-    try {
-      await firebaseDeleteAccount();
-      await AsyncStorage.clear();
-      await firebaseSignOut();
-      showLoadingPopup(false);
-    } catch (error: any) {
-      console.error('deleteUser:', error);
-      showLoadingPopup(false);
-      Alert.alert(
-        i18n.t('errorTitle'),
-        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
-      );
-    }
-  };
-
-  const deleteUserSecurityPopup = () => {
-    Alert.alert(i18n.t('deleteUserDialogTitle'), i18n.t('deleteUserDialogMessage'), [
-      { style: 'cancel', text: i18n.t('cancel') },
-      { onPress: () => deleteUser(), style: 'destructive', text: i18n.t('delete') },
-    ]);
-  };
-
-  const exportData = async () => {
+  const dataExport = async () => {
     showLoadingPopup(true, 'exportData');
     try {
-      await exportUserData();
+      if (!items || !consumptions) throw new Error('noDataToExport');
+      await exportData(items, consumptions);
+      showLoadingPopup(false);
+    } catch (error: any) {
+      console.error(error);
+      showLoadingPopup(false);
+      Alert.alert(
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
+    }
+  };
+
+  const dataImport = async () => {
+    showLoadingPopup(true, 'importData');
+    try {
+      const { consumptions: importedConsumptions, items: importedItems } = await readAndValidate();
+
+      // check for duplicates
+      if (findDuplicateItems(importedItems, items)) {
+        throw new CustomError('duplicateItems');
+      }
+
+      realm.write(() => {
+        importedItems.forEach((item) => {
+          const newItem: Item = { ...item, _id: new Realm.BSON.ObjectId() };
+          realm.create('Item', newItem);
+        });
+      });
+
+      if (findDuplicateConsumptions(importedConsumptions, consumptions)) {
+        throw new CustomError('duplicateItems');
+      }
+
+      realm.write(() => {
+        importedConsumptions.forEach((consumption) => {
+          const newConsumption: Consumption = {
+            _id: new Realm.BSON.ObjectId(consumption._id),
+            date: consumption.date,
+            items: [],
+          };
+          consumption.items.forEach((item) => {
+            const newItem: ConsumedItem = { ...item, _id: new Realm.BSON.ObjectId() };
+            newConsumption.items.push(newItem);
+          });
+          realm.create('Consumption', newConsumption);
+        });
+      });
+
+      showLoadingPopup(false);
+    } catch (error: any) {
+      console.error(error);
+      showLoadingPopup(false);
+      Alert.alert(
+        i18n.t('errorTitle'),
+        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      );
+    }
+  };
+
+  const realmExport = async () => {
+    showLoadingPopup(true, 'exportRealm');
+    try {
+      await Sharing.shareAsync(`file://${realm.path}`);
       showLoadingPopup(false);
     } catch (error: any) {
       console.error(error);
@@ -103,7 +144,7 @@ function SettingsScreen() {
           {/* calorieTarget */}
           <SettingsItem
             left={i18n.t('calorieTarget')}
-            right={settings?.calorieTarget ?? '2100'}
+            right={calorieTarget.value}
             onPress={() => {
               setShowCalorieTargetDialog(true);
             }}
@@ -117,75 +158,48 @@ function SettingsScreen() {
           />
 
           {/* wight input */}
-          <SettingsItem
+          {/* <SettingsItem
             left={`${i18n.t('weight')} (${i18n.t('kilogramAbbreviation')})`}
             right={settings?.weight ?? '0'}
             onPress={() => setShowWeightDialog(true)}
-          />
+          /> */}
+
           <HorizontalLine />
 
           {/* data export */}
           <SettingsItem
-            left={i18n.t('exportData')}
+            left={i18n.t('dataExport')}
             right={<Feather name="upload" size={24} />}
-            onPress={exportData}
+            onPress={dataExport}
+          />
+
+          <SettingsItem
+            left={i18n.t('dataImport')}
+            right={<Feather name="download" size={24} />}
+            onPress={dataImport}
+          />
+
+          <SettingsItem
+            left={i18n.t('realmExport')}
+            right={<Feather name="database" size={24} />}
+            onPress={realmExport}
           />
 
           {/* share */}
-          <SettingsItem
+          {/* <SettingsItem
             left={i18n.t('recommendApp')}
             right={<Feather name="share-2" size={24} />}
             onPress={() => Share.share({ message: 'https://xires.de' })}
           />
-          <HorizontalLine />
-
-          {/* privacy policy */}
-          <SettingsItem
-            left={i18n.t('privacyPolicy')}
-            right={<Feather name="chevron-right" size={24} />}
-            onPress={() => openLink('https://xires.de')}
-          />
-
-          {/* terms of use */}
-          <SettingsItem
-            left={i18n.t('termsOfService')}
-            right={<Feather name="chevron-right" size={24} />}
-            onPress={() => openLink('https://xires.de')}
-          />
+          
+          <HorizontalLine /> */}
 
           {/* imprint */}
-          <SettingsItem
+          {/* <SettingsItem
             left={i18n.t('imprint')}
             right={<Feather name="chevron-right" size={24} />}
             onPress={() => openLink('https://xires.de')}
-          />
-          <HorizontalLine />
-
-          {/* change email */}
-          <SettingsItem
-            left={i18n.t('changeEmail')}
-            right={<Feather name="chevron-right" size={24} />}
-            onPress={() => navigation.navigate('ChangeEmail')}
-          />
-
-          {/* change password */}
-          <SettingsItem
-            left={i18n.t('changePassword')}
-            right={<Feather name="chevron-right" size={24} />}
-            onPress={() => navigation.navigate('ChangePassword')}
-          />
-          <HorizontalLine />
-
-          {/* delete account */}
-          <SettingsItem
-            left={i18n.t('deleteAccount')}
-            color={colors.notification}
-            onPress={() => deleteUserSecurityPopup()}
-          />
-
-          {/* logout */}
-          <SettingsItem left={i18n.t('logout')} onPress={() => signUserOut()} />
-          <Spacer height={20} />
+          /> */}
         </View>
       </ScrollView>
 
@@ -197,10 +211,10 @@ function SettingsScreen() {
         placeholder="2100"
         show={showCalorieTargetDialog}
         text={i18n.t('dailyCalorieTargetQuestion')}
-        value={settings?.calorieTarget}
+        value={calorieTarget.value}
       />
       {/* weight dialog */}
-      <InputDialog
+      {/* <InputDialog
         headerText={i18n.t('currentWeightTitle')}
         onClose={() => setShowWeightDialog(false)}
         onSave={(newValue) => saveWeight(newValue)}
@@ -208,7 +222,7 @@ function SettingsScreen() {
         show={showWeightDialog}
         text={`${i18n.t('currentWeightTitleQuestion')} (in ${i18n.t('kilogramAbbreviation')})`}
         value={settings?.weight}
-      />
+      /> */}
     </>
   );
 }
