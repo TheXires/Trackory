@@ -60,7 +60,6 @@ function EditItemScreen() {
       carbohydrates: realmItem.carbohydrates,
       fat: realmItem.fat,
       image: realmItem.image,
-      imgUrl: realmItem.imgUrl,
       name: realmItem.name,
       protein: realmItem.protein,
     });
@@ -79,8 +78,8 @@ function EditItemScreen() {
   }, [navigation, handleUpdate]);
 
   useEffect(() => {
-    if (updatedItem && (updatedItem.imgUrl || updatedItem.imgUrl === '')) {
-      setShownImage(updatedItem.imgUrl);
+    if (updatedItem && (updatedItem.image || updatedItem.image === '')) {
+      setShownImage(updatedItem.image);
     } else if (imageUrl !== '') {
       setShownImage(imageUrl);
     } else {
@@ -93,7 +92,7 @@ function EditItemScreen() {
   };
 
   const deleteImage = () => {
-    setUpdatedItem(update(updatedItem, { imgUrl: { $set: '' } }));
+    setUpdatedItem(update(updatedItem, { image: { $set: '' } }));
     setImageUrl('');
   };
 
@@ -106,7 +105,7 @@ function EditItemScreen() {
         <ChangeImageButton
           imgUri={shownImage ? { uri: shownImage } : placeholderImage}
           onDelete={deleteImage}
-          onPress={async () => change((await selectImage()) ?? '', 'imgUrl')}
+          onPress={async () => change((await selectImage()) ?? '', 'image')}
         />
 
         {/* Name input */}

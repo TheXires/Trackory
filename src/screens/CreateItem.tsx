@@ -32,8 +32,7 @@ function CreateItemScreen() {
     calories: 0,
     carbohydrates: 0,
     fat: 0,
-    image: undefined,
-    imgUrl: '',
+    image: '',
     name: '',
     protein: 0,
   });
@@ -129,10 +128,9 @@ function CreateItemScreen() {
 
         {/* Add image button */}
         <AddImageButton
-          imageUri={item.imgUrl}
-          onDelete={() => change(undefined, 'imgUrl')}
-          onPress={async () => change(await selectImage(), 'imgUrl')}
-          // onPress={async () => change(await selectImage(), 'image')}
+          imageUri={item.image}
+          onDelete={() => change(undefined, 'image')}
+          onPress={async () => change(await selectImage(), 'image')}
         />
       </View>
     </KeyboardAwareScrollView>

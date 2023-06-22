@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable sort-keys */
 
-import { Realm } from "@realm/react";
+import { Realm } from '@realm/react';
 
 export class ConsumedItemSchema extends Realm.Object<ConsumedItemSchema> {
   _id!: Realm.BSON.ObjectId;
@@ -12,9 +12,7 @@ export class ConsumedItemSchema extends Realm.Object<ConsumedItemSchema> {
 
   fat: number = 0;
 
-  image?: ArrayBuffer;
-
-  imgUrl?: string;
+  image?: string;
 
   name!: string;
 
@@ -29,8 +27,7 @@ export class ConsumedItemSchema extends Realm.Object<ConsumedItemSchema> {
       calories: 'double',
       carbohydrates: 'double',
       fat: 'double',
-      image: 'data?',
-      imgUrl: 'string?',
+      image: 'string?',
       name: 'string',
       protein: 'double',
       quantity: 'int',
