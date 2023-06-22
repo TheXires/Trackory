@@ -3,8 +3,8 @@ const IS_DEV = process.env.APP_VARIANT === 'development';
 
 export default {
   expo: {
-    name: 'eas-calorie-counter',
-    slug: 'eas-calorie-counter',
+    name: 'Trackory',
+    slug: 'trackory',
     version: '0.1.0',
     orientation: 'portrait',
     userInterfaceStyle: 'automatic',
@@ -19,7 +19,7 @@ export default {
     assetBundlePatterns: ['**/*'],
     ios: {
       supportsTablet: false,
-      bundleIdentifier: IS_DEV ? 'com.xires.eascaloriecounter.dev' : 'com.xires.eascaloriecounter',
+      bundleIdentifier: IS_DEV ? 'com.xires.trackory.dev' : 'com.xires.trackory',
       infoPlist: {
         NSCameraUsageDescription: 'Grant access to camera to take pictures of your Food',
         NSPhotoLibraryUsageDescription: 'Grant access to gallery to select pictures of your Food',
@@ -30,7 +30,7 @@ export default {
         foregroundImage: './assets/adaptive-icon.png',
         backgroundColor: '#FFFFFF',
       },
-      package: IS_DEV ? 'com.xires.eascaloriecounter.dev' : 'com.xires.eascaloriecounter',
+      package: IS_DEV ? 'com.xires.trackory.dev' : 'com.xires.trackory',
     },
     web: {
       favicon: './assets/favicon.png',
