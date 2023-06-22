@@ -13,7 +13,8 @@ function CreateNewItemButton({ onPress }: Props) {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={onPress} style={{ paddingRight: 15, width: '50%' }}>
+      {/* <Pressable onPress={onPress} style={{ paddingRight: 15, width: '50%' }}> */}
+      <Pressable onPress={onPress} style={{ width: '100%' }}>
         <View style={[styles.button, { borderColor: colors.primary }]}>
           <View style={styles.innerBox}>
             <Feather name="plus" style={[styles.icon, { color: colors.primary }]} />
@@ -22,14 +23,14 @@ function CreateNewItemButton({ onPress }: Props) {
         </View>
       </Pressable>
       {/* TODO hier Möglichkeit einbauen einmal etwas hinzuzufügen, ohne es richtig erstellen zu müssen */}
-      <Pressable onPress={() => alert('toImplement')} style={{ paddingLeft: 15, width: '50%' }}>
+      {/* <Pressable onPress={() => alert('toImplement')} style={{ paddingLeft: 15, width: '50%' }}>
         <View style={[styles.button, { borderColor: colors.primary }]}>
           <View style={styles.innerBox}>
             <Feather name="plus" style={[styles.icon, { color: colors.primary }]} />
             <Text style={[styles.text, { color: colors.primary }]}>{i18n.t('addOnce')}</Text>
           </View>
         </View>
-      </Pressable>
+      </Pressable> */}
     </View>
   );
 }

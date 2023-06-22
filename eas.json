@@ -1,20 +1,18 @@
 {
   "cli": {
-    "version": ">= 0.46.0"
+    "version": ">= 0.46.0",
+    "promptToConfigurePushNotifications": false
   },
   "build": {
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "ios": {
-        "cocoapods": "1.11.2"
+      "env": {
+        "APP_VARIANT": "development"
       }
     },
     "preview": {
       "distribution": "internal",
-      "ios": {
-        "cocoapods": "1.11.2"
-      },
       "android": {
         "buildType": "apk"
       }

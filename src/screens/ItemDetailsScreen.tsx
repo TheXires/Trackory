@@ -1,6 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/core';
 import { useTheme } from '@react-navigation/native';
-import React, { useContext, useEffect, useState } from 'react';
+import { Realm } from '@realm/react';
+import React, { useContext, useEffect } from 'react';
 import { Alert, Image, Platform, StyleSheet, Text, View } from 'react-native';
 import placeholderImage from '../../assets/itemPlaceholderImage.png';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
@@ -8,44 +9,46 @@ import CustomButton from '../components/CustomButton';
 import HorizontalLine from '../components/HorizontalLine';
 import ItemDetailsRow from '../components/ItemDetailsRow';
 import NavigationHeaderButton from '../components/NavigationHeaderButton';
-import { ItemContext } from '../contexts/ItemContext';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { firebaseRemoveItem } from '../firebase/items.firebase';
 import { i18n } from '../i18n/i18n';
+import { RealmContext } from '../realm/RealmContext';
 import { permanentColors } from '../theme/colors';
-import { ItemContextType, LoadingContextType } from '../types/context';
+import { LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
 import { Item } from '../types/item';
 import { ItemDetailsNavigationProp, ItemDetailsRouteProp } from '../types/navigation';
+
+const { useObject, useRealm } = RealmContext;
 
 function ItemDetailsScreen() {
   const { colors } = useTheme();
   const navigation = useNavigation<ItemDetailsNavigationProp>();
   const route = useRoute<ItemDetailsRouteProp>();
+  const realm = useRealm();
 
-  const { items, refreshItems } = useContext<ItemContextType>(ItemContext);
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
 
-  const [item, setItem] = useState<Item | undefined>(undefined);
+  const item = useObject<Item>('Item', new Realm.BSON.ObjectId(route.params.itemId));
 
   useEffect(() => {
     if (!route.params.itemId) return;
-    setItem(items.find((element: Item) => element.id === route.params.itemId));
     navigation.setOptions({
       headerRight: () =>
         NavigationHeaderButton({
+          // TODO ab hier weiter machen
           onPress: () => navigation.navigate('EditItem', { itemId: route.params.itemId }),
           text: i18n.t('edit'),
         }),
     });
-  }, [route, items, navigation]);
+  }, [route, navigation]);
 
   const deleteItem = async () => {
     showLoadingPopup(true, i18n.t('deleteItem'));
     try {
       if (!item) throw new CustomError('unexpectedError');
-      await firebaseRemoveItem(item);
-      await refreshItems();
+      realm.write(() => {
+        realm.delete(item);
+      });
       showLoadingPopup(false);
       navigation.goBack();
     } catch (error: any) {
@@ -73,7 +76,7 @@ function ItemDetailsScreen() {
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
-            source={item.imgUrl !== '' ? { uri: item.imgUrl } : placeholderImage}
+            source={item.image !== '' ? { uri: item.image } : placeholderImage}
           />
           {/* Item name */}
           <Text

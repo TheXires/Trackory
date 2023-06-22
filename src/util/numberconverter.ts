@@ -1,8 +1,10 @@
 /**
  * converts a string to an integer
  *
- * @param text string to convert to number
- * @returns number from string or null if string is not a number
+ * @param value string to convert to number
+ * @returns number from value or undefined if value is not a number
  */
-export const convertTextToInteger = (text: string): number | undefined =>
-  Number.isNaN(parseInt(text, 10)) ? undefined : parseInt(text, 10);
+export const convertTextToInteger = (value: string | undefined): number | undefined => {
+  if (value === undefined) return undefined;
+  return Number.isNaN(parseInt(value, 10)) ? undefined : parseInt(value, 10);
+};

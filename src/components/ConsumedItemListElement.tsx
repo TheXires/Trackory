@@ -32,7 +32,7 @@ function ConsumedItemListElement({ consumedItem, onSave }: Props) {
     setEdit(!edit);
   };
 
-  const image = consumedItem.imgUrl ? { uri: consumedItem.imgUrl } : placeholderImg;
+  const image = consumedItem.image ? { uri: consumedItem.image } : placeholderImg;
 
   return (
     <View style={[styles.container, { backgroundColor: permanentColors.primary }]}>

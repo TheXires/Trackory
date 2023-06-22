@@ -1,59 +1,65 @@
 import { useNavigation, useTheme } from '@react-navigation/native';
-import dateformat from 'dateformat';
-import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import dateFormat from 'dateformat';
+import React, { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
 import ConsumedItemListElement from '../components/ConsumedItemListElement';
 import FloatingActionButton from '../components/FloatingActionButton';
 import HomeProgress from '../components/HomeProgress';
 import Spacer from '../components/Spacer';
 import TopBar from '../components/TopBar';
 import { DAY_IN_MS } from '../constants';
-import { HistoryContext } from '../contexts/HistoryContext';
-import { SettingsContext } from '../contexts/SettingsContext';
 import { i18n } from '../i18n/i18n';
-import { HistoryContextType } from '../types/context';
-import { ConsumedItem } from '../types/item';
+import { RealmContext } from '../realm/RealmContext';
+import { ConsumedItem, Consumption } from '../types/item';
 import { ConsumedNavigationProp } from '../types/navigation';
+import { Setting } from '../types/settings';
+import { convertTextToInteger } from '../util/numberconverter';
+
+const { useRealm, useQuery } = RealmContext;
 
 function HomeScreen() {
   const { colors } = useTheme();
   const navigation = useNavigation<ConsumedNavigationProp>();
-
-  const { settings } = useContext(SettingsContext);
-  const { consumedItems, refreshConsumedItems, refreshingConsumedItems, consumeItem } =
-    useContext<HistoryContextType>(HistoryContext);
+  const realm = useRealm();
 
   const [todaysCalories, setTodaysCalories] = useState<number>(0);
   const [daysInPast, setDaysInPast] = useState<number>(0);
 
+  const calorieTarget = useQuery<Setting>('Setting').filtered("key == 'calorieTarget'")[0];
+  const consumption = useQuery<Consumption>('Consumption').filtered(
+    `date = "${dateFormat(Date.now() - daysInPast * DAY_IN_MS, 'yyyy-mm-dd')}"`,
+  )[0];
+
   useEffect(() => {
-    const caloriesSum = consumedItems.reduce((sum, item) => sum + item.calories * item.quantity, 0);
+    if (!consumption) return setTodaysCalories(0);
+    const caloriesSum = consumption.items.reduce(
+      (sum, item) => sum + item.calories * item.quantity,
+      0,
+    );
     setTodaysCalories(caloriesSum);
-  }, [consumedItems]);
+  }, [consumption]);
 
-  useEffect(() => {
-    refreshConsumedItems(daysInPast, true);
-  }, [daysInPast]);
-
-  const changeQuantity = async (daysInThePast: number, item: ConsumedItem, quantity: number) => {
-    const changeQuantityBy = quantity - item.quantity;
-    consumeItem(daysInThePast, item, changeQuantityBy);
-    return null;
+  const changeQuantity = async (item: ConsumedItem, quantity: number) => {
+    if (!consumption) return;
+    const consumedItemIndex = consumption.items.findIndex((i) => i._id.equals(item._id));
+    if (consumedItemIndex === -1) return;
+    realm.write(() => {
+      if (quantity === 0) {
+        const tmp = [...consumption.items];
+        tmp.splice(consumedItemIndex, 1);
+        consumption.items = tmp;
+      } else {
+        consumption.items[consumedItemIndex].quantity = quantity;
+      }
+    });
   };
-
-  const renderedItem = (item: ConsumedItem) => (
-    <ConsumedItemListElement
-      consumedItem={item}
-      onSave={(quantity: number) => changeQuantity(daysInPast, item, quantity)}
-    />
-  );
 
   const changeDay = (direction: number) => {
     const newDaysInPast = daysInPast + direction;
     setDaysInPast(newDaysInPast < 0 ? 0 : newDaysInPast);
   };
 
-  const renderSpacer = () => <Spacer height={15} />;
+  if (!calorieTarget) return null;
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -63,31 +69,31 @@ function HomeScreen() {
         rightButtonDisabled={daysInPast === 0}
       >
         <HomeProgress
-          calorieTarget={settings?.calorieTarget ?? 0}
+          calorieTarget={convertTextToInteger(calorieTarget.value) ?? 0}
           title={
             daysInPast === 0
               ? i18n.t('today')
-              : dateformat(Date.now() - daysInPast * DAY_IN_MS, 'dd.mm')
+              : dateFormat(Date.now() - daysInPast * DAY_IN_MS, 'dd.mm')
           }
           todaysCalories={todaysCalories}
         />
       </TopBar>
-      <FlatList
-        data={consumedItems}
-        keyExtractor={(item: ConsumedItem) => item.id}
-        renderItem={({ item }) => renderedItem(item)}
-        ListHeaderComponent={<Spacer height={15} />}
-        ListFooterComponent={<Spacer height={100} />}
-        ItemSeparatorComponent={renderSpacer}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshingConsumedItems}
-            onRefresh={() => refreshConsumedItems(daysInPast)}
-            tintColor={colors.primary}
-          />
-        }
-      />
+      {consumption && (
+        <FlatList
+          data={consumption.items}
+          keyExtractor={(item: ConsumedItem) => item._id.toHexString()}
+          renderItem={({ item }) => (
+            <ConsumedItemListElement
+              consumedItem={item}
+              onSave={(quantity: number) => changeQuantity(item, quantity)}
+            />
+          )}
+          ListHeaderComponent={() => Spacer({ height: 15 })}
+          ListFooterComponent={() => Spacer({ height: 100 })}
+          ItemSeparatorComponent={() => Spacer({ height: 15 })}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
       <FloatingActionButton
         icon="plus"
         onPress={() => navigation.navigate('AddItem', { daysInPast })}

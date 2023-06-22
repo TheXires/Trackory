@@ -2,70 +2,31 @@
  * Default Item
  */
 export interface Item {
+  _id: Realm.BSON.ObjectId;
   calories: number;
   carbohydrates: number;
   fat: number;
-  id: string;
-  imgUrl: string | undefined;
+  image?: string;
   name: string;
   protein: number;
 }
 
-/**
- * Special form of item without Id to create a new item
- */
-export interface NewItem {
-  calories: number;
-  carbohydrates: number;
-  fat: number;
-  imgUrl: string | undefined;
-  name: string;
-  protein: number;
-}
 /**
  * All properties of NewItem as Type
  */
-export type NewItemPropertyType =
+export type ItemPropertyType =
+  | '_id'
   | 'calories'
   | 'carbohydrates'
   | 'fat'
-  | 'imgUrl'
-  | 'name'
-  | 'protein';
-
-  /**
-   * Special form of Item where all values are optional to update an item
-   */
-export interface UpdateItem {
-  calories: number | undefined;
-  carbohydrates: number | undefined;
-  fat: number | undefined;
-  imgUrl: string | undefined;
-  name: string | undefined;
-  protein: number | undefined;
-}
-/**
- * All properties of UpdateItem as Type
- */
-export type UpdateItemPropertyType =
-  | 'calories'
-  | 'carbohydrates'
-  | 'fat'
-  | 'imgUrl'
+  | 'image'
   | 'name'
   | 'protein';
 
 /**
  * Special form of Item with quantity as number of consumptions
  */
-export interface ConsumedItem {
-  calories: number;
-  carbohydrates: number;
-  fat: number;
-  id: string;
-  imgUrl: string | undefined;
-  name: string;
-  protein: number;
+export interface ConsumedItem extends Item {
   quantity: number;
 }
 
@@ -73,6 +34,7 @@ export interface ConsumedItem {
  * Consumption with consumed items and date of consumption
  */
 export interface Consumption {
+  _id: Realm.BSON.ObjectId;
   date: string;
   items: ConsumedItem[];
 }

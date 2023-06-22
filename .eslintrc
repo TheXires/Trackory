@@ -22,6 +22,8 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/react-in-jsx-scope": "off",
+    "no-underscore-dangle": "off",
     "no-unused-expressions": "warn",
     "import/extensions": "off",
     "react/require-default-props": "off",
