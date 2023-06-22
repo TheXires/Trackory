@@ -8,31 +8,33 @@ import { i18n } from '../i18n/i18n';
  *
  * @returns image file url on success, otherwise undefined
  */
-export const takeImage = async (): Promise<string | null> => {
+export const takeImage = async (): Promise<string | undefined> => {
   try {
     const capturedImage = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [1, 1],
+      base64: true,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 0.5,
     });
-    if (capturedImage.canceled) return null;
+    if (!capturedImage.assets || !capturedImage.assets[0].base64) return undefined;
     const optimizedImage = await ImageManipulator.manipulateAsync(
-      capturedImage.assets[0].uri,
+      capturedImage.assets[0].base64,
       [{ resize: { width: 400 } }],
       {
+        base64: true,
         compress: 0.5,
         format: ImageManipulator.SaveFormat.JPEG,
       },
     );
-    return optimizedImage.uri;
+    return `data:image/jpeg;base64,${optimizedImage.base64}`;
   } catch (error: any) {
     Alert.alert(
       i18n.t('errorTitle'),
       i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
     );
   }
-  return null;
+  return undefined;
 };
 
 /**
@@ -48,18 +50,17 @@ export const selectImage = async (): Promise<string | undefined> => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 0.5,
     });
-    if (selectedImage.canceled) return undefined;
+    if (!selectedImage.assets) return undefined;
     const optimizedImage = await ImageManipulator.manipulateAsync(
       selectedImage.assets[0].uri,
-      [{ resize: { width: 400 } }],
+      [{ resize: { width: 300 } }],
       {
+        base64: true,
         compress: 0.5,
         format: ImageManipulator.SaveFormat.JPEG,
       },
     );
-    // const image = await getArrayBuffer(optimizedImage.uri);
-    // return image;
-    return optimizedImage.uri;
+    return `data:image/jpeg;base64,${optimizedImage.base64}`;
   } catch (error: any) {
     Alert.alert(
       i18n.t('errorTitle'),
