@@ -6,8 +6,7 @@ export interface Item {
   calories: number;
   carbohydrates: number;
   fat: number;
-  image?: ArrayBuffer;
-  imgUrl?: string;
+  image?: string;
   name: string;
   protein: number;
 }
@@ -21,7 +20,6 @@ export type ItemPropertyType =
   | 'carbohydrates'
   | 'fat'
   | 'image'
-  | 'imgUrl'
   | 'name'
   | 'protein';
 

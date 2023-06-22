@@ -76,7 +76,7 @@ function ItemDetailsScreen() {
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
-            source={item.imgUrl !== '' ? { uri: item.imgUrl } : placeholderImage}
+            source={item.image !== '' ? { uri: item.image } : placeholderImage}
           />
           {/* Item name */}
           <Text

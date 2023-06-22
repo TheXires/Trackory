@@ -12,9 +12,7 @@ export class ItemSchema extends Realm.Object<ItemSchema> {
 
   fat: number = 0;
 
-  image?: ArrayBuffer;
-
-  imgUrl?: string;
+  image?: string;
 
   name!: string;
 
@@ -27,8 +25,7 @@ export class ItemSchema extends Realm.Object<ItemSchema> {
       calories: 'double',
       carbohydrates: 'double',
       fat: 'double',
-      image: 'data?',
-      imgUrl: 'string?',
+      image: 'string?',
       name: 'string',
       protein: 'double',
     },

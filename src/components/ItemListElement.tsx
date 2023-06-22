@@ -15,7 +15,7 @@ interface Props {
 function ItemListElement({ item, onPress }: Props) {
   const { colors } = useTheme();
 
-  const image = item.imgUrl ? { uri: item.imgUrl } : placeholderImg;
+  const image = item.image ? { uri: item.image } : placeholderImg;
 
   return (
     <>

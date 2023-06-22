@@ -13,7 +13,7 @@ interface Props {
 function ItemCard({ item, onPress }: Props) {
   const { colors } = useTheme();
 
-  const image = item.imgUrl ? { uri: item.imgUrl } : placeholderImg;
+  const image = item.image ? { uri: item.image } : placeholderImg;
 
   return (
     <BaseButton style={styles.container} rippleRadius={0} onPress={onPress}>

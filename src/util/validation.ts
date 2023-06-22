@@ -48,11 +48,7 @@ function isValidItem(item: any): boolean {
     return false;
   }
 
-  if ('image' in item && !(item.image instanceof ArrayBuffer) && item.image != null) {
-    return false;
-  }
-
-  if ('imgUrl' in item && typeof item.imgUrl !== 'string') {
+  if ('image' in item && typeof item.image !== 'string') {
     return false;
   }
 
