@@ -82,13 +82,15 @@ function ItemDetailsScreen() {
             />
           </SharedElement>
           {/* Item name */}
-          <Text
-            style={[styles.itemName, { color: colors.text }]}
-            numberOfLines={3}
-            ellipsizeMode="tail"
-          >
-            {item.name}
-          </Text>
+          <SharedElement id={`item.${route.params.itemId}.name`}>
+            <Text
+              style={[styles.itemName, { color: colors.text }]}
+              numberOfLines={3}
+              ellipsizeMode="tail"
+            >
+              {item.name}
+            </Text>
+          </SharedElement>
         </View>
         <View style={styles.dataContainer}>
           {/* calories */}

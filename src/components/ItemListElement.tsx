@@ -25,13 +25,15 @@ function ItemListElement({ item, onPress }: Props) {
           <SharedElement id={`item.${item._id.toHexString()}.image`}>
             <Image style={styles.image} source={image} />
           </SharedElement>
-          <Text
-            style={[styles.itemName, { color: colors.text }]}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {item.name}
-          </Text>
+          <SharedElement id={`item.${item._id.toHexString()}.name`}>
+            <Text
+              style={[styles.itemName, { color: colors.text }]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {item.name}
+            </Text>
+          </SharedElement>
         </View>
         <Feather name="chevron-right" size={24} color={colors.text} />
       </RectButton>
@@ -61,7 +63,6 @@ const styles = StyleSheet.create({
     width: 50,
   },
   itemName: {
-    flex: 0.9,
     fontSize: 16,
   },
 });

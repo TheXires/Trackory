@@ -55,14 +55,16 @@ function RootStackNavigator() {
         component={ItemDetailsScreen}
         sharedElements={(route) => {
           const { itemId } = route.params;
-          return [`item.${itemId}.image`];
+          return [
+            { animation: 'move', id: `item.${itemId}.image` },
+            { animation: 'fade', id: `item.${itemId}.name` },
+          ];
         }}
         options={{
           headerBackTitle: i18n.t('back'),
           title: i18n.t('itemDetailsTitle'),
         }}
       />
-      {/* <RootStack.Group screenOptions={{ presentation: 'modal' }}> */}
       <RootStack.Screen
         name="EditItem"
         component={EditItemScreen}
@@ -72,10 +74,10 @@ function RootStackNavigator() {
               onPress: () => navigation.goBack(),
               text: i18n.t('cancel'),
             }),
+          presentation: 'modal',
           title: i18n.t('EditItemTitle'),
         }}
       />
-      {/* </RootStack.Group> */}
     </RootStack.Navigator>
   );
 }
