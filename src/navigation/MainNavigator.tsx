@@ -53,7 +53,9 @@ function RootStackNavigator() {
       <RootStack.Screen
         name="ItemDetails"
         component={ItemDetailsScreen}
-        sharedElements={(route) => {
+        sharedElements={(route, otherRoute) => {
+          // to only animate when coming from ItemsScreen (LocalItemsScreen, because its in its own stack)
+          if (otherRoute.name !== 'LocalItemsScreen') return;
           const { itemId } = route.params;
           return [
             { animation: 'move', id: `item.${itemId}.image` },
