@@ -3,6 +3,7 @@ import { useTheme } from '@react-navigation/native';
 import { Realm } from '@realm/react';
 import React, { useContext, useEffect } from 'react';
 import { Alert, Image, Platform, StyleSheet, Text, View } from 'react-native';
+import { SharedElement } from 'react-navigation-shared-element';
 import placeholderImage from '../../assets/itemPlaceholderImage.png';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
 import CustomButton from '../components/CustomButton';
@@ -74,18 +75,22 @@ function ItemDetailsScreen() {
       <View>
         {/* Item image */}
         <View style={styles.imageContainer}>
-          <Image
-            style={styles.image}
-            source={item.image !== '' ? { uri: item.image } : placeholderImage}
-          />
+          <SharedElement id={`item.${route.params.itemId}.image`}>
+            <Image
+              style={styles.image}
+              source={item.image !== '' ? { uri: item.image } : placeholderImage}
+            />
+          </SharedElement>
           {/* Item name */}
-          <Text
-            style={[styles.itemName, { color: colors.text }]}
-            numberOfLines={3}
-            ellipsizeMode="tail"
-          >
-            {item.name}
-          </Text>
+          <SharedElement id={`item.${route.params.itemId}.name`}>
+            <Text
+              style={[styles.itemName, { color: colors.text }]}
+              numberOfLines={3}
+              ellipsizeMode="tail"
+            >
+              {item.name}
+            </Text>
+          </SharedElement>
         </View>
         <View style={styles.dataContainer}>
           {/* calories */}

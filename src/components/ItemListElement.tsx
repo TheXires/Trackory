@@ -3,6 +3,7 @@ import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
+import { SharedElement } from 'react-navigation-shared-element';
 import placeholderImg from '../../assets/itemPlaceholderImage.png';
 import { Item } from '../types/item';
 import HorizontalLine from './HorizontalLine';
@@ -21,14 +22,18 @@ function ItemListElement({ item, onPress }: Props) {
     <>
       <RectButton style={styles.container} onPress={onPress}>
         <View style={styles.dataContainer}>
-          <Image style={styles.image} source={image} />
-          <Text
-            style={[styles.itemName, { color: colors.text }]}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {item.name}
-          </Text>
+          <SharedElement id={`item.${item._id.toHexString()}.image`}>
+            <Image style={styles.image} source={image} />
+          </SharedElement>
+          <SharedElement id={`item.${item._id.toHexString()}.name`}>
+            <Text
+              style={[styles.itemName, { color: colors.text }]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {item.name}
+            </Text>
+          </SharedElement>
         </View>
         <Feather name="chevron-right" size={24} color={colors.text} />
       </RectButton>
@@ -58,7 +63,6 @@ const styles = StyleSheet.create({
     width: 50,
   },
   itemName: {
-    flex: 0.9,
     fontSize: 16,
   },
 });

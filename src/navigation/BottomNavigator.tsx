@@ -4,10 +4,8 @@ import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import HeaderRightButton from '../components/HeaderRightButton';
 import { i18n } from '../i18n/i18n';
-import HomeScreen from '../screens/HomeScreen';
-import ItemsScreen from '../screens/ItemsScreen';
-import StatisticsScreen from '../screens/StatisticsScreen';
 import { BottomTabParamList } from '../types/navigation';
+import { HomeScreenTab, ItemsScreenTab, StatisticsScreenTab } from './TabStack';
 
 interface IconProps {
   icon: 'home' | 'bar-chart-2' | 'coffee';
@@ -34,7 +32,7 @@ function BottomNavigator() {
     >
       <MainTab.Screen
         name="HomeScreen"
-        component={HomeScreen}
+        component={HomeScreenTab}
         options={{
           tabBarIcon: ({ focused }) =>
             TabBarIcon({ color: focused ? colors.primary : colors.text, icon: 'home' }),
@@ -43,7 +41,7 @@ function BottomNavigator() {
       />
       <MainTab.Screen
         name="Statistics"
-        component={StatisticsScreen}
+        component={StatisticsScreenTab}
         options={{
           tabBarIcon: ({ focused }) =>
             TabBarIcon({
@@ -55,7 +53,7 @@ function BottomNavigator() {
       />
       <MainTab.Screen
         name="Items"
-        component={ItemsScreen}
+        component={ItemsScreenTab}
         options={{
           tabBarIcon: ({ focused }) =>
             TabBarIcon({ color: focused ? colors.primary : colors.text, icon: 'coffee' }),
