@@ -10,7 +10,7 @@ import { Consumption, Item } from '../types/item';
  */
 export const findDuplicateItems = (
   newItems: Item[],
-  currentItems: Realm.Results<Item & Realm.Object<unknown, never>>,
+  currentItems: Realm.Results<Item & Realm.Object<Item, never>>,
 ): boolean => {
   if (currentItems.length === 0) return false;
 
@@ -32,7 +32,7 @@ export const findDuplicateItems = (
  */
 export const findDuplicateConsumptions = (
   newConsumptions: Consumption[],
-  currentConsumptions: Realm.Results<Consumption & Realm.Object<unknown, never>>,
+  currentConsumptions: Realm.Results<Consumption & Realm.Object<Consumption, never>>,
 ): boolean => {
   if (currentConsumptions.length === 0) return false;
 

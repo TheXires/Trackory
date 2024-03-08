@@ -4,7 +4,7 @@ import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { SharedElement } from 'react-navigation-shared-element';
-import placeholderImg from '../../assets/itemPlaceholderImage.png';
+import placeholderImg from '../../assets/images/itemPlaceholderImage.png';
 import { Item } from '../types/item';
 import HorizontalLine from './HorizontalLine';
 

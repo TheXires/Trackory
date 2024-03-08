@@ -2,7 +2,7 @@ import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { BaseButton } from 'react-native-gesture-handler';
-import placeholderImg from '../../assets/itemPlaceholderImage.png';
+import placeholderImg from '../../assets/images/itemPlaceholderImage.png';
 import { Item } from '../types/item';
 
 interface Props {

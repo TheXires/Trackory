@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable sort-keys */
 
-import { Realm } from '@realm/react';
+import Realm from 'realm';
 
 export class SettingsSchema extends Realm.Object<SettingsSchema> {
   _id!: Realm.BSON.ObjectId;

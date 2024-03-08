@@ -9,5 +9,5 @@ import { SettingsSchema } from './schemas/settings.schema';
  */
 export const RealmContext = createRealmContext({
   schema: [ItemSchema, ConsumedItemSchema, ConsumptionSchema, SettingsSchema],
-  schemaVersion: 3,
+  schemaVersion: 1,
 });

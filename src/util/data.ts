@@ -12,8 +12,8 @@ import { validateJsonData } from './validation';
  * @param consumptions
  */
 export const exportData = async (
-  items: Realm.Results<Item & Realm.Object<unknown, never>>,
-  consumptions: Realm.Results<Consumption & Realm.Object<unknown, never>>,
+  items: Realm.Results<Item & Realm.Object<Item, never>>,
+  consumptions: Realm.Results<Consumption & Realm.Object<Consumption, never>>,
 ): Promise<void> => {
   try {
     const toShare = { consumptions, items };

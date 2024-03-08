@@ -4,7 +4,7 @@ import { Realm } from '@realm/react';
 import React, { useContext, useEffect } from 'react';
 import { Alert, Image, Platform, StyleSheet, Text, View } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
-import placeholderImage from '../../assets/itemPlaceholderImage.png';
+import placeholderImage from '../../assets/images/itemPlaceholderImage.png';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
 import CustomButton from '../components/CustomButton';
 import HorizontalLine from '../components/HorizontalLine';

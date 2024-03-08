@@ -4,7 +4,7 @@ import update from 'immutability-helper';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import placeholderImage from '../../assets/itemPlaceholderImage.png';
+import placeholderImage from '../../assets/images/itemPlaceholderImage.png';
 import ChangeImageButton from '../components/ChangeImageButton';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
 import CustomNumberInput from '../components/CustomNumberInput';

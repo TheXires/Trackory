@@ -12,7 +12,7 @@ import { getWeeklyLabels } from './time';
  * @returns one array for each nutrition with values for each day
  */
 export const separateDailyStatisticData = (
-  consumptionHistory: Realm.Results<Consumption & Realm.Object<unknown, never>>,
+  consumptionHistory: Realm.Results<Consumption & Realm.Object<Consumption, never>>,
   weeksInPast: number,
 ) => {
   const calories: number[] = [];
