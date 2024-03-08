@@ -1,4 +1,5 @@
 import { registerRootComponent } from 'expo';
+import 'react-native-get-random-values';
 import AppInitializer from './src/AppInitializer';
 import { RealmContext } from './src/realm/RealmContext';
 

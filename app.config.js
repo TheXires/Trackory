@@ -3,19 +3,17 @@ const IS_DEV = process.env.APP_VARIANT === 'development';
 
 export default {
   expo: {
-    name: 'Trackory',
+    name: IS_DEV ? 'Dev Trackory' : 'Trackory',
     slug: 'trackory',
     version: '0.1.0',
     orientation: 'portrait',
+    icon: './assets/images/icon.png',
+    scheme: 'trackory',
     userInterfaceStyle: 'automatic',
-    icon: './assets/icon.png',
     splash: {
-      image: './assets/splash.png',
+      image: './assets/images/splash.png',
       resizeMode: 'cover',
       backgroundColor: '#25292e',
-    },
-    updates: {
-      fallbackToCacheTimeout: 0,
     },
     assetBundlePatterns: ['**/*'],
     ios: {
@@ -28,15 +26,18 @@ export default {
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: './assets/adaptive-icon.png',
+        foregroundImage: './assets/images/adaptive-icon.png',
         backgroundColor: '#FFFFFF',
       },
       package: IS_DEV ? 'com.xires.trackory.dev' : 'com.xires.trackory',
     },
     web: {
-      favicon: './assets/favicon.png',
+      bundler: 'metro',
+      output: 'static',
+      favicon: './assets/images/favicon.png',
     },
     plugins: [
+      'expo-router',
       'expo-build-properties',
       [
         'expo-image-picker',
@@ -47,7 +48,13 @@ export default {
       'expo-localization',
       'expo-document-picker',
     ],
+    experiments: {
+      typedRoutes: true,
+    },
     extra: {
+      router: {
+        origin: false,
+      },
       eas: {
         projectId: 'b146b5d6-3423-48cf-becb-faafc6d41ba8',
       },
