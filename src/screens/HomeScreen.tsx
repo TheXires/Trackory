@@ -1,6 +1,7 @@
 import { useNavigation, useTheme } from '@react-navigation/native';
 import dateFormat from 'dateformat';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, StyleSheet, View } from 'react-native';
 import ConsumedItemListElement from '../components/ConsumedItemListElement';
 import FloatingActionButton from '../components/FloatingActionButton';
@@ -8,7 +9,6 @@ import HomeProgress from '../components/HomeProgress';
 import Spacer from '../components/Spacer';
 import TopBar from '../components/TopBar';
 import { DAY_IN_MS } from '../constants';
-import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
 import { ConsumedItem, Consumption } from '../types/item';
 import { ConsumedNavigationProp } from '../types/navigation';
@@ -19,6 +19,7 @@ const { useRealm, useQuery } = RealmContext;
 
 function HomeScreen() {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const navigation = useNavigation<ConsumedNavigationProp>();
   const realm = useRealm();
 
@@ -72,7 +73,7 @@ function HomeScreen() {
           calorieTarget={convertTextToInteger(calorieTarget.value) ?? 0}
           title={
             daysInPast === 0
-              ? i18n.t('today')
+              ? t('screen.home.today')
               : dateFormat(Date.now() - daysInPast * DAY_IN_MS, 'dd.mm')
           }
           todaysCalories={todaysCalories}

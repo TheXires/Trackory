@@ -2,12 +2,12 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useTheme } from '@react-navigation/native';
 import dateFormat from 'dateformat';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import CustomBarChart from '../components/CustomBarChart';
 import CustomLineChart from '../components/CustomLineChart';
 import TopBar from '../components/TopBar';
-import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
 import { Consumption } from '../types/item';
 import { separateDailyStatisticData } from '../util/statistics';
@@ -17,6 +17,7 @@ const { useQuery } = RealmContext;
 
 function StatisticsScreen() {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const bottomTabBarHeight = useBottomTabBarHeight();
 
   const [weeklyLabels, setWeeklyLabels] = useState<string[]>(getWeeklyLabels(0, 'yyyy-mm-dd'));
@@ -74,31 +75,33 @@ function StatisticsScreen() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* calorie bar chart */}
         <CustomBarChart
-          title={`${i18n.t('calories')} (${i18n.t('calorieAbbreviation')})`}
+          title={`${t('general.item.calories')} (${t('abbreviation.calorie')})`}
           labels={weeklyLabels}
           data={calorieWeekData}
         />
         {/* fat bar chart */}
         <CustomBarChart
-          title={`${i18n.t('fat')} (${i18n.t('gramAbbreviation')})`}
+          title={`${t('general.item.fat')} (${t('abbreviation.gram')})`}
           labels={weeklyLabels}
           data={fatWeekData}
         />
         {/* carbohydrates bar chart */}
         <CustomBarChart
-          title={`${i18n.t('carbohydrates')} (${i18n.t('gramAbbreviation')})`}
+          title={`${t('general.item.carbohydrates')} (${t('abbreviation.gram')})`}
           labels={weeklyLabels}
           data={carbohydratesWeekData}
         />
         {/* protein bar chart */}
         <CustomBarChart
-          title={`${i18n.t('protein')} (${i18n.t('gramAbbreviation')})`}
+          title={`${t('general.item.protein')} (${t('abbreviation.gram')})`}
           labels={weeklyLabels}
           data={proteinWeekData}
         />
         {/* weight line chart */}
         <CustomLineChart
-          title={`${i18n.t('weight')} (${i18n.t('kilogramAbbreviation')}) - ${i18n.t('monthly')}`}
+          title={`${t('screen.settings.weight')} (${t('abbreviation.kilogram')}) - ${t(
+            'screen.statistics.monthly',
+          )}`}
           labels={yearlyLabels}
           data={weightYearData}
         />

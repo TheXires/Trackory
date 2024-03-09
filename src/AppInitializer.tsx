@@ -2,15 +2,16 @@ import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/
 import { Realm } from '@realm/react';
 import 'expo-dev-client';
 import * as Localization from 'expo-localization';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import 'react-native-get-random-values';
 import { LoadingProvider } from './contexts/LoadingContext';
-import { i18n } from './i18n/i18n';
 import RootStackNavigator from './navigation/MainNavigator';
 import { RealmContext } from './realm/RealmContext';
 import { MyDarkTheme, MyLightTheme } from './theme/colors';
 import { Setting } from './types/settings';
+import { I18nextProvider } from 'react-i18next';
+import translator from './i18n/i18next';
 
 const { useQuery, useRealm } = RealmContext;
 
@@ -60,6 +61,17 @@ export default function AppInitializer() {
     }
   };
 
+  const appLanguage = useMemo(
+    () =>
+      !language || language === 'system' ? Localization.getLocales()[0].languageTag : language,
+    [language, Localization],
+  );
+
+  useEffect(() => {
+    // App language
+    translator.changeLanguage(appLanguage);
+  }, [appLanguage]);
+
   useEffect(() => {
     if (initialStart === 'false') return;
     saveDefaultSettings();
@@ -70,21 +82,19 @@ export default function AppInitializer() {
     setColorTheme(systemScheme ?? 'light');
   }, [systemScheme]);
 
-  i18n.enableFallback = true;
-  i18n.defaultLocale = 'en-US';
-  i18n.locale = !language || language === 'system' ? Localization.locale : language;
-
   const barStyle = colorTheme === 'dark' ? 'light-content' : 'dark-content';
   const backgroundColor = colorTheme === 'dark' ? DarkTheme.colors.card : DefaultTheme.colors.card;
 
   return (
     <>
       <StatusBar barStyle={barStyle} backgroundColor={backgroundColor} />
-      <LoadingProvider>
-        <NavigationContainer theme={colorTheme === 'dark' ? MyDarkTheme : MyLightTheme}>
-          <RootStackNavigator />
-        </NavigationContainer>
-      </LoadingProvider>
+      <I18nextProvider i18n={translator}>
+        <LoadingProvider>
+          <NavigationContainer theme={colorTheme === 'dark' ? MyDarkTheme : MyLightTheme}>
+            <RootStackNavigator />
+          </NavigationContainer>
+        </LoadingProvider>
+      </I18nextProvider>
     </>
   );
 }

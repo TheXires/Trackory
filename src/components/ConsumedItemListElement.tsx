@@ -2,9 +2,9 @@ import { Feather } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import placeholderImg from '../../assets/images/itemPlaceholderImage.png';
-import { i18n } from '../i18n/i18n';
 import { permanentColors } from '../theme/colors';
 import { ConsumedItem } from '../types/item';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   consumedItem: ConsumedItem;
@@ -12,6 +12,8 @@ interface Props {
 }
 
 function ConsumedItemListElement({ consumedItem, onSave }: Props) {
+  const { t } = useTranslation();
+
   const [edit, setEdit] = useState(false);
   const [quantity, setQuantity] = useState(consumedItem.quantity);
 
@@ -50,7 +52,7 @@ function ConsumedItemListElement({ consumedItem, onSave }: Props) {
 
           {/* calories */}
           <Text style={styles.text}>
-            {i18n.t('caloriesPerItem', { itemCalories: consumedItem.calories })}
+            {t('component.overviewItem.caloriesPerItem', { itemCalories: consumedItem.calories })}
           </Text>
         </View>
 

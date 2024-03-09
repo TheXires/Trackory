@@ -1,5 +1,5 @@
 import React from 'react';
-import { i18n } from '../i18n/i18n';
+import { useTranslation } from 'react-i18next';
 import CustomTextInput from './CustomTextInput';
 
 interface Props {
@@ -8,11 +8,13 @@ interface Props {
 }
 
 function Searchbar({ searchTerm, setSearchTerm }: Props) {
+  const { t } = useTranslation();
+
   return (
     <CustomTextInput
       hideTitle
       onChangeText={(text) => setSearchTerm(text)}
-      placeholder={i18n.t('search')}
+      placeholder={t('component.searchbar.search')}
       value={searchTerm}
     />
   );

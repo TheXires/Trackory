@@ -2,6 +2,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Realm } from '@realm/react';
 import update from 'immutability-helper';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import placeholderImage from '../../assets/images/itemPlaceholderImage.png';
@@ -11,7 +12,6 @@ import CustomNumberInput from '../components/CustomNumberInput';
 import CustomTextInput from '../components/CustomTextInput';
 import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
 import { LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
@@ -22,6 +22,7 @@ import { selectImage } from '../util/image';
 const { useRealm, useObject } = RealmContext;
 
 function EditItemScreen() {
+  const { t } = useTranslation();
   const navigation = useNavigation<EditItemNavigationProp>();
   const route = useRoute<EditItemRouteProp>();
   const realm = useRealm();
@@ -34,9 +35,9 @@ function EditItemScreen() {
   const realmItem = useObject<Item>('Item', new Realm.BSON.ObjectId(route.params.itemId));
 
   const handleUpdate = useCallback(async () => {
-    showLoadingPopup(true, i18n.t('save'));
+    showLoadingPopup(true, t('general.control.save'));
     try {
-      if (!updatedItem) throw new CustomError('unexpectedError');
+      if (!updatedItem) throw new CustomError('error.general.unexpectedError');
       realm.write(() => {
         realm.create('Item', updatedItem, Realm.UpdateMode.Modified);
       });
@@ -46,8 +47,8 @@ function EditItemScreen() {
       console.error(error);
       showLoadingPopup(false);
       Alert.alert(
-        i18n.t('errorTitle'),
-        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        t('error.general.errorTitle'),
+        t(error.code, { defaults: [{ scope: 'error.general.unexpectedError' }] }),
       );
     }
   }, [updatedItem]);
@@ -72,7 +73,7 @@ function EditItemScreen() {
       headerRight: () =>
         NavigationHeaderButton({
           onPress: () => handleUpdate(),
-          text: i18n.t('save'),
+          text: t('general.control.save'),
         }),
     });
   }, [navigation, handleUpdate]);
@@ -112,7 +113,7 @@ function EditItemScreen() {
         <CustomTextInput
           onChangeText={(input) => change(input, 'name')}
           placeholder={realmItem.name}
-          title={i18n.t('itemName')}
+          title={t('general.item.name')}
           value={updatedItem.name}
         />
 
@@ -120,7 +121,7 @@ function EditItemScreen() {
         <CustomNumberInput
           onChangeText={(input) => change(input, 'calories')}
           placeholder={realmItem.calories.toString()}
-          title={i18n.t('calories')}
+          title={t('general.item.calories')}
           value={updatedItem.calories}
         />
 
@@ -128,7 +129,7 @@ function EditItemScreen() {
         <CustomNumberInput
           onChangeText={(input) => change(input, 'fat')}
           placeholder={realmItem.fat.toString()}
-          title={i18n.t('fat')}
+          title={t('general.item.fat')}
           value={updatedItem.fat}
         />
 
@@ -136,7 +137,7 @@ function EditItemScreen() {
         <CustomNumberInput
           onChangeText={(input) => change(input, 'carbohydrates')}
           placeholder={realmItem.carbohydrates.toString()}
-          title={i18n.t('carbohydrates')}
+          title={t('general.item.carbohydrates')}
           value={updatedItem.carbohydrates}
         />
 
@@ -144,7 +145,7 @@ function EditItemScreen() {
         <CustomNumberInput
           onChangeText={(input) => change(input, 'protein')}
           placeholder={realmItem.protein.toString()}
-          title={i18n.t('protein')}
+          title={t('general.item.protein')}
           value={updatedItem.protein}
         />
       </View>

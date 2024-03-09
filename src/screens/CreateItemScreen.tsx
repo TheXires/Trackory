@@ -10,7 +10,6 @@ import CustomNumberInput from '../components/CustomNumberInput';
 import CustomTextInput from '../components/CustomTextInput';
 import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
 import { permanentColors } from '../theme/colors';
 import { LoadingContextType } from '../types/context';
@@ -18,10 +17,12 @@ import { CustomError } from '../types/error';
 import { Item, ItemPropertyType } from '../types/item';
 import { CreateItemNavigationProp } from '../types/navigation';
 import { selectImage } from '../util/image';
+import { useTranslation } from 'react-i18next';
 
 const { useRealm } = RealmContext;
 
 function CreateItemScreen() {
+  const { t } = useTranslation();
   const navigation = useNavigation<CreateItemNavigationProp>();
   const realm = useRealm();
 
@@ -39,9 +40,9 @@ function CreateItemScreen() {
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const handleCreation = useCallback(async () => {
-    showLoadingPopup(true, i18n.t('create'));
+    showLoadingPopup(true, t('general.control.create'));
     try {
-      if (!item.name || item.name === '') throw new CustomError('create/no-name');
+      if (!item.name || item.name === '') throw new CustomError('error.createItem.create/no-name');
       realm.write(() => {
         realm.create('Item', item);
       });
@@ -50,8 +51,8 @@ function CreateItemScreen() {
     } catch (error: any) {
       showLoadingPopup(false);
       Alert.alert(
-        i18n.t('errorTitle'),
-        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        t('error.general.errorTitle'),
+        t(error.code, { defaults: [{ scope: 'error.general.unexpectedError' }] }),
       );
     }
   }, [item]);
@@ -61,7 +62,7 @@ function CreateItemScreen() {
       headerRight: () =>
         NavigationHeaderButton({
           onPress: () => handleCreation(),
-          text: i18n.t('create'),
+          text: t('general.control.create'),
         }),
     });
   }, [handleCreation]);
@@ -78,7 +79,7 @@ function CreateItemScreen() {
           <CustomTextInput
             onChangeText={(text) => change(text, 'name')}
             placeholder="Sandwich..."
-            title={i18n.t('itemName')}
+            title={t('general.item.name')}
             value={item.name}
           />
 
@@ -86,7 +87,7 @@ function CreateItemScreen() {
           <CustomNumberInput
             onChangeText={(input) => change(input, 'calories')}
             placeholder="123"
-            title={i18n.t('calories')}
+            title={t('general.item.calories')}
             value={item.calories}
           />
           {expanded && (
@@ -95,7 +96,7 @@ function CreateItemScreen() {
               <CustomNumberInput
                 onChangeText={(input) => change(input, 'fat')}
                 placeholder="123"
-                title={i18n.t('fat')}
+                title={t('general.item.fat')}
                 value={item.fat}
               />
 
@@ -103,7 +104,7 @@ function CreateItemScreen() {
               <CustomNumberInput
                 onChangeText={(input) => change(input, 'carbohydrates')}
                 placeholder="123"
-                title={i18n.t('carbohydrates')}
+                title={t('general.item.carbohydrates')}
                 value={item.carbohydrates}
               />
 
@@ -111,7 +112,7 @@ function CreateItemScreen() {
               <CustomNumberInput
                 onChangeText={(input) => change(input, 'protein')}
                 placeholder="123"
-                title={i18n.t('protein')}
+                title={t('general.item.protein')}
                 value={item.protein}
               />
             </>
@@ -122,7 +123,7 @@ function CreateItemScreen() {
         <View style={styles.expandButtonContainer}>
           <Text style={styles.expandButton} onPress={() => setExpanded(!expanded)}>
             <Feather name={expanded ? 'minus' : 'plus'} size={18} />
-            {i18n.t(expanded ? 'less' : 'more')}
+            {t(expanded ? 'general.control.less' : 'general.control.more')}
           </Text>
         </View>
 

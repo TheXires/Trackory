@@ -1,8 +1,8 @@
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from '@react-navigation/native';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { i18n } from '../i18n/i18n';
 
 interface Props {
   onPress: () => void;
@@ -10,6 +10,7 @@ interface Props {
 
 function CreateNewItemButton({ onPress }: Props) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
@@ -18,7 +19,9 @@ function CreateNewItemButton({ onPress }: Props) {
         <View style={[styles.button, { borderColor: colors.primary }]}>
           <View style={styles.innerBox}>
             <Feather name="plus" style={[styles.icon, { color: colors.primary }]} />
-            <Text style={[styles.text, { color: colors.primary }]}>{i18n.t('create')}</Text>
+            <Text style={[styles.text, { color: colors.primary }]}>
+              {t('general.control.create')}
+            </Text>
           </View>
         </View>
       </Pressable>

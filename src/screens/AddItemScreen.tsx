@@ -9,16 +9,17 @@ import Searchbar from '../components/Searchbar';
 import Spacer from '../components/Spacer';
 import { DAY_IN_MS } from '../constants';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
 import { LoadingContextType } from '../types/context';
 import { ConsumedItem, Consumption, Item } from '../types/item';
 import { AddItemNavigationProp, AddItemRouteProp } from '../types/navigation';
+import { useTranslation } from 'react-i18next';
 
 const { useRealm, useQuery } = RealmContext;
 
 function AddItemScreen() {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const navigation = useNavigation<AddItemNavigationProp>();
   const realm = useRealm();
 
@@ -33,7 +34,7 @@ function AddItemScreen() {
   )[0];
 
   const onPress = async (item: Item) => {
-    showLoadingPopup(true, i18n.t('add'));
+    showLoadingPopup(true, t('general.control.add'));
     try {
       if (!consumption) {
         const newConsumption: ConsumedItem = {

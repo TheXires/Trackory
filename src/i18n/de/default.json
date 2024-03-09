@@ -1,0 +1,102 @@
+{
+  "general": {
+    "control": {
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "add": "Hinzufügen",
+      "create": "Erstellen",
+      "delete": "Löschen",
+      "edit": "Bearbeiten",
+      "more": "Mehr",
+      "less": "Weniger",
+      "ok": "Ok",
+      "back": "Zurück"
+    },
+    "item": {
+      "name": "Name",
+      "calories": "Kalorien",
+      "carbohydrates": "Kohlenhydrate",
+      "fat": "Fett",
+      "protein": "Proteine"
+    }
+  },
+  "screen": {
+    "addItem": {
+      "title": "Item hinzufügen"
+    },
+    "createItem": {
+      "title": "Item erstellen",
+      "addPhoto": "Foto hinzufügen"
+    },
+    "editItem": {
+      "title": "Bearbeiten"
+    },
+    "home": {
+      "title": "Übersicht",
+      "today": "Heute"
+    },
+    "itemDetails": {
+      "title": "Item",
+      "deleteItemDialogTitle": "Item löschen",
+      "deleteItemDialogText": "Möchtest du das Item wirklich löschen?"
+    },
+    "items": {
+      "title": "Items"
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "calorieTarget": "Tägliches Kalorienziel",
+      "calorieRequirementCalculator": "Kalorienbedarfsrechner",
+      "weight": "Gewicht",
+      "dataExport": "Datenexport (JSON)",
+      "dataImport": "Datenimport (JSON)",
+      "realmExport": "Realm-Export",
+      "recommendApp": "App weiter empfehlen",
+      "imprint": "Impressum",
+      "dialog": {
+        "dailyCalorieTarget": "Tägliches Kalorienziel",
+        "dailyCalorieTargetQuestion": "Was ist dein tägliches Kalorienziel?",
+        "currentWeightTitle": "Aktuelles Gewicht",
+        "currentWeightTitleQuestion": "Wie viel wiegst du momentan?"
+      }
+    },
+    "statistics": {
+      "title": "Statistik",
+      "monthly": "monatlich"
+    }
+  },
+  "component": {
+    "homeProgress": {
+      "today": "Heute",
+      "caloriesLeft": "noch {{caloriesLeft}} kcal bis zum Ziel",
+      "negativeCaloriesLeft": "{{caloriesLeft}} kcal über Ziel"
+    },
+    "overviewItem": {
+      "caloriesPerItem": "je {{itemCalories}} kcal"
+    },
+    "searchbar": {
+      "search": "Suche"
+    }
+  },
+  "error": {
+    "general": {
+      "errorTitle": "Fehler",
+      "unexpectedError": "Es ist ein unerwarteter Fehler aufgetreten"
+    },
+    "createItem": {
+      "create/no-name": "Zum erstellem des Items ist ein Name erforderlich"
+    },
+    "dataExport": {
+      "noDataToExport": "Es sind keine Daten zum exportieren vorhanden",
+      "unableToOpenFile": "Datei konnte nicht geöffnet werden"
+    },
+    "dataImport": {
+      "duplicateItems": "Daten konnten aufgrund doppelte Einträge nicht importiert werden"
+    }
+  },
+  "abbreviation": {
+    "calorie": "kcal",
+    "gram": "g",
+    "kilogram": "kg"
+  }
+}

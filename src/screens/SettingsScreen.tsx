@@ -3,12 +3,12 @@ import { useTheme } from '@react-navigation/native';
 import { Realm } from '@realm/react';
 import * as Sharing from 'expo-sharing';
 import React, { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, Linking, ScrollView, StyleSheet, View } from 'react-native';
 import HorizontalLine from '../components/HorizontalLine';
 import InputDialog from '../components/InputDialog';
 import SettingsItem from '../components/SettingsItem';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
 import { LoadingContextType } from '../types/context';
 import { CustomError } from '../types/error';
@@ -21,6 +21,7 @@ const { useRealm, useQuery } = RealmContext;
 
 function SettingsScreen() {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const realm = useRealm();
 
   const { showLoadingPopup } = useContext<LoadingContextType>(LoadingContext);
@@ -62,15 +63,15 @@ function SettingsScreen() {
   const dataExport = async () => {
     showLoadingPopup(true, 'exportData');
     try {
-      if (!items || !consumptions) throw new Error('noDataToExport');
+      if (!items || !consumptions) throw new Error('error.dataExport.noDataToExport');
       await exportData(items, consumptions);
       showLoadingPopup(false);
     } catch (error: any) {
       console.error(error);
       showLoadingPopup(false);
       Alert.alert(
-        i18n.t('errorTitle'),
-        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        t('error.general.errorTitle'),
+        t(error.code, { defaults: [{ scope: 'error.general.unexpectedError' }] }),
       );
     }
   };
@@ -82,7 +83,7 @@ function SettingsScreen() {
 
       // check for duplicates
       if (findDuplicateItems(importedItems, items)) {
-        throw new CustomError('duplicateItems');
+        throw new CustomError('error.dataImport.duplicateItems');
       }
 
       realm.write(() => {
@@ -93,7 +94,7 @@ function SettingsScreen() {
       });
 
       if (findDuplicateConsumptions(importedConsumptions, consumptions)) {
-        throw new CustomError('duplicateItems');
+        throw new CustomError('error.dataImport.duplicateItems');
       }
 
       realm.write(() => {
@@ -116,8 +117,8 @@ function SettingsScreen() {
       console.error(error);
       showLoadingPopup(false);
       Alert.alert(
-        i18n.t('errorTitle'),
-        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        t('error.general.errorTitle'),
+        t(error.code, { defaults: [{ scope: 'error.general.unexpectedError' }] }),
       );
     }
   };
@@ -131,8 +132,8 @@ function SettingsScreen() {
       console.error(error);
       showLoadingPopup(false);
       Alert.alert(
-        i18n.t('errorTitle'),
-        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        t('error.general.errorTitle'),
+        t(error.code, { defaults: [{ scope: 'error.general.unexpectedError' }] }),
       );
     }
   };
@@ -143,7 +144,7 @@ function SettingsScreen() {
         <View>
           {/* calorieTarget */}
           <SettingsItem
-            left={i18n.t('calorieTarget')}
+            left={t('screen.settings.calorieTarget')}
             right={calorieTarget.value}
             onPress={() => {
               setShowCalorieTargetDialog(true);
@@ -152,7 +153,7 @@ function SettingsScreen() {
 
           {/* calorie requirements calculator */}
           <SettingsItem
-            left={i18n.t('calorieRequirementCalculator')}
+            left={t('screen.settings.calorieRequirementCalculator')}
             right={<Feather name="chevron-right" size={24} />}
             onPress={() => openLink('http://kalorienbedarf.de')}
           />
@@ -168,19 +169,19 @@ function SettingsScreen() {
 
           {/* data export */}
           <SettingsItem
-            left={i18n.t('dataExport')}
+            left={t('screen.settings.dataExport')}
             right={<Feather name="upload" size={24} />}
             onPress={dataExport}
           />
 
           <SettingsItem
-            left={i18n.t('dataImport')}
+            left={t('screen.settings.dataImport')}
             right={<Feather name="download" size={24} />}
             onPress={dataImport}
           />
 
           <SettingsItem
-            left={i18n.t('realmExport')}
+            left={t('screen.settings.realmExport')}
             right={<Feather name="database" size={24} />}
             onPress={realmExport}
           />
@@ -205,12 +206,12 @@ function SettingsScreen() {
 
       {/* calorieTarget Dialogs */}
       <InputDialog
-        headerText={i18n.t('dailyCalorieTarget')}
+        headerText={t('screen.settings.dialog.dailyCalorieTarget')}
         onClose={() => setShowCalorieTargetDialog(false)}
         onSave={(newValue) => saveCalorieTarget(newValue)}
         placeholder="2100"
         show={showCalorieTargetDialog}
-        text={i18n.t('dailyCalorieTargetQuestion')}
+        text={t('screen.settings.dialog.dailyCalorieTargetQuestion')}
         value={calorieTarget.value}
       />
       {/* weight dialog */}

@@ -1,9 +1,9 @@
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { i18n } from '../i18n/i18n';
 import { permanentColors } from '../theme/colors';
 import ChangeImageButton from './ChangeImageButton';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   imageUri: string | undefined;
@@ -12,6 +12,8 @@ interface Props {
 }
 
 function AddImageButton({ imageUri, onDelete, onPress }: Props) {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.addPhotoButtonContainer}>
       {imageUri ? (
@@ -19,7 +21,9 @@ function AddImageButton({ imageUri, onDelete, onPress }: Props) {
       ) : (
         <Pressable style={styles.addPhotoButton} onPress={onPress}>
           <Feather name="plus" size={46} style={styles.addPhotoButtonText} />
-          <Text style={[styles.addPhotoButtonText, { fontSize: 18 }]}>{i18n.t('addPhoto')}</Text>
+          <Text style={[styles.addPhotoButtonText, { fontSize: 18 }]}>
+            {t('screen.createItem.addPhoto')}
+          </Text>
         </Pressable>
       )}
     </View>

@@ -1,7 +1,7 @@
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
 import { Alert } from 'react-native';
-import { i18n } from '../i18n/i18n';
+import i18next from '../i18n/i18next';
 
 /**
  * takes a picture
@@ -30,8 +30,8 @@ export const takeImage = async (): Promise<string | undefined> => {
     return `data:image/jpeg;base64,${optimizedImage.base64}`;
   } catch (error: any) {
     Alert.alert(
-      i18n.t('errorTitle'),
-      i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      i18next.t('error.general.errorTitle'),
+      i18next.t(error.code, { defaults: [{ scope: 'error.general.unexpectedError' }] }),
     );
   }
   return undefined;
@@ -63,8 +63,8 @@ export const selectImage = async (): Promise<string | undefined> => {
     return `data:image/jpeg;base64,${optimizedImage.base64}`;
   } catch (error: any) {
     Alert.alert(
-      i18n.t('errorTitle'),
-      i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+      i18next.t('error.general.errorTitle'),
+      i18next.t(error.code, { defaults: [{ scope: 'error.general.unexpectedError' }] }),
     );
     console.error(error);
   }

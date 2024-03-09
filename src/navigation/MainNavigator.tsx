@@ -3,11 +3,11 @@
 // https://reactnavigation.org/docs/nesting-navigators/
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import NavigationHeaderButton from '../components/NavigationHeaderButton';
-import { i18n } from '../i18n/i18n';
 import AddItemScreen from '../screens/AddItemScreen';
-import CreateItemScreen from '../screens/CreateItem';
+import CreateItemScreen from '../screens/CreateItemScreen';
 import EditItemScreen from '../screens/EditItemScreen';
 import ItemDetailsScreen from '../screens/ItemDetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -18,6 +18,7 @@ const RootStack = createSharedElementStackNavigator<RootStackParamList>();
 
 function RootStackNavigator() {
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   return (
     <RootStack.Navigator initialRouteName="Main" screenOptions={{ headerTitleAlign: 'center' }}>
@@ -26,8 +27,8 @@ function RootStackNavigator() {
         name="AddItem"
         component={AddItemScreen}
         options={{
-          headerBackTitle: i18n.t('back'),
-          title: i18n.t('addItemTitle'),
+          headerBackTitle: t('general.control.back'),
+          title: t('screen.addItem.title'),
         }}
       />
       <RootStack.Screen
@@ -37,17 +38,17 @@ function RootStackNavigator() {
           headerLeft: () =>
             NavigationHeaderButton({
               onPress: () => navigation.goBack(),
-              text: i18n.t('cancel'),
+              text: t('general.control.cancel'),
             }),
-          title: i18n.t('createItemTitle'),
+          title: t('screen.createItem.title'),
         }}
       />
       <RootStack.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
-          headerBackTitle: i18n.t('back'),
-          title: i18n.t('settingsTitle'),
+          headerBackTitle: t('general.control.back'),
+          title: t('screen.settings.title'),
         }}
       />
       <RootStack.Screen
@@ -63,8 +64,8 @@ function RootStackNavigator() {
           ];
         }}
         options={{
-          headerBackTitle: i18n.t('back'),
-          title: i18n.t('itemDetailsTitle'),
+          headerBackTitle: t('general.control.back'),
+          title: t('screen.itemDetails.title'),
         }}
       />
       <RootStack.Screen
@@ -74,10 +75,10 @@ function RootStackNavigator() {
           headerLeft: () =>
             NavigationHeaderButton({
               onPress: () => navigation.goBack(),
-              text: i18n.t('cancel'),
+              text: t('general.control.cancel'),
             }),
           presentation: 'modal',
-          title: i18n.t('EditItemTitle'),
+          title: t('screen.editItem.title'),
         }}
       />
     </RootStack.Navigator>

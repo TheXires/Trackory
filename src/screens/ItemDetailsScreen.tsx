@@ -2,6 +2,7 @@ import { useNavigation, useRoute } from '@react-navigation/core';
 import { useTheme } from '@react-navigation/native';
 import { Realm } from '@realm/react';
 import React, { useContext, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, Image, Platform, StyleSheet, Text, View } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
 import placeholderImage from '../../assets/images/itemPlaceholderImage.png';
@@ -11,7 +12,6 @@ import HorizontalLine from '../components/HorizontalLine';
 import ItemDetailsRow from '../components/ItemDetailsRow';
 import NavigationHeaderButton from '../components/NavigationHeaderButton';
 import { LoadingContext } from '../contexts/LoadingContext';
-import { i18n } from '../i18n/i18n';
 import { RealmContext } from '../realm/RealmContext';
 import { permanentColors } from '../theme/colors';
 import { LoadingContextType } from '../types/context';
@@ -23,6 +23,7 @@ const { useObject, useRealm } = RealmContext;
 
 function ItemDetailsScreen() {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const navigation = useNavigation<ItemDetailsNavigationProp>();
   const route = useRoute<ItemDetailsRouteProp>();
   const realm = useRealm();
@@ -38,15 +39,15 @@ function ItemDetailsScreen() {
         NavigationHeaderButton({
           // TODO ab hier weiter machen
           onPress: () => navigation.navigate('EditItem', { itemId: route.params.itemId }),
-          text: i18n.t('edit'),
+          text: t('general.control.edit'),
         }),
     });
   }, [route, navigation]);
 
   const deleteItem = async () => {
-    showLoadingPopup(true, i18n.t('deleteItem'));
+    showLoadingPopup(true, t('general.control.delete'));
     try {
-      if (!item) throw new CustomError('unexpectedError');
+      if (!item) throw new CustomError('error.general.unexpectedError');
       realm.write(() => {
         realm.delete(item);
       });
@@ -55,17 +56,21 @@ function ItemDetailsScreen() {
     } catch (error: any) {
       showLoadingPopup(false);
       Alert.alert(
-        i18n.t('errorTitle'),
-        i18n.t(error.code, { defaults: [{ scope: 'unexpectedError' }] }),
+        t('error.general.errorTitle'),
+        t(error.code, { defaults: [{ scope: 'error.general.unexpectedError' }] }),
       );
     }
   };
 
   const deleteItemPopup = () => {
-    Alert.alert(i18n.t('deleteItemDialogTitle'), i18n.t('deleteItemDialogText'), [
-      { style: 'cancel', text: i18n.t('cancel') },
-      { onPress: () => deleteItem(), style: 'destructive', text: i18n.t('delete') },
-    ]);
+    Alert.alert(
+      t('screen.itemDetails.deleteItemDialogTitle'),
+      t('screen.itemDetails.deleteItemDialogText'),
+      [
+        { style: 'cancel', text: t('general.control.cancel') },
+        { onPress: () => deleteItem(), style: 'destructive', text: t('general.control.delete') },
+      ],
+    );
   };
 
   if (!item) return <CustomActivityIndicator />;
@@ -95,32 +100,32 @@ function ItemDetailsScreen() {
         <View style={styles.dataContainer}>
           {/* calories */}
           <ItemDetailsRow
-            description={i18n.t('calories')}
-            unit={i18n.t('calorieAbbreviation')}
+            description={t('general.item.calories')}
+            unit={t('abbreviation.calorie')}
             value={item.calories}
           />
           <HorizontalLine />
 
           {/* fat */}
           <ItemDetailsRow
-            description={i18n.t('fat')}
-            unit={i18n.t('gramAbbreviation')}
+            description={t('general.item.fat')}
+            unit={t('abbreviation.gram')}
             value={item.fat}
           />
           <HorizontalLine />
 
           {/* carbohydrates */}
           <ItemDetailsRow
-            description={i18n.t('carbohydrates')}
-            unit={i18n.t('gramAbbreviation')}
+            description={t('general.item.carbohydrates')}
+            unit={t('abbreviation.gram')}
             value={item.carbohydrates}
           />
           <HorizontalLine />
 
           {/* protein */}
           <ItemDetailsRow
-            description={i18n.t('protein')}
-            unit={i18n.t('gramAbbreviation')}
+            description={t('general.item.protein')}
+            unit={t('abbreviation.gram')}
             value={item.protein}
           />
         </View>
@@ -129,7 +134,7 @@ function ItemDetailsScreen() {
       {/* delete button */}
       <View style={styles.buttonContainer}>
         <CustomButton
-          value={i18n.t('deleteItem')}
+          value={t('general.control.delete')}
           onPress={deleteItemPopup}
           textColor={permanentColors.error}
           buttonColor={colors.background}

@@ -1,8 +1,8 @@
 import { useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { i18n } from '../i18n/i18n';
 import { permanentColors } from '../theme/colors';
 import { convertTextToInteger } from '../util/numberconverter';
 import Dialog from './Dialog';
@@ -19,6 +19,7 @@ interface Props {
 
 function InputDialog({ headerText, onClose, onSave, placeholder, show, text, value }: Props) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   const [localValue, setLocalValue] = useState<string | undefined>(value);
   const [canSave, setCanSave] = useState<boolean>(false);
@@ -53,7 +54,7 @@ function InputDialog({ headerText, onClose, onSave, placeholder, show, text, val
             activeOpacity={0.8}
             onPress={() => onClose()}
           >
-            <Text>{i18n.t('cancel')}</Text>
+            <Text>{t('general.control.cancel')}</Text>
           </TouchableOpacity>
 
           {/* save button */}
@@ -68,7 +69,7 @@ function InputDialog({ headerText, onClose, onSave, placeholder, show, text, val
                 color: canSave ? permanentColors.primary : permanentColors.border,
               }}
             >
-              {i18n.t('save')}
+              {t('general.control.save')}
             </Text>
           </TouchableOpacity>
         </View>
